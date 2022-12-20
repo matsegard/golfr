@@ -4,13 +4,16 @@ import {
   Text,
   View,
   Image,
-  Button,
   Alert,
   Pressable,
   ScrollView,
 } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { faLocationDot } from "@fortawesome/free-solid-svg-icons/faLocationDot";
+import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { faRightLeft } from "@fortawesome/free-solid-svg-icons";
+import { faWeightHanging } from "@fortawesome/free-solid-svg-icons";
+import { faBarsProgress } from "@fortawesome/free-solid-svg-icons";
 
 const product = {
   title: "Taylormade M4",
@@ -19,6 +22,10 @@ const product = {
     "Denna tunna träffytan tillsammans med den väldigt tunna framkanten levererar klubbhuvudet hög bollhastighet.",
   location: "Göteborg, Majorna",
   clubs: "5 - 6 - 7 - 8 - 9 - PW - Driver - Putter - 3 wood",
+  hcp: "10-20",
+  stiffness: "Stiff",
+  leftRight: "Höger",
+  gender: "Herr",
 };
 
 export default function ProductDetails() {
@@ -37,10 +44,46 @@ export default function ProductDetails() {
           </View>
         </View>
         <View style={styles.specsContainer}>
-          <Text>Icons</Text>
-          <Text>Icons</Text>
-          <Text>Icons</Text>
-          <Text>Icons</Text>
+          <View
+            style={{
+              alignItems: "center",
+            }}
+          >
+            <View style={styles.iconsText}>
+              <FontAwesomeIcon style={styles.icons} icon={faBarsProgress} />
+            </View>
+            <Text>HCP {product.hcp}</Text>
+          </View>
+          <View
+            style={{
+              alignItems: "center",
+            }}
+          >
+            <View style={styles.iconsText}>
+              <FontAwesomeIcon style={styles.icons} icon={faWeightHanging} />
+            </View>
+            <Text>{product.stiffness}</Text>
+          </View>
+          <View
+            style={{
+              alignItems: "center",
+            }}
+          >
+            <View style={styles.iconsText}>
+              <FontAwesomeIcon style={styles.icons} icon={faRightLeft} />
+            </View>
+            <Text>{product.leftRight}</Text>
+          </View>
+          <View
+            style={{
+              alignItems: "center",
+            }}
+          >
+            <View style={styles.iconsText}>
+              <FontAwesomeIcon style={styles.icons} icon={faUser} />
+            </View>
+            <Text>{product.gender}</Text>
+          </View>
         </View>
         <View style={styles.subHeadingContainer}>
           <Text style={styles.subHeadingText}>Klubbor</Text>
@@ -82,7 +125,6 @@ const styles = StyleSheet.create({
     color: "#6A994E",
     alignItems: "center",
   },
-
   infoContainer: {
     flex: 2.5,
     backgroundColor: "white",
@@ -123,7 +165,6 @@ const styles = StyleSheet.create({
     color: "#ffff",
     fontFamily: "MontserratSemiBold",
   },
-
   bodyText: {
     fontFamily: "MontserratRegular",
   },
@@ -133,16 +174,30 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
   },
-
   subHeadingContainer: {
     padding: "2%",
+    marginTop: 10,
   },
-
   bottomContainer: {
     flexDirection: "row",
     marginTop: "6%",
     justifyContent: "space-between",
     padding: "2%",
     alignItems: "center",
+  },
+  icons: {
+    color: "#6A994E",
+    zIndex: 2,
+    width: 50,
+    height: 50,
+  },
+  iconsText: {
+    backgroundColor: "rgba(131, 124, 128, 0.14)",
+    width: 40,
+    height: 40,
+    borderRadius: 100,
+    marginBottom: 10,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
