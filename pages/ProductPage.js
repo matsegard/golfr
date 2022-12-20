@@ -16,6 +16,7 @@ export default function ProductPage() {
           fontSize: 30,
         }}
       >
+        
         <ProductCard />
       </Text>
       <StatusBar style="auto" />

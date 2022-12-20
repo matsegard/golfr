@@ -1,18 +1,26 @@
-import { Box, Heading, AspectRatio, Image, Text, Center, HStack, Stack, Pressable ,NativeBaseProvider, StyleSheet } from "native-base";
+import {ScrollView, Box, Heading, AspectRatio, Image, Text, Center, HStack, Stack, Pressable ,NativeBaseProvider, StyleSheet } from "native-base";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons/faLocationDot";
 
 const ProductCard = () => {
      
-      const Products = {
+      const Products = [{
         Title:"Titlest t100",
         Price: 299,
         Description:"Ett toppen golf sett som kommer göra att din tur i det gröna kommer att förvlandlas till en sago stund. Glöma sne och kortaslag, mot stjärnorna och vidare",
         Place:"Majorna Göteborg"
+      },{
+        Title:"Titlest t300",
+        Price: 2999,
+        Description:"Ett toppen golf sett som kommer göra att din tur i det gröna kommer att förvlandlas till en sago stund. Glöma sne och kortaslag, mot stjärnorna och vidare",
+        Place:"Lunden Göteborg"
       }
-
-    return (
-        <Box alignItems="center" >
+    ];
+      
+      return (
+        <ScrollView w={["200", "300"]} h="200">
+        <Box alignItems="center" marginBottom="10" >
+        {Products.map((item) => (
         <Box maxW="80" rounded="lg" overflow="hidden" borderColor="coolGray.200" borderWidth="1" _dark={{
         borderColor: "coolGray.600",
         backgroundColor: "gray.700"
@@ -35,32 +43,33 @@ const ProductCard = () => {
             fontWeight: "700",
             fontSize: "xs"
           }} position="absolute" bottom="0" px="3" py="1.5">
-              {Products.Price} kr/dag
+              {item.Price} kr/dag
             </Center>
           </Box>
           <Stack p="4" space={3}>
             <Stack space={2}>
               <Heading size="md" ml="-1">
-               {Products.Title}
+               {item.Title}
               </Heading>
               <Text fontSize="xs" _light={{
               color: "tertiary.500"
             }} _dark={{
               color: "tertiary.500"
             }} fontWeight="500" ml="-0.5" mt="-1">
-                 {Products.Place} <FontAwesomeIcon icon={faLocationDot} />
+                 {item.Place} <FontAwesomeIcon icon={faLocationDot} />
               </Text>
             </Stack>
             <Text fontWeight="400">
-              {Products.Description}
+              {item.Description}
             </Text>
           </Stack>
         </Box>
+      ))}
       </Box>
-   
+      </ScrollView>
     )
-}
-
+  }
+  
 export default ProductCard;
 
 
