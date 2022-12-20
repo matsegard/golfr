@@ -13,7 +13,6 @@ export default function ProductDetails() {
         }}
       >
         <Image source={require("../assets/test.jpg")} />
-        <Text>ProductDetails</Text>
       </View>
       <View
         style={{
@@ -21,8 +20,11 @@ export default function ProductDetails() {
           backgroundColor: "white",
           borderTopLeftRadius: "20",
           borderTopRightRadius: "20",
+          padding: "5%",
         }}
-      />
+      >
+        <Text style={styles.title}>Taylormade m4</Text>
+      </View>
     </View>
   );
 }
@@ -31,5 +33,9 @@ const styles = StyleSheet.create({
   container: {
     flex: "1",
     backgroundColor: "white",
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: "bold",
   },
 });
