@@ -1,6 +1,7 @@
 import HomePage from "./pages/HomePage";
 import { NavigationContainer } from "@react-navigation/native";
 import ProductPage from "./pages/ProductPage";
+import ProductDetails from "./pages/ProductDetails";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NativeBaseProvider } from "native-base";
 import { useFonts } from "expo-font";
