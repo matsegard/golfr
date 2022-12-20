@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   product: {
-    marginTop: 50,
+    marginTop: 135,
   },
   text: { fontSize: "50",
   

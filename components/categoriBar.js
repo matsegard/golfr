@@ -2,21 +2,21 @@ import { View, Pressable, Text } from "native-base"
 
 const CategoriBar = () => {
     return (
-        <View  flexDirection="row" justifyContent="space-between" >
+        <View  flexDirection="row" justifyContent="space-between" width="90%" margin="5" >
             <Pressable>
-              <Text>Klubbor</Text>    
+              <Text fontSize="xl"  >Klubbor</Text>    
             </Pressable> 
             <Pressable>
-              <Text>Golfset</Text>    
+              <Text fontSize="xl" >Golfset</Text>    
             </Pressable> 
             <Pressable>
-              <Text>Vagn</Text>    
+              <Text fontSize="xl" >Vagn</Text>    
             </Pressable> 
             <Pressable>
-              <Text>Golfbil</Text>    
+              <Text fontSize="xl" >Golfbil</Text>    
             </Pressable> 
             <Pressable>
-              <Text>Övrigt</Text>    
+              <Text fontSize="xl" >Övrigt</Text>    
             </Pressable> 
         </View>
     )
