@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 224,
     position: "absolute",
-    top: -10,
+    top: -19,
   },
   bubbleText: {
     width: "88%",
@@ -206,7 +206,7 @@ const styles = StyleSheet.create({
     borderRadius: "75%",
     backgroundColor: "#B6B6B6",
     position: "absolute",
-    top: 120,
+    top: 110,
   },
   addProfilePic: {
     width: 30,
@@ -214,14 +214,14 @@ const styles = StyleSheet.create({
     borderRadius: "50%",
     backgroundColor: "#B0D182",
     position: "absolute",
-    top: 240,
+    top: 230,
     right: 150,
     justifyContent: "center",
     alignItems: "center",
   },
   forms: {
     position: "absolute",
-    top: 290,
+    top: 280,
   },
   form: {
     marginTop: 30,
