@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faMugSaucer } from "@fortawesome/free-solid-svg-icons/faMugSaucer";
 import Navbar from "../Navbar";
+import ProductCard from "../components/productCard";
 
 export default function ProductPage() {
   return (
@@ -17,9 +18,8 @@ export default function ProductPage() {
           fontSize: 30,
         }}
       >
-        Golf club title
+        <ProductCard />
       </Text>
-      <FontAwesomeIcon icon={faMugSaucer} />
       <StatusBar style="auto" />
       <Navbar />
     </View>
