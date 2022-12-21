@@ -229,7 +229,6 @@ const styles = StyleSheet.create({
   editFormContainer: {
     width: 280,
   },
-  editForm: {},
 });
 
 export default ProfilePage;
