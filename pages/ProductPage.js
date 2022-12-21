@@ -3,19 +3,15 @@ import { StyleSheet, Text, View, Button } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faMugSaucer } from "@fortawesome/free-solid-svg-icons/faMugSaucer";
 import Navbar from "../components/Navbar"
-import ProductCard from "../components/productCard";
-import CategoriBar from "../components/categoriBar";
-
+import ProductCard from "../components/product/productCard";
+import CategoriBar from "../components/product/categoriBar";
+import SearchBar from "../components/product/searchBar";
 export default function ProductPage({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.product}>
-        <Text style={styles.text}>Produkter</Text>
+        <SearchBar />
       </View>
-      <Button
-        title="Gå till en produkt"
-        onPress={() => navigation.navigate("ProductDetails")}
-      />
       <CategoriBar />
       <View style={styles.top} />
       <Text
