@@ -3,12 +3,14 @@ import { StyleSheet, Text, View } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faMugSaucer } from "@fortawesome/free-solid-svg-icons/faMugSaucer";
 import ProductCard from "../components/productCard";
+import CategoriBar from "../components/categoriBar";
 export default function ProductPage() {
   return (
     <View style={styles.container}>
       <View style={styles.product}>
         <Text style={styles.text}>Produkter</Text>
       </View>
+      < CategoriBar />
       <View style={styles.top} />
       <Text
         style={{
@@ -16,6 +18,7 @@ export default function ProductPage() {
           fontSize: 30,
         }}
       >
+        
         <ProductCard />
       </Text>
       <StatusBar style="auto" />
@@ -30,6 +33,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  product: {},
-  text: { fontSize: "50" },
+  product: {
+    marginTop: 135,
+  },
+  text: { fontSize: "50",
+  
+},
+
 });
