@@ -148,11 +148,29 @@ function ProfilePage() {
           </View>
         )}
       </View>
-      <PrimaryButton
-        label="Redigera profil"
-        btnWidth={{ width: 152, position: "absolute", right: 50, bottom: -670 }}
-        onPress={() => setEditMode(!editMode)}
-      />
+      {editMode ? (
+        <PrimaryButton
+          label="Spara"
+          btnWidth={{
+            width: 152,
+            position: "absolute",
+            right: 50,
+            bottom: -670,
+          }}
+          onPress={() => setEditMode(!editMode)}
+        />
+      ) : (
+        <PrimaryButton
+          label="Redigera profil"
+          btnWidth={{
+            width: 152,
+            position: "absolute",
+            right: 50,
+            bottom: -670,
+          }}
+          onPress={() => setEditMode(!editMode)}
+        />
+      )}
     </View>
   );
 }
