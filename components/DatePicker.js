@@ -2,8 +2,9 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import { Text, View, Button, TextInput } from "react-native";
 import React, { useState } from "react";
 
-function useInput() {
-  const [date, setDate] = useState(new Date());
+export default function DatePicker({ price }) {
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
   const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
 
@@ -15,33 +16,27 @@ function useInput() {
     showMode("date");
   };
 
-  const onChange = (event, selectedDate) => {
+  const onChangeFirstInput = (event, selectedDate) => {
     const currentDate = selectedDate;
     setShow(Platform.OS === "ios");
-    setDate(currentDate);
+    setStartDate(currentDate);
     setShow(false);
   };
-  return {
-    date,
-    showDatepicker,
-    show,
-    mode,
-    onChange,
+
+  const onChangeSecondInput = (event, selectedDate) => {
+    const currentDate = selectedDate;
+    setShow(Platform.OS === "ios");
+    setEndDate(currentDate);
+    setShow(false);
   };
-}
 
-// const daysBetween = (input.date, input2.date) => {
-//   const oneDay = 24 * 60 * 60 * 1000;
-//   const diffDays = Math.round(
-//     Math.abs((startDate.getTime() - endDate.getTime()) / oneDay)
-//   );
-//   return diffDays;
-// };
-
-export default function DatePicker({ price }) {
-  const input = useInput(new Date());
-  const input2 = useInput(new Date());
-  const totalPrice = price * 3;
+  const daysBetween = (startDate, endDate) => {
+    const oneDay = 24 * 60 * 60 * 1000;
+    const diffDays = Math.round(
+      Math.abs((startDate.getTime() - endDate.getTime()) / oneDay)
+    );
+    return diffDays;
+  };
 
   return (
     <View
@@ -65,15 +60,15 @@ export default function DatePicker({ price }) {
             alignItems: "center",
           }}
         >
-          <Button onPress={input.showDatepicker} title={"Startdatum"} />
-          {input.show && (
+          <Button onPress={showDatepicker} title={"Startdatum"} />
+          {show && (
             <DateTimePicker
               testID="dateTimePicker1"
-              value={input.date}
-              mode={input.mode}
+              value={startDate}
+              mode={mode}
               is24Hour={true}
               display="default"
-              onChange={input.onChange}
+              onChange={onChangeFirstInput}
               minimumDate={new Date()}
               style={{ justifyContent: "center" }}
             />
@@ -86,16 +81,16 @@ export default function DatePicker({ price }) {
             alignItems: "center",
           }}
         >
-          <Button onPress={input2.showDatepicker} title={"Slutdatum"} />
-          {input2.show && (
+          <Button onPress={showDatepicker} title={"Slutdatum"} />
+          {show && (
             <DateTimePicker
               // minimumDate={moment(new Date()).add(1, "h")}
               testID="dateTimePicker2"
-              value={input2.date}
-              mode={input2.mode}
+              value={endDate}
+              mode={mode}
               is24Hour={true}
               display="default"
-              onChange={input2.onChange}
+              onChange={onChangeSecondInput}
             />
           )}
         </View>
@@ -117,7 +112,7 @@ export default function DatePicker({ price }) {
           Hyrperiod
         </Text>
         <Text style={{ fontFamily: "MontserratMedium", fontSize: 18 }}>
-          {input.date.toLocaleDateString()} - {input2.date.toLocaleDateString()}
+          {startDate.toLocaleDateString()} - {endDate.toLocaleDateString()}
         </Text>
         <View style={{ flexDirection: "row", marginTop: 10 }}>
           <Text
@@ -135,7 +130,7 @@ export default function DatePicker({ price }) {
               fontSize: 18,
             }}
           >
-            {totalPrice}kr
+            {price * daysBetween(startDate, endDate)}kr
           </Text>
         </View>
       </View>
