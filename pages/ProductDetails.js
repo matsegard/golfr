@@ -35,8 +35,6 @@ const product = {
 export default function ProductDetails() {
   const [activeImage, setActiveImage] = useState(0);
 
-  Dimensions.get("window").width;
-
   const onScroll = ({ nativeEvent }) => {
     const slide = Math.ceil(
       nativeEvent.contentOffset.x / nativeEvent.layoutMeasurement.width
