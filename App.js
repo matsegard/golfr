@@ -1,6 +1,7 @@
 import HomePage from "./pages/HomePage";
 import { NavigationContainer } from "@react-navigation/native";
 import ProductPage from "./pages/ProductPage";
+import DatePicker from "./components/DatePicker";
 import ProductDetails from "./pages/ProductDetails";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NativeBaseProvider } from "native-base";
@@ -51,6 +52,7 @@ export default function App() {
               },
             }}
           />
+          <Stack.Screen name="DatePicker" component={DatePicker} />
         </Stack.Navigator>
       </NativeBaseProvider>
     </NavigationContainer>

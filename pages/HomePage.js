@@ -7,6 +7,10 @@ export default function HomePage({ navigation }) {
         title="Gå till produktsidan"
         onPress={() => navigation.navigate("Products")}
       />
+      <Button
+        title="DatePicker"
+        onPress={() => navigation.navigate("DatePicker")}
+      />
     </View>
   );
 }
