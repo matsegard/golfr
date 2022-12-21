@@ -30,10 +30,19 @@ function useInput() {
   };
 }
 
+// const daysBetween = (input.date, input2.date) => {
+//   const oneDay = 24 * 60 * 60 * 1000;
+//   const diffDays = Math.round(
+//     Math.abs((startDate.getTime() - endDate.getTime()) / oneDay)
+//   );
+//   return diffDays;
+// };
+
 export default function DatePicker({ price }) {
   const input = useInput(new Date());
   const input2 = useInput(new Date());
   const totalPrice = price * 3;
+
   return (
     <View
       style={{
