@@ -2,6 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faMugSaucer } from "@fortawesome/free-solid-svg-icons/faMugSaucer";
+import Navbar from "../Navbar";
 
 export default function ProductPage() {
   return (
@@ -20,6 +21,7 @@ export default function ProductPage() {
       </Text>
       <FontAwesomeIcon icon={faMugSaucer} />
       <StatusBar style="auto" />
+      <Navbar />
     </View>
   );
 }
@@ -27,7 +29,7 @@ export default function ProductPage() {
 const styles = StyleSheet.create({
   container: {
     flex: "1",
-    backgroundColor: "white",
+    backgroundColor: "FAFAFA",
     justifyContent: "center",
     alignItems: "center",
   },
