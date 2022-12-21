@@ -23,7 +23,6 @@ export default function ProductPage({ navigation }) {
         <ProductCard />
       </Text>
       <StatusBar style="auto" />
-      <Navbar />
     </View>
   );
 }
