@@ -14,10 +14,6 @@ export default function HomePage({ navigation }) {
         btnWidth={{ width: 200 }}
         onPress={() => console.log("I am the third button")}
       />
-      <Button
-        title="DatePicker"
-        onPress={() => navigation.navigate("DatePicker")}
-      />
     </View>
   );
 }

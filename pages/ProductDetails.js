@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
-
+import DatePickerModal from "../components/DatePickerModal";
 import {
   StyleSheet,
   Text,
@@ -34,12 +34,17 @@ const product = {
 
 export default function ProductDetails() {
   const [activeImage, setActiveImage] = useState(0);
+  const [openModal, setOpenModal] = useState(false);
 
   const onScroll = ({ nativeEvent }) => {
     const slide = Math.ceil(
       nativeEvent.contentOffset.x / nativeEvent.layoutMeasurement.width
     );
     if (slide !== activeImage) setActiveImage(slide);
+  };
+
+  const openDatePickerModal = () => {
+    setOpenModal(!openModal);
   };
 
   const images = [
@@ -140,12 +145,16 @@ export default function ProductDetails() {
           <Text style={styles.subHeadingText}>Beskrivning</Text>
           <Text style={styles.bodyText}>{product.description}</Text>
         </View>
+        {openModal && (
+          <DatePickerModal
+            openModal={openModal}
+            setOpenModal={setOpenModal}
+            price={product.price}
+          />
+        )}
         <View style={styles.bottomContainer}>
           <Text style={styles.bodyText}>{product.price}kr /dag</Text>
-          <Pressable
-            style={styles.button}
-            onPress={() => Alert.alert("Hyrförfrågan skickad")}
-          >
+          <Pressable style={styles.button} onPress={openDatePickerModal}>
             <Text style={styles.buttonText}>Skicka hyrförfrågan</Text>
           </Pressable>
         </View>
