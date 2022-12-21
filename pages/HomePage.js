@@ -9,6 +9,10 @@ export default function HomePage({ navigation }) {
         title="Gå till produktsidan"
         onPress={() => navigation.navigate("Products")}
       />
+      <Button
+        title="Gå till mina annonser"
+        onPress={() => navigation.navigate("MyProducts")}
+      />
       <PrimaryButton
         label="Lägg till produkt"
         btnWidth={{ width: 200 }}
