@@ -1,7 +1,8 @@
-import {ScrollView, Box, Heading, AspectRatio, Image, Text, Center, Stack, View,} from "native-base";
+import {ScrollView, Box, Heading, AspectRatio, Image, Text, Center, Stack, Button,} from "native-base";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons/faLocationDot";
-import { StyleSheet } from "react-native";
+import { Pressable, StyleSheet } from "react-native";
+import { useNavigation } from '@react-navigation/native';
 
 export default function ProductCard(){
      
@@ -22,13 +23,21 @@ export default function ProductCard(){
         Place:"Lunden Göteborg"
       }
     ];
-      
+    const navigation = useNavigation(); 
+
       return (     
       
-        <ScrollView>
-        <Box alignItems="center" marginBottom="20" >
+        <ScrollView
+        showsVerticalScrollIndicator={false}
+        height="auto"   
+      >
+        <Box alignItems="center" marginBottom="240" >
         {Products.map((item) => (
-          <Box maxW="80" rounded="lg" marginBottom="10" overflow="hidden" borderColor="coolGray.200" borderWidth="1" _dark={{
+          <Pressable onPress={() => navigation.navigate("ProductDetails")} >
+          <Box         
+          maxW="80" rounded="lg"
+          marginBottom="5" overflow="hidden" 
+          borderColor="coolGray.200" borderWidth="1" _dark={{
             borderColor: "coolGray.600",
             backgroundColor: "gray.700"
           }} _web={{
@@ -36,7 +45,8 @@ export default function ProductCard(){
             borderWidth: 0
           }} _light={{
             backgroundColor: "gray.50"
-          }}>
+          }}
+          >
           <Box>
             <AspectRatio w="100%" ratio={16 / 9}>
               <Image source={{
@@ -70,13 +80,14 @@ export default function ProductCard(){
               {item.Description}
             </Text>
           </Stack>
-        </Box>
+        </Box> 
+      </Pressable>
       ))}
       </Box>
       </ScrollView>
-     
-    )
-  }
+      
+      )
+    }
   
   const styles = StyleSheet.create({
     margin: {
