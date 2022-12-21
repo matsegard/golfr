@@ -4,8 +4,6 @@ import ProductPage from "./pages/ProductPage";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NativeBaseProvider } from "native-base";
 import { useFonts } from "expo-font";
-import { Text } from "react-native";
-import { Fragment } from "react";
 // import * as SplashScreen from "expo-splash-screen";
 
 export default function App() {
