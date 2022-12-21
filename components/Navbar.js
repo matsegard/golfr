@@ -7,7 +7,7 @@ import { faSquarePlus } from "@fortawesome/free-solid-svg-icons/faSquarePlus";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons/faMagnifyingGlass";
 import { faUser } from "@fortawesome/free-solid-svg-icons/faUser";
 
-export default function Navbar() {
+function Navbar() {
   const [selected, setSelected] = useState(0);
 
   return (
@@ -109,10 +109,8 @@ export default function Navbar() {
 const styles = StyleSheet.create({
   container: {
     width: "100%",
-    position: "absolute",
+    position: "fixed",
     bottom: 0,
-    left: 0,
-    right: 0,
     height: "10%",
     justifyContent: "space-evenly",
     alignItems: "center",
@@ -124,3 +122,5 @@ const styles = StyleSheet.create({
     height: 5,
   },
 });
+
+export default Navbar;

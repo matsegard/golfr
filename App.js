@@ -1,6 +1,7 @@
 import HomePage from "./pages/HomePage";
 import { NavigationContainer } from "@react-navigation/native";
 import ProductPage from "./pages/ProductPage";
+import ProfilePage from "./pages/ProfilePage";
 import ProductDetails from "./pages/ProductDetails";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NativeBaseProvider } from "native-base";
@@ -35,6 +36,20 @@ export default function App() {
         <Stack.Navigator>
           <Stack.Screen name="Home" component={HomePage} />
           <Stack.Screen name="Products" component={ProductPage} />
+          <Stack.Screen
+            name="Profile"
+            component={ProfilePage}
+            options={{
+              title: "Produkt",
+              headerStyle: {
+                backgroundColor: "#6A8E4E",
+              },
+              headerTintColor: "#fff",
+              headerTitleStyle: {
+                fontWeight: "bold",
+              },
+            }}
+          />
           <Stack.Screen
             name="ProductDetails"
             component={ProductDetails}
