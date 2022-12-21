@@ -1,4 +1,6 @@
 import { StatusBar } from "expo-status-bar";
+import React, { useState } from "react";
+
 import {
   StyleSheet,
   Text,
@@ -31,54 +33,54 @@ const product = {
 };
 
 export default function ProductDetails() {
+  const [activeImage, setActiveImage] = useState(0);
+
+  Dimensions.get("window").width;
+
+  const onScroll = ({ nativeEvent }) => {
+    const slide = Math.ceil(
+      nativeEvent.contentOffset.x / nativeEvent.layoutMeasurement.width
+    );
+    if (slide !== activeImage) setActiveImage(slide);
+  };
+
   const images = [
     "https://plus.unsplash.com/premium_photo-1661774316407-56209baefa8c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
     "https://images.unsplash.com/photo-1535131749006-b7f58c99034b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
+    "https://images.unsplash.com/flagged/photo-1576448438685-9f5e5b283d4f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
   ];
 
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
         <ScrollView
+          scrollEventThrottle={400}
+          onScroll={onScroll}
           pagingEnabeld
           horizontal
           showsHorizontalScrollIndicator={false}
           decelerationRate={0}
-          snapToInterval={400}
+          snapToInterval={Dimensions.get("window").width}
           snapToAlignment={"center"}
         >
           {images.map((image, index) => (
             <Image key={index} style={styles.image} source={{ uri: image }} />
           ))}
         </ScrollView>
-        <View>
-          <FontAwesomeIcon
-            style={{
-              flexDirection: "row",
-              position: "absolute",
-              color: "blue",
-              bottom: 28,
-            }}
-            icon={faCircle}
-          />
-          <FontAwesomeIcon
-            style={{
-              flexDirection: "row",
-              position: "absolute",
-              color: "blue",
-              bottom: 28,
-            }}
-            icon={faCircle}
-          />
-          <FontAwesomeIcon
-            style={{
-              flexDirection: "row",
-              position: "absolute",
-              color: "blue",
-              bottom: 28,
-            }}
-            icon={faCircle}
-          />
+        <View
+          style={{
+            flexDirection: "row",
+            position: "absolute",
+            bottom: 30,
+          }}
+        >
+          {images.map((i, k) => (
+            <FontAwesomeIcon
+              key={k}
+              style={k == activeImage ? styles.pagingActive : styles.paging}
+              icon={faCircle}
+            />
+          ))}
         </View>
       </View>
 
@@ -146,7 +148,7 @@ export default function ProductDetails() {
             style={styles.button}
             onPress={() => Alert.alert("Hyrförfrågan skickad")}
           >
-            <Text style={styles.buttonText}>Sicka hyrförfrågan</Text>
+            <Text style={styles.buttonText}>Skicka hyrförfrågan</Text>
           </Pressable>
         </View>
       </View>
@@ -189,14 +191,14 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   imageContainer: {
-    height: "40%",
+    flex: 1.6,
     marginBottom: -20,
     justifyContent: "center",
     alignItems: "center",
   },
   image: {
     resizeMode: "cover",
-    width: 400,
+    width: Dimensions.get("window").width,
     height: "100%",
   },
   location: {
@@ -249,5 +251,15 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     alignItems: "center",
     justifyContent: "center",
+  },
+  pagingActive: {
+    color: "white",
+    margin: 6,
+    opacity: 0.9,
+  },
+  paging: {
+    margin: 6,
+    opacity: 0.7,
+    color: "#e0e0e0",
   },
 });
