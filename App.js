@@ -40,7 +40,7 @@ export default function App() {
             name="Profile"
             component={ProfilePage}
             options={{
-              title: "Produkt",
+              title: "Profil",
               headerStyle: {
                 backgroundColor: "#6A8E4E",
               },
