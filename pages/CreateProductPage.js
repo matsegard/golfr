@@ -1,7 +1,11 @@
-import { StyleSheet, Text, View, Image, TextInput } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, View, Image, Text, TextInput } from "react-native";
+import { Select, Box, CheckIcon, Center } from "native-base";
 import Navbar from "../components/Navbar";
 
-export default function CreateProduct({ navigation }) {
+export default function CreateProduct() {
+  const [service, setService] = useState("");
+
   return (
     <View style={styles.container}>
       <View style={styles.greenBubble}>
@@ -24,11 +28,28 @@ export default function CreateProduct({ navigation }) {
           keyboardType="numeric"
         />
         <Text style={styles.formLabel}>Kategori</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Skriv en titel"
-          keyboardType="numeric"
-        />
+        <Center>
+          <Box maxW="300">
+            <Select
+              selectedValue={service}
+              minWidth="100%"
+              accessibilityLabel="Choose Service"
+              placeholder="Choose Service"
+              _selectedItem={{
+                bg: "teal.600",
+                endIcon: <CheckIcon size="5" />,
+              }}
+              mt={1}
+              onValueChange={(itemValue) => setService(itemValue)}
+            >
+              <Select.Item label="Golfset" value="ux" />
+              <Select.Item label="Vagn/bag" value="web" />
+              <Select.Item label="Golfklubba" value="cross" />
+              <Select.Item label="Golfbil" value="ui" />
+              <Select.Item label="Övrigt" value="backend" />
+            </Select>
+          </Box>
+        </Center>
         <Text style={styles.formLabel}>Bild</Text>
         <TextInput
           style={styles.input}
@@ -92,6 +113,6 @@ const styles = StyleSheet.create({
   },
   formLabel: {
     fontFamily: "MontserratMedium",
-    color: "gray",
+    color: "132A13 ",
   },
 });
