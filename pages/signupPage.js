@@ -101,12 +101,12 @@ function SignupPage({ navigation }) {
         btnWidth={{
           width: 182,
           right: 115,
-          bottom: -650,
+          bottom: -640,
           position: "absolute",
         }}
         onPress={() => setEditMode(!editMode)}
       />
-      <Text style={styles.signup} onPress={() => navigation.navigate("Login")}>
+      <Text style={styles.login} onPress={() => navigation.navigate("Login")}>
         Eller logga in
       </Text>
     </View>
@@ -126,13 +126,13 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: -19,
   },
-  signup: {
+  login: {
     color: "#B6B6B6",
     fontFamily: "MontserratSemiBold",
     letterSpacing: ".3%",
     textDecorationLine: "underline",
     position: "absolute",
-    top: 730,
+    top: 720,
   },
   loginText: {
     fontSize: 20,

@@ -34,22 +34,6 @@ function LoginPage({ navigation }) {
                 marginBottom: 8,
               }}
             >
-              Username
-            </Text>
-            <Input
-              variant="underlined"
-              placeholder="Username"
-              style={styles.editForm}
-            />
-          </View>
-          <View style={styles.form}>
-            <Text
-              style={{
-                fontFamily: "MontserratSemiBold",
-                color: "#B6B6B6",
-                marginBottom: 8,
-              }}
-            >
               Email
             </Text>
             <Input
@@ -104,7 +88,7 @@ function LoginPage({ navigation }) {
         btnWidth={{
           width: 182,
           right: 115,
-          bottom: -650,
+          bottom: -600,
           position: "absolute",
         }}
         onPress={() => setEditMode(!editMode)}
@@ -135,7 +119,7 @@ const styles = StyleSheet.create({
     letterSpacing: ".3%",
     textDecorationLine: "underline",
     position: "absolute",
-    top: 730,
+    top: 680,
   },
   loginText: {
     fontSize: 20,
