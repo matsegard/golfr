@@ -3,6 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import ProductPage from "./pages/ProductPage";
 import ProfilePage from "./pages/ProfilePage";
 import LoginPage from "./pages/LoginPage";
+import SignupPage from "./pages/signupPage";
 import ProductDetails from "./pages/ProductDetails";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NativeBaseProvider } from "native-base";
@@ -56,6 +57,20 @@ export default function App() {
             component={LoginPage}
             options={{
               title: "Login",
+              headerStyle: {
+                backgroundColor: "#6A8E4E",
+              },
+              headerTintColor: "#fff",
+              headerTitleStyle: {
+                fontWeight: "bold",
+              },
+            }}
+          />
+          <Stack.Screen
+            name="Signup"
+            component={SignupPage}
+            options={{
+              title: "Registrera",
               headerStyle: {
                 backgroundColor: "#6A8E4E",
               },

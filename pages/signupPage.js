@@ -8,7 +8,7 @@ import { Input, Icon } from "native-base";
 import PrimaryButton from "../components/PrimaryButton.js";
 import { useState } from "react";
 
-function LoginPage({ navigation }) {
+function SignupPage({ navigation }) {
   const [editMode, setEditMode] = useState(false);
   const [show, setShow] = useState(false);
 
@@ -23,7 +23,7 @@ function LoginPage({ navigation }) {
         ]}
         source={require("../assets/Ellipse.png")}
       />
-      <Text style={styles.loginText}>Login</Text>
+      <Text style={styles.loginText}>Registrera dig</Text>
       <View style={styles.forms}>
         <View style={styles.editFormContainer}>
           <View style={styles.form}>
@@ -95,12 +95,9 @@ function LoginPage({ navigation }) {
             </View>
           </View>
         </View>
-        <Pressable>
-          <Text style={styles.forgotPassword}>Glömt ditt lösenord?</Text>
-        </Pressable>
       </View>
       <PrimaryButton
-        label="Login"
+        label="Registrera"
         btnWidth={{
           width: 182,
           right: 115,
@@ -109,8 +106,8 @@ function LoginPage({ navigation }) {
         }}
         onPress={() => setEditMode(!editMode)}
       />
-      <Text style={styles.signup} onPress={() => navigation.navigate("Signup")}>
-        Eller registrera dig
+      <Text style={styles.signup} onPress={() => navigation.navigate("Login")}>
+        Eller logga in
       </Text>
     </View>
   );
@@ -169,4 +166,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginPage;
+export default SignupPage;
