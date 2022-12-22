@@ -53,27 +53,27 @@ export default function CreateProduct() {
         <Text style={styles.formLabel}>Bild</Text>
         <TextInput
           style={styles.input}
-          placeholder="Skriv en titel"
+          placeholder="Välj bild"
           keyboardType="numeric"
         />
         <Text style={styles.formLabel}>Beskrivning</Text>
         <TextInput
-          multiline
-          numberOfLines={40}
+          multiline={true}
+          numberOfLines={10}
           style={styles.input}
-          placeholder="Skriv en titel"
+          placeholder=""
           keyboardType="numeric"
         />
         <Text style={styles.formLabel}>Pris</Text>
         <TextInput
           style={styles.input}
-          placeholder="Skriv en titel"
+          placeholder="Ange pris"
           keyboardType="numeric"
         />
         <Text style={styles.formLabel}>Plats</Text>
         <TextInput
           style={styles.input}
-          placeholder="Skriv en titel"
+          placeholder="Ange plats"
           keyboardType="numeric"
         />
       </View>
