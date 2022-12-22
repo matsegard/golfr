@@ -2,9 +2,8 @@ import { StyleSheet, View, Image, Text } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Pressable } from "react-native";
-import { Input, Icon } from "native-base";
+import { Input, WarningOutlineIcon, FormControl } from "native-base";
 import PrimaryButton from "../components/PrimaryButton.js";
 import { useState } from "react";
 
@@ -52,11 +51,21 @@ function SignupPage({ navigation }) {
             >
               Email
             </Text>
-            <Input
-              variant="underlined"
-              placeholder="Email"
-              style={styles.editForm}
-            />
+            <FormControl isInvalid w="100%" maxW="300px">
+              <Input
+                variant="underlined"
+                placeholder="Email"
+                style={styles.editForm}
+                onChange={(e) => handleEmailChange(e)}
+              />
+              {/* {error ? (
+                <FormControl.ErrorMessage
+                  leftIcon={<WarningOutlineIcon size="xs" />}
+                >
+                  Ogiltig email
+                </FormControl.ErrorMessage>
+              ) : null} */}
+            </FormControl>
           </View>
           <View style={styles.form}>
             <Text
@@ -104,7 +113,7 @@ function SignupPage({ navigation }) {
           bottom: -640,
           position: "absolute",
         }}
-        onPress={() => setEditMode(!editMode)}
+        onPress={null}
       />
       <Text style={styles.login} onPress={() => navigation.navigate("Login")}>
         Eller logga in
@@ -159,7 +168,7 @@ const styles = StyleSheet.create({
   },
   forgotPassword: {
     fontSize: 12,
-    fontFamily: "MontserratThin",
+    fontFamily: "MontserratLight",
     color: "#9E9E9E",
     paddingTop: 15,
     right: -165,

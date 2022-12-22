@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
   },
   forgotPassword: {
     fontSize: 12,
-    fontFamily: "MontserratThin",
+    fontFamily: "MontserratLight",
     color: "#9E9E9E",
     paddingTop: 15,
     right: -165,
