@@ -6,6 +6,7 @@ import Navbar from "../components/Navbar";
 import ProductCard from "../components/productCard";
 import CategoriBar from "../components/categoriBar";
 import SearchBar from "../components/searchBar";
+
 export default function ProductPage({ navigation }) {
   return (
     <View style={styles.container}>

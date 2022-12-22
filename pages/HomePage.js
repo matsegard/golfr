@@ -13,6 +13,7 @@ export default function HomePage({ navigation }) {
         title="Gå till profilen"
         onPress={() => navigation.navigate("Profile")}
       />
+
       <PrimaryButton
         label="Lägg till produkt"
         btnWidth={{ width: 200 }}

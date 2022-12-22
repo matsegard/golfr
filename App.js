@@ -4,6 +4,7 @@ import ProductPage from "./pages/ProductPage";
 import DatePicker from "./components/DatePicker";
 import ProfilePage from "./pages/ProfilePage";
 import ProductDetails from "./pages/ProductDetails";
+import CreateProductPage from "./pages/CreateProductPage";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NativeBaseProvider } from "native-base";
 import { useFonts } from "expo-font";
@@ -37,6 +38,20 @@ export default function App() {
         <Stack.Navigator>
           <Stack.Screen name="Home" component={HomePage} />
           <Stack.Screen name="Products" component={ProductPage} />
+          <Stack.Screen
+            name="AddProduct"
+            component={CreateProductPage}
+            options={{
+              title: "AddProduct",
+              headerStyle: {
+                backgroundColor: "#6A8E4E",
+              },
+              headerTintColor: "#fff",
+              headerTitleStyle: {
+                fontWeight: "bold",
+              },
+            }}
+          />
           <Stack.Screen
             name="Profile"
             component={ProfilePage}

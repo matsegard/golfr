@@ -6,9 +6,16 @@ import { faBell } from "@fortawesome/free-solid-svg-icons/faBell";
 import { faSquarePlus } from "@fortawesome/free-solid-svg-icons/faSquarePlus";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons/faMagnifyingGlass";
 import { faUser } from "@fortawesome/free-solid-svg-icons/faUser";
+import { useNavigation } from "@react-navigation/native";
 
 function Navbar() {
   const [selected, setSelected] = useState(0);
+  const navigation = useNavigation();
+
+  function addProduct() {
+    navigation.navigate("AddProduct");
+    setSelected(2);
+  }
 
   return (
     <View style={styles.container}>
@@ -50,7 +57,8 @@ function Navbar() {
         />
       </Pressable>
       <Pressable
-        onPress={() => setSelected(2)}
+        onPress={addProduct}
+        addProduct
         style={{
           backgroundColor: selected === 2 ? "#6A8E4E" : "transparent",
           color: selected === 2 ? "white" : "#828282",
@@ -109,9 +117,9 @@ function Navbar() {
 const styles = StyleSheet.create({
   container: {
     width: "100%",
-    position: "fixed",
+    position: "absolute",
     bottom: 0,
-    height: "10%",
+    height: "12%",
     justifyContent: "space-evenly",
     alignItems: "center",
     flexDirection: "row",
