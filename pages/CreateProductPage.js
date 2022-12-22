@@ -29,24 +29,24 @@ export default function CreateProduct() {
         />
         <Text style={styles.formLabel}>Kategori</Text>
         <Center>
-          <Box maxW="300">
+          <Box maxW="300" style={{ marginBottom: 20 }}>
             <Select
               selectedValue={service}
               minWidth="100%"
-              accessibilityLabel="Choose Service"
-              placeholder="Choose Service"
+              accessibilityLabel="Välj kategori"
+              placeholder="Välj kategori"
               _selectedItem={{
-                bg: "teal.600",
-                endIcon: <CheckIcon size="5" />,
+                bg: "#6A8E4E",
+                endIcon: <CheckIcon size="4" />,
               }}
-              mt={1}
+              mt={3}
               onValueChange={(itemValue) => setService(itemValue)}
             >
-              <Select.Item label="Golfset" value="ux" />
-              <Select.Item label="Vagn/bag" value="web" />
-              <Select.Item label="Golfklubba" value="cross" />
-              <Select.Item label="Golfbil" value="ui" />
-              <Select.Item label="Övrigt" value="backend" />
+              <Select.Item label="Golfset" value="Golfset" />
+              <Select.Item label="Vagn/bag" value="Vagn/bag" />
+              <Select.Item label="Golfklubba" value="Golfklubba" />
+              <Select.Item label="Golfbil" value="Golfbil" />
+              <Select.Item label="Övrigt" value="Övrigt" />
             </Select>
           </Box>
         </Center>
@@ -58,6 +58,8 @@ export default function CreateProduct() {
         />
         <Text style={styles.formLabel}>Beskrivning</Text>
         <TextInput
+          multiline
+          numberOfLines={40}
           style={styles.input}
           placeholder="Skriv en titel"
           keyboardType="numeric"
@@ -103,7 +105,7 @@ const styles = StyleSheet.create({
     height: 40,
     marginBottom: 20,
     padding: 10,
-    width: "90%",
+    width: "100%",
     borderBottomColor: "#000000",
     borderBottomWidth: 1,
   },
@@ -113,6 +115,6 @@ const styles = StyleSheet.create({
   },
   formLabel: {
     fontFamily: "MontserratMedium",
-    color: "132A13 ",
+    color: "#585858",
   },
 });
