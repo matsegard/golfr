@@ -58,10 +58,10 @@ export default function CreateProduct() {
         />
         <Text style={styles.formLabel}>Beskrivning</Text>
         <TextInput
-          multiline={true}
+          multiline
           numberOfLines={10}
           style={styles.input}
-          placeholder=""
+          placeholder="Beskrivning"
           keyboardType="numeric"
         />
         <Text style={styles.formLabel}>Pris</Text>
