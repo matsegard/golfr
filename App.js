@@ -1,7 +1,12 @@
 import HomePage from "./pages/HomePage";
 import { NavigationContainer } from "@react-navigation/native";
 import ProductPage from "./pages/ProductPage";
+import DatePicker from "./components/DatePicker";
+import ProfilePage from "./pages/ProfilePage";
+import LoginPage from "./pages/LoginPage";
+import SignupPage from "./pages/signupPage";
 import ProductDetails from "./pages/ProductDetails";
+import CreateProductPage from "./pages/CreateProductPage";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NativeBaseProvider } from "native-base";
 import { useFonts } from "expo-font";
@@ -38,6 +43,62 @@ export default function App() {
           <Stack.Screen name="Products" component={ProductPage} />
           <Stack.Screen name="MyProducts" component={MyProducts} />
           <Stack.Screen
+            name="AddProduct"
+            component={CreateProductPage}
+            options={{
+              title: "AddProduct",
+              headerStyle: {
+                backgroundColor: "#6A8E4E",
+              },
+              headerTintColor: "#fff",
+              headerTitleStyle: {
+                fontWeight: "bold",
+              },
+            }}
+          />
+          <Stack.Screen
+            name="Profile"
+            component={ProfilePage}
+            options={{
+              title: "Profil",
+              headerStyle: {
+                backgroundColor: "#6A8E4E",
+              },
+              headerTintColor: "#fff",
+              headerTitleStyle: {
+                fontWeight: "bold",
+              },
+            }}
+          />
+          <Stack.Screen
+            name="Login"
+            component={LoginPage}
+            options={{
+              title: "Login",
+              headerStyle: {
+                backgroundColor: "#6A8E4E",
+              },
+              headerTintColor: "#fff",
+              headerTitleStyle: {
+                fontWeight: "bold",
+              },
+            }}
+          />
+          <Stack.Screen
+            name="Signup"
+            component={SignupPage}
+            options={{
+              title: "Registrera",
+              headerStyle: {
+                backgroundColor: "#6A8E4E",
+              },
+              headerTintColor: "#fff",
+              headerTitleStyle: {
+                fontWeight: "bold",
+              },
+            }}
+          />
+          <Stack.Screen
             name="ProductDetails"
             component={ProductDetails}
             options={{
@@ -51,6 +112,7 @@ export default function App() {
               },
             }}
           />
+          <Stack.Screen name="DatePicker" component={DatePicker} />
         </Stack.Navigator>
       </NativeBaseProvider>
     </NavigationContainer>
