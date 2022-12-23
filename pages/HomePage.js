@@ -19,7 +19,7 @@ export default function HomePage({ navigation }) {
       />
       <Button
         title="Gå till profilen"
-        onPress={() => navigation.navigate("Profile")}
+        onPress={() => navigation.navigate("AddProduct")}
       />
       <Button
         title="Gå till login"
