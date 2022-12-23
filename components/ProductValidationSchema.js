@@ -46,4 +46,9 @@ export const ProductValidationSchema = yup.object().shape({
     .required("Välj fattning")
     .oneOf(["Höger", "Vänster"])
     .label(["Höger", "Vänster"]),
+  shaft: yup
+    .string()
+    .optional()
+    .oneOf(["Lady", "Senior", "Regular", "Stiff", "X-Stiff"])
+    .label(["Lady", "Senior", "Regular", "Stiff", "X-Stiff"]),
 });

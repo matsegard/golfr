@@ -38,6 +38,7 @@ export default function CreateProduct() {
               difficulty: "",
               gender: "",
               hand: "",
+              shaft: "",
             }}
             onSubmit={(values) => console.log(values)}
           >
@@ -177,6 +178,33 @@ export default function CreateProduct() {
                     {errors.hand && (
                       <Text style={styles.errorMessage}>{errors.hand}</Text>
                     )}
+                    <Text style={styles.formLabel}>Skaftstyvhet</Text>
+                    <Center>
+                      <Box maxW="300" style={{ marginBottom: 20 }}>
+                        <Select
+                          selectedValue={values.shaft}
+                          value={values.shaft}
+                          onChangeText={handleChange("shaft")}
+                          onBlur={handleBlur("shaft")}
+                          minWidth="100%"
+                          label="Välj skaftstyvhet"
+                          accessibilityLabel="Välj skaftstyvhet"
+                          placeholder="Välj skaftstyvhet"
+                          _selectedItem={{
+                            bg: "#6A8E4E",
+                            endIcon: <CheckIcon size="4" />,
+                          }}
+                          mt={3}
+                          onValueChange={handleChange("shaft")}
+                        >
+                          <Select.Item label="Lady" value="Lady" />
+                          <Select.Item label="Senior" value="Senior" />
+                          <Select.Item label="Regular" value="Regular" />
+                          <Select.Item label="Stiff" value="Stiff" />
+                          <Select.Item label="X-Stiff" value="X-Stiff" />
+                        </Select>
+                      </Box>
+                    </Center>
                   </>
                 )}
 
