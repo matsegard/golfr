@@ -34,6 +34,10 @@ export default function CreateProduct() {
               description: "",
               price: "",
               location: "",
+              clubs: "",
+              difficulty: "",
+              gender: "",
+              hand: "",
             }}
             onSubmit={(values) => console.log(values)}
           >
@@ -97,12 +101,81 @@ export default function CreateProduct() {
                       style={styles.input}
                       placeholder="5 - 6 - 7 - 8 - 9 - PW - Driver - Putter.."
                       keyboardType="numeric"
-                      value={values.klubbor}
-                      onChangeText={handleChange("klubbor")}
-                      onBlur={handleBlur("klubbor")}
+                      value={values.clubs}
+                      onChangeText={handleChange("clubs")}
+                      onBlur={handleBlur("clubs")}
                     />
-                    {errors.klubbor && (
-                      <Text style={styles.errorMessage}>{errors.klubbor}</Text>
+                    {errors.clubs && (
+                      <Text style={styles.errorMessage}>{errors.clubs}</Text>
+                    )}
+                    <Text style={styles.formLabel}>Svårighetsgrad</Text>
+                    <TextInput
+                      style={styles.input}
+                      placeholder="Ange klubbornas svårighetsgrad"
+                      keyboardType="numeric"
+                      value={values.klubbor}
+                      onChangeText={handleChange("difficulty")}
+                      onBlur={handleBlur("difficulty")}
+                    />
+                    {errors.difficulty && (
+                      <Text style={styles.errorMessage}>
+                        {errors.difficulty}
+                      </Text>
+                    )}
+                    <Text style={styles.formLabel}>Kön</Text>
+                    <Center>
+                      <Box maxW="300" style={{ marginBottom: 20 }}>
+                        <Select
+                          selectedValue={values.gender}
+                          value={values.gender}
+                          onChangeText={handleChange("gender")}
+                          onBlur={handleBlur("gender")}
+                          minWidth="100%"
+                          label="Välj kön"
+                          accessibilityLabel="Välj kön"
+                          placeholder="Välj kön"
+                          _selectedItem={{
+                            bg: "#6A8E4E",
+                            endIcon: <CheckIcon size="4" />,
+                          }}
+                          mt={3}
+                          onValueChange={handleChange("gender")}
+                        >
+                          <Select.Item label="Herr" value="Herr" />
+                          <Select.Item label="Dam" value="Dam" />
+                          <Select.Item label="Unisex" value="Unisex" />
+                        </Select>
+                      </Box>
+                    </Center>
+                    {errors.gender && (
+                      <Text style={styles.errorMessage}>{errors.gender}</Text>
+                    )}
+                    <Text style={styles.formLabel}>Fattning</Text>
+                    <Center>
+                      <Box maxW="300" style={{ marginBottom: 20 }}>
+                        <Select
+                          selectedValue={values.hand}
+                          value={values.hand}
+                          onChangeText={handleChange("hand")}
+                          onBlur={handleBlur("hand")}
+                          minWidth="100%"
+                          label="Välj kön"
+                          accessibilityLabel="Välj fattning"
+                          placeholder="Välj fattning"
+                          _selectedItem={{
+                            bg: "#6A8E4E",
+                            endIcon: <CheckIcon size="4" />,
+                          }}
+                          mt={3}
+                          onValueChange={handleChange("hand")}
+                        >
+                          <Select.Item label="Höger" value="Höger" />
+                          <Select.Item label="Vänster" value="Vänster" />
+                        </Select>
+                      </Box>
+                    </Center>
+                    {errors.hand && (
+                      <Text style={styles.errorMessage}>{errors.hand}</Text>
                     )}
                   </>
                 )}
@@ -170,7 +243,6 @@ export default function CreateProduct() {
           </Formik>
         </ScrollView>
       </View>
-
       <Navbar />
     </View>
   );
@@ -224,7 +296,7 @@ const styles = StyleSheet.create({
   errorMessage: {
     fontSize: 13,
     color: "red",
-    marginTop: -15,
+    marginTop: -13,
     marginBottom: 10,
   },
 });
