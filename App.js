@@ -10,6 +10,7 @@ import CreateProductPage from "./pages/CreateProductPage";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NativeBaseProvider } from "native-base";
 import { useFonts } from "expo-font";
+import MyProducts from "./pages/MyProducts";
 // import * as SplashScreen from "expo-splash-screen";
 
 export default function App() {
@@ -40,6 +41,7 @@ export default function App() {
         <Stack.Navigator>
           <Stack.Screen name="Home" component={HomePage} />
           <Stack.Screen name="Products" component={ProductPage} />
+          <Stack.Screen name="MyProducts" component={MyProducts} />
           <Stack.Screen
             name="AddProduct"
             component={CreateProductPage}
