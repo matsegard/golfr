@@ -1,8 +1,16 @@
-import { View, Button } from "react-native";
+import { View, Button, Pressable, Text } from "react-native";
 import PrimaryButton from "../components/PrimaryButton.js";
 import Navbar from "../components/Navbar";
+import EditProductModal from "./EditProductModal.js";
+import { useState } from "react";
 
 export default function HomePage({ navigation }) {
+  const [open, setOpen] = useState(false);
+
+  const showModal = () => {
+    setOpen(!open);
+  };
+
   return (
     <View style={{ height: "100%" }}>
       <Button
@@ -19,6 +27,10 @@ export default function HomePage({ navigation }) {
         onPress={() => console.log("I am the third button")}
       />
       <Navbar />
+      <Pressable title="Open" onPress={showModal}>
+        <Text>Open</Text>
+      </Pressable>
+      {open && <EditProductModal open={open} setOpen={setOpen} />}
     </View>
   );
 }
