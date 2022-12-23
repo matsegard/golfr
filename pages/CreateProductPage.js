@@ -4,6 +4,7 @@ import { Select, Box, CheckIcon, Center } from "native-base";
 import Navbar from "../components/Navbar";
 import { Formik } from "formik";
 import PrimaryButton from "../components/PrimaryButton.js";
+import { ProductValidationSchema } from "../components/ProductValidationSchema";
 
 export default function CreateProduct() {
   return (
@@ -21,6 +22,7 @@ export default function CreateProduct() {
       </View>
       <View style={styles.form}>
         <Formik
+          validationSchema={ProductValidationSchema}
           initialValues={{
             title: "",
             category: "",
@@ -31,7 +33,14 @@ export default function CreateProduct() {
           }}
           onSubmit={(values) => console.log(values)}
         >
-          {({ handleChange, handleBlur, handleSubmit, values }) => (
+          {({
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            values,
+            isValid,
+            errors,
+          }) => (
             <>
               <Text style={styles.headerText}>Lägg ut en annons</Text>
               <Text style={styles.formLabel}>Titel</Text>
@@ -43,6 +52,11 @@ export default function CreateProduct() {
                 onChangeText={handleChange("title")}
                 onBlur={handleBlur("title")}
               />
+              {errors.title && (
+                <Text style={{ fontSize: 12, color: "red" }}>
+                  {errors.title}
+                </Text>
+              )}
               <Text style={styles.formLabel}>Kategori</Text>
               <Center>
                 <Box maxW="300" style={{ marginBottom: 20 }}>
@@ -108,11 +122,14 @@ export default function CreateProduct() {
                 onChangeText={handleChange("location")}
                 onBlur={handleBlur("location")}
               />
-              <PrimaryButton
-                label="Lägg till annons"
-                btnWidth={{ width: 200 }}
-                onPress={handleSubmit}
-              />
+              <View style={{ justifyContent: "center", alignItems: "center" }}>
+                <PrimaryButton
+                  label="Lägg till annons"
+                  btnWidth={{ width: 200 }}
+                  onPress={handleSubmit}
+                  disabled={!isValid}
+                />
+              </View>
             </>
           )}
         </Formik>
