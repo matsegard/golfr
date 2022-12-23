@@ -13,6 +13,10 @@ export default function HomePage({ navigation }) {
         title="Gå till profilen"
         onPress={() => navigation.navigate("Profile")}
       />
+      <Button
+        title="Gå till login"
+        onPress={() => navigation.navigate("Login")}
+      />
       <PrimaryButton
         label="Lägg till produkt"
         btnWidth={{ width: 200 }}
