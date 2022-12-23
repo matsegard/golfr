@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Image, Text, TextInput } from "react-native";
-import { Select, Box, CheckIcon, Center } from "native-base";
+import { Select, Box, CheckIcon, Center, ScrollView } from "native-base";
 import Navbar from "../components/Navbar";
 import { Formik } from "formik";
 import PrimaryButton from "../components/PrimaryButton.js";
@@ -20,119 +20,256 @@ export default function CreateProduct() {
           source={require("../assets/Ellipse.png")}
         />
       </View>
+      <Text style={styles.headerText}>Skapa en annons</Text>
       <View style={styles.form}>
-        <Formik
-          validationSchema={ProductValidationSchema}
-          initialValues={{
-            title: "",
-            category: "",
-            image: "",
-            description: "",
-            price: "",
-            location: "",
-          }}
-          onSubmit={(values) => console.log(values)}
-        >
-          {({
-            handleChange,
-            handleBlur,
-            handleSubmit,
-            values,
-            isValid,
-            errors,
-          }) => (
-            <>
-              <Text style={styles.headerText}>Lägg ut en annons</Text>
-              <Text style={styles.formLabel}>Titel</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Skriv en titel"
-                keyboardType="numeric"
-                value={values.title}
-                onChangeText={handleChange("title")}
-                onBlur={handleBlur("title")}
-              />
-              {errors.title && (
-                <Text style={{ fontSize: 12, color: "red" }}>
-                  {errors.title}
-                </Text>
-              )}
-              <Text style={styles.formLabel}>Kategori</Text>
-              <Center>
-                <Box maxW="300" style={{ marginBottom: 20 }}>
-                  <Select
-                    selectedValue={values.category}
-                    value={values.category}
-                    onChangeText={handleChange("category")}
-                    onBlur={handleBlur("category")}
-                    minWidth="100%"
-                    accessibilityLabel="Välj kategori"
-                    placeholder="Välj kategori"
-                    _selectedItem={{
-                      bg: "#6A8E4E",
-                      endIcon: <CheckIcon size="4" />,
-                    }}
-                    mt={3}
-                    onValueChange={handleChange("category")}
-                  >
-                    <Select.Item label="Golfset" value="Golfset" />
-                    <Select.Item label="Vagn/bag" value="Vagn/bag" />
-                    <Select.Item label="Golfklubba" value="Golfklubba" />
-                    <Select.Item label="Golfbil" value="Golfbil" />
-                    <Select.Item label="Övrigt" value="Övrigt" />
-                  </Select>
-                </Box>
-              </Center>
-              <Text style={styles.formLabel}>Bild</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Välj bild"
-                keyboardType="numeric"
-                value={values.image}
-                onChangeText={handleChange("image")}
-                onBlur={handleBlur("image")}
-              />
-              <Text style={styles.formLabel}>Beskrivning</Text>
-              <TextInput
-                multiline
-                numberOfLines={3}
-                ellipsizeMode="tail"
-                style={styles.inputDescription}
-                placeholder="Beskrivning"
-                keyboardType="numeric"
-                value={values.description}
-                onChangeText={handleChange("description")}
-                onBlur={handleBlur("description")}
-              />
-              <Text style={styles.formLabel}>Pris</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Ange pris"
-                keyboardType="numeric"
-                value={values.price}
-                onChangeText={handleChange("price")}
-                onBlur={handleBlur("price")}
-              />
-              <Text style={styles.formLabel}>Plats</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Ange plats"
-                keyboardType="numeric"
-                value={values.location}
-                onChangeText={handleChange("location")}
-                onBlur={handleBlur("location")}
-              />
-              <View style={{ justifyContent: "center", alignItems: "center" }}>
-                <PrimaryButton
-                  label="Lägg till annons"
-                  btnWidth={{ width: 200 }}
-                  onPress={handleSubmit}
-                  disabled={!isValid}
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <Formik
+            validateOnChange={false}
+            validateOnBlur={false}
+            validationSchema={ProductValidationSchema}
+            initialValues={{
+              title: "",
+              category: "",
+              image: "",
+              description: "",
+              price: "",
+              location: "",
+              clubs: "",
+              difficulty: "",
+              gender: "",
+              hand: "",
+              shaft: "",
+            }}
+            onSubmit={(values) => console.log(values)}
+          >
+            {({
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              values,
+              isValid,
+              errors,
+            }) => (
+              <>
+                <Text style={styles.formLabel}>Titel</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Skriv en titel"
+                  keyboardType="numeric"
+                  value={values.title}
+                  onChangeText={handleChange("title")}
+                  onBlur={handleBlur("title")}
+                  validateOnChange={false}
+                  validateOnBlur={false}
                 />
-              </View>
-            </>
-          )}
-        </Formik>
+                {errors.title && (
+                  <Text style={styles.errorMessage}>{errors.title}</Text>
+                )}
+                <Text style={styles.formLabel}>Kategori</Text>
+                <Center>
+                  <Box maxW="300" style={{ marginBottom: 20 }}>
+                    <Select
+                      selectedValue={values.category}
+                      value={values.category}
+                      onChangeText={handleChange("category")}
+                      onBlur={handleBlur("category")}
+                      minWidth="100%"
+                      label="Välj kategori"
+                      accessibilityLabel="Välj kategori"
+                      placeholder="Välj kategori"
+                      _selectedItem={{
+                        bg: "#6A8E4E",
+                        endIcon: <CheckIcon size="4" />,
+                      }}
+                      mt={3}
+                      onValueChange={handleChange("category")}
+                    >
+                      <Select.Item label="Golfset" value="Golfset" />
+                      <Select.Item label="Vagn/bag" value="Vagn/bag" />
+                      <Select.Item label="Golfklubba" value="Golfklubba" />
+                      <Select.Item label="Golfbil" value="Golfbil" />
+                      <Select.Item label="Övrigt" value="Övrigt" />
+                    </Select>
+                  </Box>
+                </Center>
+                {errors.category && (
+                  <Text style={styles.errorMessage}>{errors.category}</Text>
+                )}
+                {values.category == "Golfset" && (
+                  <>
+                    <Text style={styles.formLabel}>Klubbor</Text>
+                    <TextInput
+                      style={styles.input}
+                      placeholder="5 - 6 - 7 - 8 - 9 - PW - Driver - Putter.."
+                      keyboardType="numeric"
+                      value={values.clubs}
+                      onChangeText={handleChange("clubs")}
+                      onBlur={handleBlur("clubs")}
+                    />
+                    {errors.clubs && (
+                      <Text style={styles.errorMessage}>{errors.clubs}</Text>
+                    )}
+                    <Text style={styles.formLabel}>Svårighetsgrad</Text>
+                    <TextInput
+                      style={styles.input}
+                      placeholder="Ange klubbornas svårighetsgrad"
+                      keyboardType="numeric"
+                      value={values.klubbor}
+                      onChangeText={handleChange("difficulty")}
+                      onBlur={handleBlur("difficulty")}
+                    />
+                    {errors.difficulty && (
+                      <Text style={styles.errorMessage}>
+                        {errors.difficulty}
+                      </Text>
+                    )}
+                    <Text style={styles.formLabel}>Kön</Text>
+                    <Center>
+                      <Box maxW="300" style={{ marginBottom: 20 }}>
+                        <Select
+                          selectedValue={values.gender}
+                          value={values.gender}
+                          onChangeText={handleChange("gender")}
+                          onBlur={handleBlur("gender")}
+                          minWidth="100%"
+                          label="Välj kön"
+                          accessibilityLabel="Välj kön"
+                          placeholder="Välj kön"
+                          _selectedItem={{
+                            bg: "#6A8E4E",
+                            endIcon: <CheckIcon size="4" />,
+                          }}
+                          mt={3}
+                          onValueChange={handleChange("gender")}
+                        >
+                          <Select.Item label="Herr" value="Herr" />
+                          <Select.Item label="Dam" value="Dam" />
+                          <Select.Item label="Unisex" value="Unisex" />
+                        </Select>
+                      </Box>
+                    </Center>
+                    {errors.gender && (
+                      <Text style={styles.errorMessage}>{errors.gender}</Text>
+                    )}
+                    <Text style={styles.formLabel}>Fattning</Text>
+                    <Center>
+                      <Box maxW="300" style={{ marginBottom: 20 }}>
+                        <Select
+                          selectedValue={values.hand}
+                          value={values.hand}
+                          onChangeText={handleChange("hand")}
+                          onBlur={handleBlur("hand")}
+                          minWidth="100%"
+                          label="Välj kön"
+                          accessibilityLabel="Välj fattning"
+                          placeholder="Välj fattning"
+                          _selectedItem={{
+                            bg: "#6A8E4E",
+                            endIcon: <CheckIcon size="4" />,
+                          }}
+                          mt={3}
+                          onValueChange={handleChange("hand")}
+                        >
+                          <Select.Item label="Höger" value="Höger" />
+                          <Select.Item label="Vänster" value="Vänster" />
+                        </Select>
+                      </Box>
+                    </Center>
+                    {errors.hand && (
+                      <Text style={styles.errorMessage}>{errors.hand}</Text>
+                    )}
+                    <Text style={styles.formLabel}>Skaftstyvhet</Text>
+                    <Center>
+                      <Box maxW="300" style={{ marginBottom: 20 }}>
+                        <Select
+                          selectedValue={values.shaft}
+                          value={values.shaft}
+                          onChangeText={handleChange("shaft")}
+                          onBlur={handleBlur("shaft")}
+                          minWidth="100%"
+                          label="Välj skaftstyvhet"
+                          accessibilityLabel="Välj skaftstyvhet"
+                          placeholder="Välj skaftstyvhet"
+                          _selectedItem={{
+                            bg: "#6A8E4E",
+                            endIcon: <CheckIcon size="4" />,
+                          }}
+                          mt={3}
+                          onValueChange={handleChange("shaft")}
+                        >
+                          <Select.Item label="Lady" value="Lady" />
+                          <Select.Item label="Senior" value="Senior" />
+                          <Select.Item label="Regular" value="Regular" />
+                          <Select.Item label="Stiff" value="Stiff" />
+                          <Select.Item label="X-Stiff" value="X-Stiff" />
+                        </Select>
+                      </Box>
+                    </Center>
+                  </>
+                )}
+
+                <Text style={styles.formLabel}>Bild</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Välj bild"
+                  keyboardType="numeric"
+                  value={values.image}
+                  onChangeText={handleChange("image")}
+                  onBlur={handleBlur("image")}
+                />
+                <Text style={styles.formLabel}>Beskrivning</Text>
+                <TextInput
+                  multiline
+                  numberOfLines={3}
+                  ellipsizeMode="tail"
+                  style={styles.inputDescription}
+                  placeholder="Beskrivning"
+                  keyboardType="numeric"
+                  value={values.description}
+                  onChangeText={handleChange("description")}
+                  onBlur={handleBlur("description")}
+                />
+                {errors.description && (
+                  <Text style={styles.errorMessage}>{errors.description}</Text>
+                )}
+                <Text style={styles.formLabel}>Pris</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Ange pris"
+                  keyboardType="numeric"
+                  value={values.price}
+                  onChangeText={handleChange("price")}
+                  onBlur={handleBlur("price")}
+                />
+                {errors.price && (
+                  <Text style={styles.errorMessage}>{errors.price}</Text>
+                )}
+                <Text style={styles.formLabel}>Plats</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Ange plats"
+                  keyboardType="numeric"
+                  value={values.location}
+                  onChangeText={handleChange("location")}
+                  onBlur={handleBlur("location")}
+                />
+                {errors.location && (
+                  <Text style={styles.errorMessage}>{errors.location}</Text>
+                )}
+                <View
+                  style={{ justifyContent: "center", alignItems: "center" }}
+                >
+                  <PrimaryButton
+                    label="Lägg till annons"
+                    btnWidth={{ width: 200, marginTop: 10 }}
+                    onPress={handleSubmit}
+                    disabled={!isValid}
+                  />
+                </View>
+              </>
+            )}
+          </Formik>
+        </ScrollView>
       </View>
       <Navbar />
     </View>
@@ -155,8 +292,9 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: "25",
     fontFamily: "MontserratSemiBold",
-    marginBottom: 30,
+    marginBottom: 60,
     alignSelf: "center",
+    color: "white",
   },
   input: {
     height: 40,
@@ -176,10 +314,17 @@ const styles = StyleSheet.create({
   },
   form: {
     width: "70%",
-    flex: 0.7,
+    flex: 0.9,
+    marginBottom: 80,
   },
   formLabel: {
     fontFamily: "MontserratMedium",
     color: "#585858",
+  },
+  errorMessage: {
+    fontSize: 13,
+    color: "red",
+    marginTop: -13,
+    marginBottom: 10,
   },
 });
