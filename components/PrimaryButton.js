@@ -1,6 +1,5 @@
 import { StyleSheet, TouchableHighlight, Text } from "react-native";
 
-
 function PrimaryButton({ label, onPress, btnWidth }) {
   return (
     <TouchableHighlight
