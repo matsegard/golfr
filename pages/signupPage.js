@@ -2,13 +2,12 @@ import { StyleSheet, View, Image, Text } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Pressable } from "react-native";
-import { Input, Icon } from "native-base";
+import { Input, WarningOutlineIcon, FormControl } from "native-base";
 import PrimaryButton from "../components/PrimaryButton.js";
 import { useState } from "react";
 
-function LoginPage({ navigation }) {
+function SignupPage({ navigation }) {
   const [editMode, setEditMode] = useState(false);
   const [show, setShow] = useState(false);
 
@@ -23,7 +22,7 @@ function LoginPage({ navigation }) {
         ]}
         source={require("../assets/Ellipse.png")}
       />
-      <Text style={styles.loginText}>Login</Text>
+      <Text style={styles.loginText}>Registrera dig</Text>
       <View style={styles.forms}>
         <View style={styles.editFormContainer}>
           <View style={styles.form}>
@@ -34,13 +33,39 @@ function LoginPage({ navigation }) {
                 marginBottom: 8,
               }}
             >
-              Email
+              Username
             </Text>
             <Input
               variant="underlined"
-              placeholder="Email"
+              placeholder="Username"
               style={styles.editForm}
             />
+          </View>
+          <View style={styles.form}>
+            <Text
+              style={{
+                fontFamily: "MontserratSemiBold",
+                color: "#B6B6B6",
+                marginBottom: 8,
+              }}
+            >
+              Email
+            </Text>
+            <FormControl isInvalid w="100%" maxW="300px">
+              <Input
+                variant="underlined"
+                placeholder="Email"
+                style={styles.editForm}
+                onChange={(e) => handleEmailChange(e)}
+              />
+              {/* {error ? (
+                <FormControl.ErrorMessage
+                  leftIcon={<WarningOutlineIcon size="xs" />}
+                >
+                  Ogiltig email
+                </FormControl.ErrorMessage>
+              ) : null} */}
+            </FormControl>
           </View>
           <View style={styles.form}>
             <Text
@@ -79,22 +104,19 @@ function LoginPage({ navigation }) {
             </View>
           </View>
         </View>
-        <Pressable>
-          <Text style={styles.forgotPassword}>Glömt ditt lösenord?</Text>
-        </Pressable>
       </View>
       <PrimaryButton
-        label="Login"
+        label="Registrera"
         btnWidth={{
           width: 182,
           right: 115,
-          bottom: -600,
+          bottom: -640,
           position: "absolute",
         }}
-        onPress={() => setEditMode(!editMode)}
+        onPress={null}
       />
-      <Text style={styles.signup} onPress={() => navigation.navigate("Signup")}>
-        Eller registrera dig
+      <Text style={styles.login} onPress={() => navigation.navigate("Login")}>
+        Eller logga in
       </Text>
     </View>
   );
@@ -113,13 +135,13 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: -19,
   },
-  signup: {
+  login: {
     color: "#B6B6B6",
     fontFamily: "MontserratSemiBold",
     letterSpacing: ".3%",
     textDecorationLine: "underline",
     position: "absolute",
-    top: 680,
+    top: 720,
   },
   loginText: {
     fontSize: 20,
@@ -153,4 +175,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginPage;
+export default SignupPage;
