@@ -2,14 +2,14 @@ import { StyleSheet, View, Image, Text } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { LoginSignupValidationSchema } from "../components/LoginSignupValidationSchema";
+import { Formik } from "formik";
 import { Pressable } from "react-native";
-import { Input, Icon } from "native-base";
+import { Input } from "native-base";
 import PrimaryButton from "../components/PrimaryButton.js";
 import { useState } from "react";
 
 function LoginPage({ navigation }) {
-  const [editMode, setEditMode] = useState(false);
   const [show, setShow] = useState(false);
 
   return (
@@ -24,75 +24,118 @@ function LoginPage({ navigation }) {
         source={require("../assets/Ellipse.png")}
       />
       <Text style={styles.loginText}>Login</Text>
+
       <View style={styles.forms}>
-        <View style={styles.editFormContainer}>
-          <View style={styles.form}>
-            <Text
-              style={{
-                fontFamily: "MontserratSemiBold",
-                color: "#B6B6B6",
-                marginBottom: 8,
-              }}
-            >
-              Email
-            </Text>
-            <Input
-              variant="underlined"
-              placeholder="Email"
-              style={styles.editForm}
-            />
-          </View>
-          <View style={styles.form}>
-            <Text
-              style={{
-                fontFamily: "MontserratSemiBold",
-                color: "#B6B6B6",
-                marginBottom: 8,
-              }}
-            >
-              Password
-            </Text>
-            <View style={styles.passwordCont}>
-              <Input
-                style={styles.editForm}
-                variant="underlined"
-                type={show ? "text" : "password"}
-                placeholder="Password"
-              />
-              <Pressable style={styles.eye} onPress={() => setShow(!show)}>
-                {show ? (
-                  <FontAwesomeIcon
-                    size={23}
-                    icon={faEye}
-                    mr="2"
-                    color="#B6B6B6"
+        <Formik
+          validationSchema={LoginSignupValidationSchema}
+          initialValues={{
+            email: "",
+            password: "",
+          }}
+          onSubmit={(values) => console.log(values)}
+        >
+          {({
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            values,
+            isValid,
+            errors,
+          }) => (
+            <>
+              <View style={styles.editFormContainer}>
+                <View style={styles.form}>
+                  <Text
+                    style={{
+                      fontFamily: "MontserratSemiBold",
+                      color: "#B6B6B6",
+                      marginBottom: 8,
+                    }}
+                  >
+                    Email
+                  </Text>
+                  <Input
+                    variant="underlined"
+                    placeholder="Email"
+                    style={styles.editForm}
+                    onChangeText={handleChange("email")}
+                    onBlur={handleBlur("email")}
+                    value={values.email}
                   />
-                ) : (
-                  <FontAwesomeIcon
-                    size={23}
-                    icon={faEyeSlash}
-                    mr="2"
-                    color="#B6B6B6"
-                  />
-                )}
+                  {errors.email && (
+                    <Text style={{ fontSize: 12, color: "red", marginTop: 5 }}>
+                      {errors.email}
+                    </Text>
+                  )}
+                </View>
+                <View style={styles.form}>
+                  <Text
+                    style={{
+                      fontFamily: "MontserratSemiBold",
+                      color: "#B6B6B6",
+                      marginBottom: 8,
+                    }}
+                  >
+                    Password
+                  </Text>
+                  <View style={styles.passwordCont}>
+                    <Input
+                      style={styles.editForm}
+                      variant="underlined"
+                      type={show ? "text" : "password"}
+                      placeholder="Password"
+                      onChangeText={handleChange("password")}
+                      onBlur={handleBlur("password")}
+                      value={values.password}
+                    />
+                    {errors.password && (
+                      <Text
+                        style={{ fontSize: 12, color: "red", marginTop: 5 }}
+                      >
+                        {errors.password}
+                      </Text>
+                    )}
+                    <Pressable
+                      style={styles.eye}
+                      onPress={() => setShow(!show)}
+                    >
+                      {show ? (
+                        <FontAwesomeIcon
+                          size={23}
+                          icon={faEye}
+                          mr="2"
+                          color="#B6B6B6"
+                        />
+                      ) : (
+                        <FontAwesomeIcon
+                          size={23}
+                          icon={faEyeSlash}
+                          mr="2"
+                          color="#B6B6B6"
+                        />
+                      )}
+                    </Pressable>
+                  </View>
+                </View>
+              </View>
+              <Pressable>
+                <Text style={styles.forgotPassword}>Glömt ditt lösenord?</Text>
               </Pressable>
-            </View>
-          </View>
-        </View>
-        <Pressable>
-          <Text style={styles.forgotPassword}>Glömt ditt lösenord?</Text>
-        </Pressable>
+              <PrimaryButton
+                label="Login"
+                btnWidth={{
+                  width: 182,
+                  right: 50,
+                  bottom: -110,
+                  position: "absolute",
+                }}
+                onPress={handleSubmit}
+              />
+            </>
+          )}
+        </Formik>
       </View>
-      <PrimaryButton
-        label="Login"
-        btnWidth={{
-          width: 182,
-          right: 115,
-          bottom: -600,
-          position: "absolute",
-        }}
-        onPress={() => setEditMode(!editMode)}
-      />
+
       <Text style={styles.signup} onPress={() => navigation.navigate("Signup")}>
         Eller registrera dig
       </Text>
