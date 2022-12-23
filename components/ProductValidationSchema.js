@@ -18,9 +18,17 @@ export const ProductValidationSchema = yup.object().shape({
     .string()
     .max(200, "Beskrivningen får inte vara mer än 200 tecken")
     .required("Fyll i en beskrivning"),
-  price: yup.number("Priset måste vara ett nummer").required("Fyll i pris"),
+  price: yup
+    .number()
+    .typeError("Priset måste vara ett nummer")
+    .required("Fyll i pris")
+    .min(1, "Priset måste innehålla minst ett nummer"),
   location: yup
     .string()
     .required("Ange plats")
     .min(3, "Plasten måste vara minst 2 tecken"),
+  klubbor: yup
+    .string()
+    .required("Ange vilka klubbor settet innehåller")
+    .min(10, "Ange vilka klubbor settet innehåller"),
 });

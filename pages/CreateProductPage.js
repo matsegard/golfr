@@ -24,6 +24,8 @@ export default function CreateProduct() {
       <View style={styles.form}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <Formik
+            validateOnChange={false}
+            validateOnBlur={false}
             validationSchema={ProductValidationSchema}
             initialValues={{
               title: "",
@@ -52,6 +54,8 @@ export default function CreateProduct() {
                   value={values.title}
                   onChangeText={handleChange("title")}
                   onBlur={handleBlur("title")}
+                  validateOnChange={false}
+                  validateOnBlur={false}
                 />
                 {errors.title && (
                   <Text style={styles.errorMessage}>{errors.title}</Text>
@@ -86,6 +90,23 @@ export default function CreateProduct() {
                 {errors.category && (
                   <Text style={styles.errorMessage}>{errors.category}</Text>
                 )}
+                {values.category == "Golfset" && (
+                  <>
+                    <Text style={styles.formLabel}>Klubbor</Text>
+                    <TextInput
+                      style={styles.input}
+                      placeholder="5 - 6 - 7 - 8 - 9 - PW - Driver - Putter.."
+                      keyboardType="numeric"
+                      value={values.klubbor}
+                      onChangeText={handleChange("klubbor")}
+                      onBlur={handleBlur("klubbor")}
+                    />
+                    {errors.klubbor && (
+                      <Text style={styles.errorMessage}>{errors.klubbor}</Text>
+                    )}
+                  </>
+                )}
+
                 <Text style={styles.formLabel}>Bild</Text>
                 <TextInput
                   style={styles.input}
@@ -139,7 +160,7 @@ export default function CreateProduct() {
                 >
                   <PrimaryButton
                     label="Lägg till annons"
-                    btnWidth={{ width: 200 }}
+                    btnWidth={{ width: 200, marginTop: 10 }}
                     onPress={handleSubmit}
                     disabled={!isValid}
                   />
@@ -194,6 +215,7 @@ const styles = StyleSheet.create({
   form: {
     width: "70%",
     flex: 0.9,
+    marginBottom: 80,
   },
   formLabel: {
     fontFamily: "MontserratMedium",
