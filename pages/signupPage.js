@@ -3,9 +3,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { Pressable } from "react-native";
-import { Input, WarningOutlineIcon, FormControl } from "native-base";
+import { Input } from "native-base";
 import PrimaryButton from "../components/PrimaryButton.js";
 import { useState } from "react";
+import { Formik } from "formik";
+import { LoginSignupValidationSchema } from "../components/LoginSignupValidationSchema";
 
 function SignupPage({ navigation }) {
   const [editMode, setEditMode] = useState(false);
@@ -24,97 +26,144 @@ function SignupPage({ navigation }) {
       />
       <Text style={styles.loginText}>Registrera dig</Text>
       <View style={styles.forms}>
-        <View style={styles.editFormContainer}>
-          <View style={styles.form}>
-            <Text
-              style={{
-                fontFamily: "MontserratSemiBold",
-                color: "#B6B6B6",
-                marginBottom: 8,
-              }}
-            >
-              Username
-            </Text>
-            <Input
-              variant="underlined"
-              placeholder="Username"
-              style={styles.editForm}
-            />
-          </View>
-          <View style={styles.form}>
-            <Text
-              style={{
-                fontFamily: "MontserratSemiBold",
-                color: "#B6B6B6",
-                marginBottom: 8,
-              }}
-            >
-              Email
-            </Text>
-            <FormControl isInvalid w="100%" maxW="300px">
-              <Input
-                variant="underlined"
-                placeholder="Email"
-                style={styles.editForm}
-                onChange={(e) => handleEmailChange(e)}
-              />
-              {/* {error ? (
-                <FormControl.ErrorMessage
-                  leftIcon={<WarningOutlineIcon size="xs" />}
-                >
-                  Ogiltig email
-                </FormControl.ErrorMessage>
-              ) : null} */}
-            </FormControl>
-          </View>
-          <View style={styles.form}>
-            <Text
-              style={{
-                fontFamily: "MontserratSemiBold",
-                color: "#B6B6B6",
-                marginBottom: 8,
-              }}
-            >
-              Password
-            </Text>
-            <View style={styles.passwordCont}>
-              <Input
-                style={styles.editForm}
-                variant="underlined"
-                type={show ? "text" : "password"}
-                placeholder="Password"
-              />
-              <Pressable style={styles.eye} onPress={() => setShow(!show)}>
-                {show ? (
-                  <FontAwesomeIcon
-                    size={23}
-                    icon={faEye}
-                    mr="2"
-                    color="#B6B6B6"
+        <Formik
+          validateOnBlur={false}
+          validationSchema={LoginSignupValidationSchema}
+          initialValues={{
+            email: "",
+            password: "",
+          }}
+          onSubmit={(values) => console.log(values)}
+        >
+          {({
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            values,
+            isValid,
+            errors,
+          }) => (
+            <>
+              <View style={styles.editFormContainer}>
+                <View style={styles.form}>
+                  <Text
+                    style={{
+                      fontFamily: "MontserratSemiBold",
+                      color: "#B6B6B6",
+                      marginBottom: 8,
+                    }}
+                  >
+                    Username
+                  </Text>
+                  <Input
+                    variant="underlined"
+                    placeholder="Username"
+                    style={styles.editForm}
+                    onChangeText={handleChange("username")}
+                    onBlur={handleBlur("username")}
+                    value={values.username}
                   />
-                ) : (
-                  <FontAwesomeIcon
-                    size={23}
-                    icon={faEyeSlash}
-                    mr="2"
-                    color="#B6B6B6"
+                  {errors.username && (
+                    <Text style={{ fontSize: 12, color: "red", marginTop: 5 }}>
+                      {errors.username}
+                    </Text>
+                  )}
+                </View>
+                <View style={styles.form}>
+                  <Text
+                    style={{
+                      fontFamily: "MontserratSemiBold",
+                      color: "#B6B6B6",
+                      marginBottom: 8,
+                    }}
+                  >
+                    Email
+                  </Text>
+                  <Input
+                    variant="underlined"
+                    placeholder="Email"
+                    style={styles.editForm}
+                    onChangeText={handleChange("email")}
+                    onBlur={handleBlur("email")}
+                    value={values.email}
                   />
-                )}
-              </Pressable>
-            </View>
-          </View>
-        </View>
+                  {errors.email && (
+                    <Text style={{ fontSize: 12, color: "red", marginTop: 5 }}>
+                      {errors.email}
+                    </Text>
+                  )}
+                </View>
+                <View style={styles.form}>
+                  <Text
+                    style={{
+                      fontFamily: "MontserratSemiBold",
+                      color: "#B6B6B6",
+                      marginBottom: 8,
+                    }}
+                  >
+                    Password
+                  </Text>
+                  <View style={styles.passwordCont}>
+                    <Input
+                      style={styles.editForm}
+                      variant="underlined"
+                      type={show ? "text" : "password"}
+                      placeholder="Password"
+                      onChangeText={handleChange("password")}
+                      onBlur={handleBlur("password")}
+                      value={values.password}
+                    />
+                    {errors.password && (
+                      <Text
+                        style={{ fontSize: 12, color: "red", marginTop: 5 }}
+                      >
+                        {errors.password}
+                      </Text>
+                    )}
+                    <Pressable
+                      style={styles.eye}
+                      onPress={() => setShow(!show)}
+                    >
+                      {show ? (
+                        <FontAwesomeIcon
+                          size={23}
+                          icon={faEye}
+                          mr="2"
+                          color="#B6B6B6"
+                          style={[
+                            !isValid ? styles.iconinvalid : styles.iconvalid,
+                          ]}
+                        />
+                      ) : (
+                        <FontAwesomeIcon
+                          size={23}
+                          icon={faEyeSlash}
+                          mr="2"
+                          color="#B6B6B6"
+                          style={[
+                            !isValid ? styles.iconinvalid : styles.iconvalid,
+                          ]}
+                        />
+                      )}
+                    </Pressable>
+                  </View>
+                </View>
+              </View>
+              <PrimaryButton
+                label="Registrera"
+                btnWidth={{
+                  width: 182,
+                  right: 50,
+                  bottom: -90,
+                  position: "absolute",
+                }}
+                onPress={handleSubmit}
+              />
+            </>
+          )}
+        </Formik>
       </View>
-      <PrimaryButton
-        label="Registrera"
-        btnWidth={{
-          width: 182,
-          right: 115,
-          bottom: -640,
-          position: "absolute",
-        }}
-        onPress={null}
-      />
+
       <Text style={styles.login} onPress={() => navigation.navigate("Login")}>
         Eller logga in
       </Text>
@@ -172,6 +221,9 @@ const styles = StyleSheet.create({
     color: "#9E9E9E",
     paddingTop: 15,
     right: -165,
+  },
+  iconinvalid: {
+    bottom: 20,
   },
 });
 

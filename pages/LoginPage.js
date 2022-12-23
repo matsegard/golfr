@@ -27,6 +27,7 @@ function LoginPage({ navigation }) {
 
       <View style={styles.forms}>
         <Formik
+          validateOnBlur={false}
           validationSchema={LoginSignupValidationSchema}
           initialValues={{
             email: "",
@@ -105,6 +106,9 @@ function LoginPage({ navigation }) {
                           icon={faEye}
                           mr="2"
                           color="#B6B6B6"
+                          style={[
+                            !isValid ? styles.iconinvalid : styles.iconvalid,
+                          ]}
                         />
                       ) : (
                         <FontAwesomeIcon
@@ -112,6 +116,9 @@ function LoginPage({ navigation }) {
                           icon={faEyeSlash}
                           mr="2"
                           color="#B6B6B6"
+                          style={[
+                            !isValid ? styles.iconinvalid : styles.iconvalid,
+                          ]}
                         />
                       )}
                     </Pressable>
@@ -193,6 +200,9 @@ const styles = StyleSheet.create({
     color: "#9E9E9E",
     paddingTop: 15,
     right: -165,
+  },
+  iconinvalid: {
+    bottom: 20,
   },
 });
 
