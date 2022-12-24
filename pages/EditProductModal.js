@@ -96,14 +96,11 @@ export default function EditProductModal({ open, setOpen }) {
                   placeholder="Choose Service"
                   style={styles.editForm}
                 >
-                  <Select.Item label="UX Research" value="ux" />
-                  <Select.Item label="Web Development" value="web" />
-                  <Select.Item
-                    label="Cross Platform Development"
-                    value="cross"
-                  />
-                  <Select.Item label="UI Designing" value="ui" />
-                  <Select.Item label="Backend Development" value="backend" />
+                  <Select.Item label="Golfset" value="golfset" />
+                  <Select.Item label="Vagn/bag" value="vagn" />
+                  <Select.Item label="Golfklubba" value="golfklubba" />
+                  <Select.Item label="Golfbil" value="golfbil" />
+                  <Select.Item label="Övrigt" value="övrigt" />
                 </Select>
               </View>
               <View style={styles.form}>
