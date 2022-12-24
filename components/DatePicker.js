@@ -99,7 +99,7 @@ export default function DatePicker({ price }) {
         style={{
           justifyContent: "center",
           alignItems: "center",
-          marginTop: 70,
+          marginTop: 25,
         }}
       >
         <Text
@@ -120,6 +120,7 @@ export default function DatePicker({ price }) {
               fontFamily: "MontserratMedium",
               fontSize: 18,
               marginRight: 10,
+              marginBottom: 10
             }}
           >
             Totalpris:
