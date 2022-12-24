@@ -64,7 +64,14 @@ function LoginPage({ navigation }) {
                     value={values.email}
                   />
                   {errors.email && (
-                    <Text style={{ fontSize: 12, color: "red", marginTop: 5 }}>
+                    <Text
+                      style={{
+                        position: "absolute",
+                        fontSize: 12,
+                        color: "red",
+                        top: 62,
+                      }}
+                    >
                       {errors.email}
                     </Text>
                   )}
@@ -91,7 +98,13 @@ function LoginPage({ navigation }) {
                     />
                     {errors.password && (
                       <Text
-                        style={{ fontSize: 12, color: "red", marginTop: 5 }}
+                        style={{
+                          position: "absolute",
+                          fontSize: 12,
+                          color: "red",
+                          top: 35,
+                          width: 130
+                        }}
                       >
                         {errors.password}
                       </Text>
@@ -106,9 +119,6 @@ function LoginPage({ navigation }) {
                           icon={faEye}
                           mr="2"
                           color="#B6B6B6"
-                          style={[
-                            !isValid ? styles.iconinvalid : styles.iconvalid,
-                          ]}
                         />
                       ) : (
                         <FontAwesomeIcon
@@ -116,9 +126,6 @@ function LoginPage({ navigation }) {
                           icon={faEyeSlash}
                           mr="2"
                           color="#B6B6B6"
-                          style={[
-                            !isValid ? styles.iconinvalid : styles.iconvalid,
-                          ]}
                         />
                       )}
                     </Pressable>
