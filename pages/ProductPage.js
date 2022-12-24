@@ -1,10 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, Button } from "react-native";
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { faMugSaucer } from "@fortawesome/free-solid-svg-icons/faMugSaucer";
-import Navbar from "../components/Navbar";
 import ProductCard from "../components/productCard";
-import CategoriBar from "../components/categoriBar";
+import CategoryBar from "../components/CategoryBar.js";
 import SearchBar from "../components/searchBar";
 
 export default function ProductPage({ navigation }) {
@@ -13,7 +10,7 @@ export default function ProductPage({ navigation }) {
       <View style={styles.product}>
         <SearchBar />
       </View>
-      <CategoriBar />
+      <CategoryBar />
       <View style={styles.top} />
       <Text
         style={{

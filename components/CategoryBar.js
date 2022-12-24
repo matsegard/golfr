@@ -2,7 +2,7 @@ import { View, Pressable, Text } from "native-base";
 import { StyleSheet } from "react-native";
 import React, { useState } from "react";
 
-const CategoriBar = () => {
+const CategoryBar = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
 
   return (
@@ -95,4 +95,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CategoriBar;
+export default CategoryBar;
