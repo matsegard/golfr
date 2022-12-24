@@ -86,6 +86,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     width: "85%",
     margin: 5,
+    marginTop: 15,
   },
   categoryText: {
     fontFamily: "MontserratSemiBold",
