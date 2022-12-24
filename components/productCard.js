@@ -43,8 +43,11 @@ function ProductCard() {
   return (
     <ScrollView showsVerticalScrollIndicator={false} height="auto">
       <Box alignItems="center" marginBottom="240">
-        {Products.map((item) => (
-          <Pressable onPress={() => navigation.navigate("ProductDetails")}>
+        {Products.map((item, i) => (
+          <Pressable
+            key={i}
+            onPress={() => navigation.navigate("ProductDetails")}
+          >
             <Box
               maxW="80"
               rounded="lg"
@@ -74,7 +77,7 @@ function ProductCard() {
                   />
                 </AspectRatio>
                 <Center
-                  bg="tertiary.500"
+                  bg="#6A994E"
                   _dark={{
                     bg: "tertiary.500",
                   }}
@@ -99,7 +102,7 @@ function ProductCard() {
                   <Text
                     fontSize="xs"
                     _light={{
-                      color: "tertiary.500",
+                      color: "#6A994E",
                     }}
                     _dark={{
                       color: "tertiary.500",
@@ -107,8 +110,10 @@ function ProductCard() {
                     fontWeight="500"
                     ml="-0.5"
                     mt="-1"
+                    mr="5"
                   >
-                    {item.Place} <FontAwesomeIcon icon={faLocationDot} />
+                    {item.Place}{" "}
+                    <FontAwesomeIcon color="#B6B6B6" icon={faLocationDot} />
                   </Text>
                 </Stack>
                 <Text fontWeight="400">{item.Description}</Text>

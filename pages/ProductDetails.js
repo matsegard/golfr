@@ -180,6 +180,7 @@ const styles = StyleSheet.create({
   locationIcon: {
     color: "#6A994E",
     alignItems: "center",
+    marginRight: 5,
   },
   infoContainer: {
     flex: 2,
@@ -210,7 +211,7 @@ const styles = StyleSheet.create({
   },
   location: {
     flexDirection: "row",
-    fontFamily: "MontserratRegular",
+    fontFamily: "MontserratBold",
   },
   button: {
     backgroundColor: "#6A994E",
@@ -235,7 +236,7 @@ const styles = StyleSheet.create({
   },
   subHeadingContainer: {
     padding: "2%",
-    marginTop: 10,
+    marginTop: 15,
   },
   bottomContainer: {
     flexDirection: "row",
