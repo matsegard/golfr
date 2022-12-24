@@ -25,7 +25,7 @@ export default function EditProductModal({ open, setOpen }) {
                 >
                   Titel
                 </Text>
-                <Input variant="underlined" placeholder="Underlined" />
+                <Input variant="underlined" placeholder="Skriv en titel" />
               </View>
               <View style={styles.form}>
                 <Text
@@ -37,7 +37,7 @@ export default function EditProductModal({ open, setOpen }) {
                 >
                   Bild
                 </Text>
-                <Input variant="underlined" placeholder="Underlined" />
+                <Input variant="underlined" placeholder="Välj bild" />
               </View>
 
               <View style={styles.form}>
@@ -48,9 +48,9 @@ export default function EditProductModal({ open, setOpen }) {
                     marginBottom: 8,
                   }}
                 >
-                  Produktinfo
+                  Beskrivning
                 </Text>
-                <Input variant="underlined" placeholder="Underlined" />
+                <Input variant="underlined" placeholder="Beskrivning" />
               </View>
               <View style={styles.form}>
                 <Text
@@ -62,7 +62,7 @@ export default function EditProductModal({ open, setOpen }) {
                 >
                   Pris
                 </Text>
-                <Input variant="underlined" placeholder="Underlined" />
+                <Input variant="underlined" placeholder="Ange pris" />
               </View>
               <View style={styles.form}>
                 <Text
@@ -77,7 +77,7 @@ export default function EditProductModal({ open, setOpen }) {
                 <Select
                   variant="underlined"
                   accessibilityLabel="Choose Service"
-                  placeholder="Choose Service"
+                  placeholder="Välj kategori"
                   _selectedItem={{
                     bg: "#6A8E4E",
                   }}
@@ -102,7 +102,7 @@ export default function EditProductModal({ open, setOpen }) {
                 <Select
                   variant="underlined"
                   accessibilityLabel="Choose Service"
-                  placeholder="Choose Service"
+                  placeholder="Ange plats"
                   _selectedItem={{
                     bg: "#6A8E4E",
                   }}
