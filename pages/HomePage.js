@@ -18,15 +18,17 @@ export default function HomePage({ navigation }) {
         onPress={() => navigation.navigate("Products")}
       />
       <Button
- Mina-annonser-sidan#17
-        title="Gå till mina annonser"
-        onPress={() => navigation.navigate("MyProducts")}
         title="Gå till profilen"
         onPress={() => navigation.navigate("Profile")}
       />
       <Button
+        title="Gå till mina annonser"
+        onPress={() => navigation.navigate("MyProducts")}
+      />
+      <Button
         title="Gå till login"
-        onPress={() => navigation.navigate("Login")} main
+        onPress={() => navigation.navigate("Login")}
+        main
       />
       <PrimaryButton
         label="Lägg till produkt"
