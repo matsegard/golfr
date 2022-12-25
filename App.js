@@ -4,7 +4,7 @@ import ProductPage from "./pages/ProductPage";
 import DatePicker from "./components/DatePicker";
 import ProfilePage from "./pages/ProfilePage";
 import LoginPage from "./pages/LoginPage";
-import SignupPage from "./pages/signupPage";
+import SignupPage from "./pages/SignupPage";
 import ProductDetails from "./pages/ProductDetails";
 import CreateProductPage from "./pages/CreateProductPage";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";

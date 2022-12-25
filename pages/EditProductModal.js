@@ -19,72 +19,56 @@ export default function EditProductModal({ open, setOpen }) {
                 <Text
                   style={{
                     fontFamily: "MontserratSemiBold",
-                    color: "#B6B6B6",
+                    color: "#878787",
                     marginBottom: 8,
                   }}
                 >
                   Titel
                 </Text>
-                <Input
-                  variant="underlined"
-                  placeholder="Underlined"
-                  style={styles.editForm}
-                />
+                <Input variant="underlined" placeholder="Skriv en titel" />
               </View>
               <View style={styles.form}>
                 <Text
                   style={{
                     fontFamily: "MontserratSemiBold",
-                    color: "#B6B6B6",
+                    color: "#878787",
                     marginBottom: 8,
                   }}
                 >
                   Bild
                 </Text>
-                <Input
-                  variant="underlined"
-                  placeholder="Underlined"
-                  style={styles.editForm}
-                />
+                <Input variant="underlined" placeholder="Välj bild" />
               </View>
 
               <View style={styles.form}>
                 <Text
                   style={{
                     fontFamily: "MontserratSemiBold",
-                    color: "#B6B6B6",
+                    color: "#878787",
                     marginBottom: 8,
                   }}
                 >
-                  Produktinfo
+                  Beskrivning
                 </Text>
-                <Input
-                  variant="underlined"
-                  placeholder="Underlined"
-                  style={styles.editForm}
-                />
+                <Input variant="underlined" placeholder="Beskrivning" />
               </View>
               <View style={styles.form}>
                 <Text
                   style={{
                     fontFamily: "MontserratSemiBold",
-                    color: "#B6B6B6",
+                    color: "#878787",
                     marginBottom: 8,
                   }}
                 >
                   Pris
                 </Text>
-                <Input
-                  variant="underlined"
-                  placeholder="Underlined"
-                  style={styles.editForm}
-                />
+                <Input variant="underlined" placeholder="Ange pris" />
               </View>
               <View style={styles.form}>
                 <Text
                   style={{
                     fontFamily: "MontserratSemiBold",
-                    color: "#B6B6B6",
+                    color: "#878787",
                     marginBottom: 8,
                   }}
                 >
@@ -93,24 +77,23 @@ export default function EditProductModal({ open, setOpen }) {
                 <Select
                   variant="underlined"
                   accessibilityLabel="Choose Service"
-                  placeholder="Choose Service"
-                  style={styles.editForm}
+                  placeholder="Välj kategori"
+                  _selectedItem={{
+                    bg: "#6A8E4E",
+                  }}
                 >
-                  <Select.Item label="UX Research" value="ux" />
-                  <Select.Item label="Web Development" value="web" />
-                  <Select.Item
-                    label="Cross Platform Development"
-                    value="cross"
-                  />
-                  <Select.Item label="UI Designing" value="ui" />
-                  <Select.Item label="Backend Development" value="backend" />
+                  <Select.Item label="Golfset" value="Golfset" />
+                  <Select.Item label="Vagn/bag" value="Vagn/bag" />
+                  <Select.Item label="Golfklubba" value="Golfklubba" />
+                  <Select.Item label="Golfbil" value="Golfbil" />
+                  <Select.Item label="Övrigt" value="Övrigt" />
                 </Select>
               </View>
               <View style={styles.form}>
                 <Text
                   style={{
                     fontFamily: "MontserratSemiBold",
-                    color: "#B6B6B6",
+                    color: "#878787",
                     marginBottom: 8,
                   }}
                 >
@@ -119,8 +102,10 @@ export default function EditProductModal({ open, setOpen }) {
                 <Select
                   variant="underlined"
                   accessibilityLabel="Choose Service"
-                  placeholder="Choose Service"
-                  style={styles.editForm}
+                  placeholder="Ange plats"
+                  _selectedItem={{
+                    bg: "#6A8E4E",
+                  }}
                 >
                   <Select.Item label="UX Research" value="ux" />
                   <Select.Item label="Web Development" value="web" />

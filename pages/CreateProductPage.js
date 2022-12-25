@@ -55,7 +55,6 @@ export default function CreateProduct() {
                 <TextInput
                   style={styles.input}
                   placeholder="Skriv en titel"
-                  keyboardType="numeric"
                   value={values.title}
                   onChangeText={handleChange("title")}
                   onBlur={handleBlur("title")}
@@ -69,6 +68,7 @@ export default function CreateProduct() {
                 <Center>
                   <Box maxW="300" style={{ marginBottom: 20 }}>
                     <Select
+                      variant="underlined"
                       selectedValue={values.category}
                       value={values.category}
                       onChangeText={handleChange("category")}
@@ -127,6 +127,7 @@ export default function CreateProduct() {
                     <Center>
                       <Box maxW="300" style={{ marginBottom: 20 }}>
                         <Select
+                          variant="underlined"
                           selectedValue={values.gender}
                           value={values.gender}
                           onChangeText={handleChange("gender")}
@@ -155,6 +156,7 @@ export default function CreateProduct() {
                     <Center>
                       <Box maxW="300" style={{ marginBottom: 20 }}>
                         <Select
+                          variant="underlined"
                           selectedValue={values.hand}
                           value={values.hand}
                           onChangeText={handleChange("hand")}
@@ -182,6 +184,7 @@ export default function CreateProduct() {
                     <Center>
                       <Box maxW="300" style={{ marginBottom: 20 }}>
                         <Select
+                          variant="underlined"
                           selectedValue={values.shaft}
                           value={values.shaft}
                           onChangeText={handleChange("shaft")}
@@ -224,7 +227,6 @@ export default function CreateProduct() {
                   ellipsizeMode="tail"
                   style={styles.inputDescription}
                   placeholder="Beskrivning"
-                  keyboardType="numeric"
                   value={values.description}
                   onChangeText={handleChange("description")}
                   onBlur={handleBlur("description")}
@@ -248,7 +250,6 @@ export default function CreateProduct() {
                 <TextInput
                   style={styles.input}
                   placeholder="Ange plats"
-                  keyboardType="numeric"
                   value={values.location}
                   onChangeText={handleChange("location")}
                   onBlur={handleBlur("location")}
@@ -299,17 +300,16 @@ const styles = StyleSheet.create({
   input: {
     height: 40,
     marginBottom: 20,
-    padding: 10,
     width: "100%",
-    borderBottomColor: "#000000",
     borderBottomWidth: 1,
+    borderBottomColor: "#B6B6B6",
   },
   inputDescription: {
     height: 70,
     marginBottom: 20,
+    marginLeft: -10,
     padding: 10,
     width: "100%",
-    borderBottomColor: "#000000",
     borderBottomWidth: 1,
   },
   form: {
@@ -319,7 +319,8 @@ const styles = StyleSheet.create({
   },
   formLabel: {
     fontFamily: "MontserratMedium",
-    color: "#585858",
+    color: "#878787",
+    marginTop: 10,
   },
   errorMessage: {
     fontSize: 13,
