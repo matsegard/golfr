@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { StyleSheet, View, Image, Text, TextInput } from "react-native";
 import { Select, Box, CheckIcon, Center, ScrollView } from "native-base";
 import Navbar from "../components/Navbar";
+import ImagePicker from "../components/ImagePicker";
 import { Formik } from "formik";
 import PrimaryButton from "../components/PrimaryButton.js";
 import { ProductValidationSchema } from "../components/ProductValidationSchema";
@@ -212,14 +213,7 @@ export default function CreateProduct() {
                 )}
 
                 <Text style={styles.formLabel}>Bild</Text>
-                <TextInput
-                  style={styles.input}
-                  placeholder="Välj bild"
-                  keyboardType="numeric"
-                  value={values.image}
-                  onChangeText={handleChange("image")}
-                  onBlur={handleBlur("image")}
-                />
+                <ImagePicker />
                 <Text style={styles.formLabel}>Beskrivning</Text>
                 <TextInput
                   multiline
