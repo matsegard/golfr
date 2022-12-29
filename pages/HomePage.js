@@ -1,9 +1,9 @@
 import { View, Button, Pressable, Text } from "react-native";
 import PrimaryButton from "../components/PrimaryButton.js";
 import Navbar from "../components/Navbar";
-import ImagePicker from "../components/ImagePicker";
 import EditProductModal from "./EditProductModal.js";
 import { useState } from "react";
+import ImageUpload from "../components/ImageUpload.js";
 
 export default function HomePage({ navigation }) {
   const [open, setOpen] = useState(false);
@@ -40,7 +40,7 @@ export default function HomePage({ navigation }) {
         <Text>Open</Text>
       </Pressable>
       {open && <EditProductModal open={open} setOpen={setOpen} />}
-      <ImagePicker />
+      <ImageUpload />
       <Navbar />
     </View>
   );

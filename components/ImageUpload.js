@@ -4,7 +4,7 @@ import * as ImagePicker from "expo-image-picker";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 
-export default function ImagePickerExample() {
+export default function ImageUpload() {
   const [image, setImage] = useState(null);
 
   const pickImage = async () => {
