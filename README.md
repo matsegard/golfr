@@ -19,6 +19,8 @@ npm start
 ## Built With
 
 - [React Native](https://reactnative.dev/)
+- [Expo](https://expo.dev/)
+- [Firebase](https://firebase.google.com/)
 
 ## Contributors
 

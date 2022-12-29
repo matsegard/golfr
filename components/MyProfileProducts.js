@@ -69,13 +69,13 @@ const MyProfileProducts = () => {
               <FontAwesomeIcon
                 style={{ marginRight: 20, marginBottom: 10 }}
                 color="#E46969"
-                size="30"
+                size={30}
                 icon={faTrashCan}
               />
               <FontAwesomeIcon
                 style={{ marginRight: 15 }}
                 color="#6A8E4E"
-                size="30"
+                size={30}
                 icon={faPen}
               />
             </Box>
