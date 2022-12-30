@@ -1,9 +1,14 @@
 import { View, Button, Pressable, Text } from "react-native";
 import PrimaryButton from "../components/PrimaryButton.js";
 import Navbar from "../components/Navbar";
+
 import ImageUpload from "../components/ImageUpload";
+
 import EditProductModal from "./EditProductModal.js";
 import { useState } from "react";
+import ImageUpload from "../components/ImageUpload.js";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "../firebase/firebaseConfig";
 
 export default function HomePage({ navigation }) {
   const [open, setOpen] = useState(false);
@@ -12,8 +17,17 @@ export default function HomePage({ navigation }) {
     setOpen(!open);
   };
 
+  function databaseTest() {
+    setDoc(doc(db, "cities", "uid"), {
+      name: "hedemora",
+      state: "CA",
+      country: "USA",
+    });
+  }
+
   return (
     <View style={{ height: "100%" }}>
+      <Button title="Database test" onPress={() => databaseTest()}></Button>
       <Button
         title="Gå till produktsidan"
         onPress={() => navigation.navigate("Products")}

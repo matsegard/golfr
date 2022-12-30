@@ -9,8 +9,8 @@ export const LoginSignupValidationSchema = yup.object().shape({
     .string()
     .min(8, ({ min }) => `Password must be at least ${min} characters`)
     .required("Password is required"),
-  username: yup
-    .string()
-    .min(1, ({ min }) => `Password must be at least ${min} characters`)
-    .required("Username is required"),
+  // username: yup
+  //   .string()
+  //   .min(1, ({ min }) => `Password must be at least ${min} characters`)
+  //   .required("Username is required"),
 });
