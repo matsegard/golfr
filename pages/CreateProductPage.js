@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { StyleSheet, View, Image, Text, TextInput } from "react-native";
 import { Select, Box, CheckIcon, Center, ScrollView } from "native-base";
 import Navbar from "../components/Navbar";
-import ImagePicker from "../components/ImagePicker";
+import ImagePicker from "../components/ImageUpload";
 import { Formik } from "formik";
 import PrimaryButton from "../components/PrimaryButton.js";
 import { ProductValidationSchema } from "../components/ProductValidationSchema";
@@ -23,7 +23,7 @@ export default function CreateProduct() {
       </View>
       <Text style={styles.headerText}>Skapa en annons</Text>
       <View style={styles.form}>
-        <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView showsVerticalScrollIndicator={false}>
           <Formik
             validateOnChange={false}
             validateOnBlur={false}

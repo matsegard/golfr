@@ -51,4 +51,8 @@ export const ProductValidationSchema = yup.object().shape({
     .optional()
     .oneOf(["Lady", "Senior", "Regular", "Stiff", "X-Stiff"])
     .label(["Lady", "Senior", "Regular", "Stiff", "X-Stiff"]),
+  level: yup
+  .string()
+  .oneOf( ["Avancerad","Medel","Nybörjare"])  
+  .label( ["Avancerad","Medel","Nybörjare"])  
 });
