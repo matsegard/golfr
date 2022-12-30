@@ -3,15 +3,38 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { Pressable } from "react-native";
-import { Input } from "native-base";
+import { Input, Button } from "native-base";
 import PrimaryButton from "../components/PrimaryButton.js";
 import { useState } from "react";
 import { Formik } from "formik";
 import { LoginSignupValidationSchema } from "../components/LoginSignupValidationSchema";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "../firebase/firebaseConfig";
 
 function SignupPage({ navigation }) {
   const [editMode, setEditMode] = useState(false);
   const [show, setShow] = useState(false);
+  const auth = getAuth();
+
+  function CreateAccount({ email, username, password }) {
+    createUserWithEmailAndPassword(auth, email, password).then(() => {
+      setDoc(doc(db, `users/${auth.currentUser?.uid}`), {
+        username: username,
+        email: email,
+      });
+    });
+    // .then(() =>
+    //   updateProfile(auth.currentUser, {
+    //     username: username,
+    //   })
+    // )
+    // .catch((error) => {});
+  }
 
   return (
     <View style={styles.container}>
@@ -33,7 +56,7 @@ function SignupPage({ navigation }) {
             email: "",
             password: "",
           }}
-          onSubmit={(values) => console.log(values)}
+          onSubmit={(values) => CreateAccount(values)}
         >
           {({
             handleChange,
@@ -149,6 +172,7 @@ function SignupPage({ navigation }) {
                   </View>
                 </View>
               </View>
+
               <PrimaryButton
                 label="Registrera"
                 btnWidth={{
