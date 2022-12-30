@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { StyleSheet, View, Image, Text, TextInput } from "react-native";
 import { Select, Box, CheckIcon, Center, ScrollView } from "native-base";
 import Navbar from "../components/Navbar";
-import ImagePicker from "../components/ImagePicker";
 import { Formik } from "formik";
 import PrimaryButton from "../components/PrimaryButton.js";
 import { ProductValidationSchema } from "../components/ProductValidationSchema";
+import ImageUpload from "../components/ImageUpload";
 
 export default function CreateProduct() {
   return (
@@ -213,7 +213,7 @@ export default function CreateProduct() {
                 )}
 
                 <Text style={styles.formLabel}>Bild</Text>
-                <ImagePicker />
+                <ImageUpload />
                 <Text style={styles.formLabel}>Beskrivning</Text>
                 <TextInput
                   multiline
