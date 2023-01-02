@@ -1,12 +1,9 @@
 import { View, Button, Pressable, Text } from "react-native";
-import PrimaryButton from "../components/PrimaryButton.js";
-import Navbar from "../components/Navbar";
-
-import ImageUpload from "../components/ImageUpload";
-
-import EditProductModal from "./EditProductModal.js";
+import PrimaryButton from "../components/inputs/PrimaryButton";
+import Navbar from "../components/bars/Navbar";
+import EditProductModal from "../components/modals/EditProductModal";
 import { useState } from "react";
-import ImageUpload from "../components/ImageUpload.js";
+import ImageUpload from "../components/inputs/ImageUpload";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../firebase/firebaseConfig";
 

@@ -1,6 +1,5 @@
-import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
-import DatePickerModal from "../components/DatePickerModal";
+import DatePickerModal from "../modals/DatePickerModal";
 import {
   StyleSheet,
   Text,

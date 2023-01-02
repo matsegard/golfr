@@ -1,15 +1,7 @@
 import React from "react";
-import {
-  Button,
-  Modal,
-  FormControl,
-  Input,
-  Center,
-  NativeBaseProvider,
-} from "native-base";
-import { useState } from "react";
-import DatePicker from "./DatePicker";
-import PrimaryButton from "./PrimaryButton";
+import { Button, Modal, Center } from "native-base";
+import DatePicker from "../inputs/DatePicker";
+import PrimaryButton from "../inputs/PrimaryButton";
 
 export default function DatePickerModal({ openModal, setOpenModal, price }) {
   return (
