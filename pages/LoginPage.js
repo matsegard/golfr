@@ -8,9 +8,53 @@ import { Pressable } from "react-native";
 import { Input } from "native-base";
 import PrimaryButton from "../components/PrimaryButton.js";
 import { useState } from "react";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+} from "firebase/auth";
 
 function LoginPage({ navigation }) {
   const [show, setShow] = useState(false);
+  const auth = getAuth();
+
+  function signIn({ email, password }) {
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log("SIGNED IN", auth.currentUser);
+      })
+      .catch((error) => {
+        if (error.code === "auth/email-already-in-use") {
+          console.log("That email address is already in use!");
+        }
+        if (error.code === "auth/invalid-email") {
+          console.log("That email address is invalid!");
+        }
+      });
+  }
+
+  // TO BE REMOVED
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      const uid = user.uid;
+      console.log("logged in", auth.currentUser);
+    } else {
+      console.log("NOT logged in");
+    }
+  });
+
+  // SIGN OUT FUNCTIONALITY
+  // function testSignOut() {
+  //   signOut(auth)
+  //     .then(() => {
+  //       console.log("SIGNED OUT");
+  //       console.log(auth.currentUser);
+  //     })
+  //     .catch((error) => {
+  //       console.log("ERROR");
+  //     });
+  // }
 
   return (
     <View style={styles.container}>
@@ -33,7 +77,7 @@ function LoginPage({ navigation }) {
             email: "",
             password: "",
           }}
-          onSubmit={(values) => console.log(values)}
+          onSubmit={(values) => signIn(values)}
         >
           {({
             handleChange,
@@ -103,7 +147,7 @@ function LoginPage({ navigation }) {
                           fontSize: 12,
                           color: "red",
                           top: 35,
-                          width: 130
+                          width: 130,
                         }}
                       >
                         {errors.password}
@@ -135,6 +179,7 @@ function LoginPage({ navigation }) {
               <Pressable>
                 <Text style={styles.forgotPassword}>Glömt ditt lösenord?</Text>
               </Pressable>
+
               <PrimaryButton
                 label="Login"
                 btnWidth={{
@@ -149,7 +194,6 @@ function LoginPage({ navigation }) {
           )}
         </Formik>
       </View>
-
       <Text style={styles.signup} onPress={() => navigation.navigate("Signup")}>
         Eller registrera dig
       </Text>
