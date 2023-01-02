@@ -14,6 +14,45 @@ function Login() {
   const [show, setShow] = useState(false);
 
   const navigation = useNavigation();
+  const auth = getAuth();
+
+  function signIn({ email, password }) {
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log("SIGNED IN", auth.currentUser);
+      })
+      .catch((error) => {
+        if (error.code === "auth/email-already-in-use") {
+          console.log("That email address is already in use!");
+        }
+        if (error.code === "auth/invalid-email") {
+          console.log("That email address is invalid!");
+        }
+      });
+  }
+
+  // TO BE REMOVED
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      const uid = user.uid;
+      console.log("logged in", auth.currentUser);
+    } else {
+      console.log("NOT logged in");
+    }
+  });
+
+  // SIGN OUT FUNCTIONALITY
+  // function testSignOut() {
+  //   signOut(auth)
+  //     .then(() => {
+  //       console.log("SIGNED OUT");
+  //       console.log(auth.currentUser);
+  //     })
+  //     .catch((error) => {
+  //       console.log("ERROR");
+  //     });
+  // }
 
   return (
     <View style={styles.container}>
