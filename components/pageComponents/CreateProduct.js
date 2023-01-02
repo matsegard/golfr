@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, View, Image, Text, TextInput } from "react-native";
 import { Select, Box, CheckIcon, Center, ScrollView } from "native-base";
 import Navbar from "../bars/Navbar";
@@ -10,6 +10,8 @@ import { doc, setDoc, addDoc, collection } from "firebase/firestore";
 import { db } from "../../firebase/firebaseConfig";
 
 export default function CreateProduct() {
+  const [image, setImage] = useState(null);
+
   function AddProducts({
     title,
     category,
@@ -71,7 +73,7 @@ export default function CreateProduct() {
               hand: "",
               shaft: "",
             }}
-            onSubmit={(values) => AddProducts(values)}
+            onSubmit={(values, image) => AddProducts(values, image)}
           >
             {({
               handleChange,
@@ -243,7 +245,7 @@ export default function CreateProduct() {
                 )}
 
                 <Text style={styles.formLabel}>Bild</Text>
-                <ImageUpload />
+                <ImageUpload setImage={setImage} image={image} />
                 <Text style={styles.formLabel}>Beskrivning</Text>
                 <TextInput
                   multiline
