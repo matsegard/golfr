@@ -39,6 +39,7 @@ export default function CreateProduct() {
       shaft: shaft,
     });
   }
+  console.log(image);
 
   return (
     <View style={styles.container}>
@@ -73,7 +74,7 @@ export default function CreateProduct() {
               hand: "",
               shaft: "",
             }}
-            onSubmit={(values, image) => AddProducts(values, image)}
+            onSubmit={(values) => AddProducts(values, image)}
           >
             {({
               handleChange,
