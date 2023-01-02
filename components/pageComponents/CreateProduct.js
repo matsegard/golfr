@@ -1,23 +1,29 @@
-import { StyleSheet, View, Text, TextInput } from "react-native";
-import { Modal, Center, Select } from "native-base";
-import PrimaryButton from "../components/PrimaryButton";
-import { ProductValidationSchema } from "../components/ProductValidationSchema";
+import React from "react";
+import { StyleSheet, View, Image, Text, TextInput } from "react-native";
+import { Select, Box, CheckIcon, Center, ScrollView } from "native-base";
+import Navbar from "../bars/Navbar";
 import { Formik } from "formik";
-import { Box, CheckIcon, ScrollView } from "native-base";
-import ImagePicker from "../components/ImageUpload";
+import PrimaryButton from "../inputs/PrimaryButton.js";
+import { ProductValidationSchema } from "../schemas/ProductValidationSchema";
+import ImageUpload from "../inputs/ImageUpload";
 
-export default function EditProductModal({ open, setOpen }) {
+export default function CreateProduct() {
   return (
-    <Center>
-      {/* <Modal
-        isOpen={open}
-        onClose={() => setOpen(false)}
-        onBackdropPress={() => setOpen(false)}
-      > */}
-        <Modal.Content maxWidth="400px">
-          <Modal.CloseButton />
-          <Modal.Header>Redigera</Modal.Header>
-          <Modal.Body>
+    <View style={styles.container}>
+      <View style={styles.greenBubble}>
+        <Image
+          style={[
+            styles.greenBubble,
+            {
+              transform: [{ rotate: "180deg" }],
+            },
+          ]}
+          source={require("../../assets/Ellipse.png")}
+        />
+      </View>
+      <Text style={styles.headerText}>Skapa en annons</Text>
+      <View style={styles.form}>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <Formik
             validateOnChange={false}
             validateOnBlur={false}
@@ -105,29 +111,14 @@ export default function EditProductModal({ open, setOpen }) {
                       <Text style={styles.errorMessage}>{errors.clubs}</Text>
                     )}
                     <Text style={styles.formLabel}>Svårighetsgrad</Text>
-                    <Box maxW="300" style={{ marginBottom: 20 }}>
-                        <Select
-                          variant="underlined"
-                          selectedValue={values.level}
-                          value={values.level}
-                          onChangeText={handleChange("level")}
-                          onBlur={handleBlur("level")}
-                          minWidth="100%"
-                          label="Välj svårighetsgrad"
-                          accessibilityLabel="Välj svårighetsgrad "
-                          placeholder="Välj svårighetsgrad"
-                          _selectedItem={{
-                            bg: "#6A8E4E",
-                            endIcon: <CheckIcon size="4" />,
-                          }}
-                          mt={3}
-                          onValueChange={handleChange("gender")}
-                        >
-                          <Select.Item label="Avancerad" value="Avancerad" />
-                          <Select.Item label="Medel" value="Medel" />
-                          <Select.Item label="Nybörjare" value="Nybörjare" />
-                        </Select>
-                      </Box>
+                    <TextInput
+                      style={styles.input}
+                      placeholder="Ange klubbornas svårighetsgrad"
+                      keyboardType="numeric"
+                      value={values.klubbor}
+                      onChangeText={handleChange("difficulty")}
+                      onBlur={handleBlur("difficulty")}
+                    />
                     {errors.difficulty && (
                       <Text style={styles.errorMessage}>
                         {errors.difficulty}
@@ -222,7 +213,7 @@ export default function EditProductModal({ open, setOpen }) {
                 )}
 
                 <Text style={styles.formLabel}>Bild</Text>
-                <ImagePicker />
+                <ImageUpload />
                 <Text style={styles.formLabel}>Beskrivning</Text>
                 <TextInput
                   multiline
@@ -264,7 +255,7 @@ export default function EditProductModal({ open, setOpen }) {
                   style={{ justifyContent: "center", alignItems: "center" }}
                 >
                   <PrimaryButton
-                    label="Spara"
+                    label="Lägg till annons"
                     btnWidth={{ width: 200, marginTop: 10 }}
                     onPress={handleSubmit}
                     disabled={!isValid}
@@ -273,22 +264,16 @@ export default function EditProductModal({ open, setOpen }) {
               </>
             )}
           </Formik>
-          </Modal.Body>
-          <Modal.Footer>
-          </Modal.Footer>
-        </Modal.Content>
-      {/* </Modal> */}
-    </Center>
+        </ScrollView>
+      </View>
+      <Navbar />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-
-  form: {
-    marginTop: 30,
-  },
   container: {
-    flex: "1",
+    height:"100%",
     backgroundColor: "FAFAFA",
     justifyContent: "center",
     alignItems: "center",

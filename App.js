@@ -1,17 +1,17 @@
 import HomePage from "./pages/HomePage";
 import { NavigationContainer } from "@react-navigation/native";
-import ProductPage from "./pages/ProductPage"
-import DatePicker from "./components/DatePicker";
-import ProfilePage from "./pages/ProfilePage"
+import ProductPage from "./pages/ProductPage";
+import DatePicker from "./components/modals/DatePickerModal";
+import ProfilePage from "./pages/ProfilePage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
-import ProductDetails from "./pages/ProductDetails";
+import ProductDetails from "./pages/ProductDetailsPage";
 import CreateProductPage from "./pages/CreateProductPage";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NativeBaseProvider } from "native-base";
 import { useFonts } from "expo-font";
-import MyProducts from "./pages/MyProducts";
-import EditProductModal from "./pages/EditProductModal";
+import MyProductsPage from "./pages/MyProductsPage";
+import EditProductModal from "./components/modals/EditProductModal";
 // import * as SplashScreen from "expo-splash-screen";
 
 export default function App() {
@@ -42,7 +42,7 @@ export default function App() {
         <Stack.Navigator>
           <Stack.Screen name="Home" component={HomePage} />
           <Stack.Screen name="Products" component={ProductPage} />
-          <Stack.Screen name="MyProducts" component={MyProducts} />
+          <Stack.Screen name="MyProducts" component={MyProductsPage} />
           <Stack.Screen
             name="AddProduct"
             component={CreateProductPage}

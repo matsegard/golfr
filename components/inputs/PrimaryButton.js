@@ -12,8 +12,6 @@ function PrimaryButton({ label, onPress, btnWidth }) {
   );
 }
 
-export default PrimaryButton;
-
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#6A994E",
@@ -29,3 +27,5 @@ const styles = StyleSheet.create({
     letterSpacing: ".3%",
   },
 });
+
+export default PrimaryButton;

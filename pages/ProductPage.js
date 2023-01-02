@@ -1,8 +1,8 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
-import ProductCard from "../components/ProductCard";
-import CategoryBar from "../components/CategoryBar.js";
-import SearchBar from "../components/SearchBar";
+import ProductCard from "../components/product/ProductCard";
+import CategoryBar from "../components/bars/CategoryBar";
+import SearchBar from "../components/inputs/SearchBar";
 
 export default function ProductPage({ navigation }) {
   return (
