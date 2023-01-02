@@ -6,8 +6,38 @@ import { Formik } from "formik";
 import PrimaryButton from "../inputs/PrimaryButton.js";
 import { ProductValidationSchema } from "../schemas/ProductValidationSchema";
 import ImageUpload from "../inputs/ImageUpload";
+import { doc, setDoc, addDoc, collection } from "firebase/firestore";
+import { db } from "../../firebase/firebaseConfig";
 
 export default function CreateProduct() {
+  function AddProducts({
+    title,
+    category,
+    image,
+    description,
+    price,
+    location,
+    clubs,
+    difficulty,
+    gender,
+    hand,
+    shaft,
+  }) {
+    addDoc(collection(db, "products"), {
+      title: title,
+      category: category,
+      image: image,
+      description: description,
+      price: price,
+      location: location,
+      clubs: clubs,
+      difficulty: difficulty,
+      gender: gender,
+      hand: hand,
+      shaft: shaft,
+    });
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.greenBubble}>
@@ -41,7 +71,7 @@ export default function CreateProduct() {
               hand: "",
               shaft: "",
             }}
-            onSubmit={(values) => console.log(values)}
+            onSubmit={(values) => AddProducts(values)}
           >
             {({
               handleChange,
@@ -273,7 +303,7 @@ export default function CreateProduct() {
 
 const styles = StyleSheet.create({
   container: {
-    height:"100%",
+    height: "100%",
     backgroundColor: "FAFAFA",
     justifyContent: "center",
     alignItems: "center",
