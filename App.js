@@ -1,8 +1,8 @@
 import HomePage from "./pages/HomePage";
 import { NavigationContainer } from "@react-navigation/native";
-import ProductPage from "./pages/ProductPage";
+import ProductPage from "./pages/ProductPage"
 import DatePicker from "./components/DatePicker";
-import ProfilePage from "./pages/ProfilePage";
+import ProfilePage from "./pages/ProfilePage"
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import ProductDetails from "./pages/ProductDetails";
@@ -11,6 +11,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NativeBaseProvider } from "native-base";
 import { useFonts } from "expo-font";
 import MyProducts from "./pages/MyProducts";
+import EditProductModal from "./pages/EditProductModal";
 // import * as SplashScreen from "expo-splash-screen";
 
 export default function App() {
@@ -89,6 +90,20 @@ export default function App() {
             component={SignupPage}
             options={{
               title: "Registrera",
+              headerStyle: {
+                backgroundColor: "#6A8E4E",
+              },
+              headerTintColor: "#fff",
+              headerTitleStyle: {
+                fontWeight: "bold",
+              },
+            }}
+          />
+          <Stack.Screen
+            name="Redigera"
+            component={EditProductModal}
+            options={{
+              title: "Redigera produkt",
               headerStyle: {
                 backgroundColor: "#6A8E4E",
               },

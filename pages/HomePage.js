@@ -1,6 +1,9 @@
 import { View, Button, Pressable, Text } from "react-native";
 import PrimaryButton from "../components/PrimaryButton.js";
 import Navbar from "../components/Navbar";
+
+import ImageUpload from "../components/ImageUpload";
+
 import EditProductModal from "./EditProductModal.js";
 import { useState } from "react";
 import ImageUpload from "../components/ImageUpload.js";
@@ -32,6 +35,10 @@ export default function HomePage({ navigation }) {
       <Button
         title="Gå till profilen"
         onPress={() => navigation.navigate("Profile")}
+      />
+      <Button
+        title="Gå till redigera produkt"
+        onPress={() => navigation.navigate("Redigera")}
       />
       <Button
         title="Gå till mina annonser"
