@@ -8,9 +8,12 @@ import { Pressable } from "react-native";
 import { Input } from "native-base";
 import PrimaryButton from "../inputs/PrimaryButton.js";
 import { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
 
-function Login({ navigation }) {
+function Login() {
   const [show, setShow] = useState(false);
+
+  const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
