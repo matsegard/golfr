@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Image, Text, TextInput } from "react-native";
+import { StyleSheet, View, Image, Text, TextInput, Alert } from "react-native";
 import { Select, Box, CheckIcon, Center, ScrollView } from "native-base";
 import Navbar from "../bars/Navbar";
 import { Formik } from "formik";
@@ -8,6 +8,7 @@ import { ProductValidationSchema } from "../schemas/ProductValidationSchema";
 import ImageUpload from "../inputs/ImageUpload";
 import { doc, setDoc, addDoc, collection } from "firebase/firestore";
 import { db } from "../../firebase/firebaseConfig";
+import { getStorage, ref, uploadString, storage } from "firebase/storage";
 
 export default function CreateProduct() {
   const [image, setImage] = useState(null);
@@ -38,8 +39,14 @@ export default function CreateProduct() {
       hand: hand,
       shaft: shaft,
     });
+    submitAlert();
   }
+
   console.log(image);
+
+  const submitAlert = () => {
+    Alert.alert("Annons skapad");
+  };
 
   return (
     <View style={styles.container}>
@@ -74,7 +81,26 @@ export default function CreateProduct() {
               hand: "",
               shaft: "",
             }}
-            onSubmit={(values) => AddProducts(values, image)}
+            onSubmit={(values, actions) => {
+              AddProducts(values);
+              actions.setSubmitting(false);
+              actions.resetForm({
+                values: {
+                  title: "",
+                  category: "",
+                  image: "",
+                  description: "",
+                  price: "",
+                  location: "",
+                  clubs: "",
+                  difficulty: "",
+                  gender: "",
+                  hand: "",
+                  shaft: "",
+                },
+              });
+            }}
+            // onSubmit={(values) => AddProducts(values, image)}
           >
             {({
               handleChange,

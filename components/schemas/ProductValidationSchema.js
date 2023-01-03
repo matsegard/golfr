@@ -29,21 +29,21 @@ export const ProductValidationSchema = yup.object().shape({
     .min(3, "Plasten måste vara minst 2 tecken"),
   clubs: yup
     .string()
-    .required("Ange vilka klubbor settet innehåller")
+    // .required("Ange vilka klubbor settet innehåller")
     .min(3, "Ange vilka klubbor settet innehåller"),
   difficulty: yup
     .number()
     .typeError("Ange svårighetsgrad i nummer")
-    .required("Ange vilka klubbor settet innehåller")
+    // .Optinal("Ange vilka klubbor settet innehåller")
     .min(3, "Ange vilka klubbor settet innehåller"),
   gender: yup
     .string()
-    .required("Välj kön")
+    // .required("Välj kön")
     .oneOf(["Herr", "Dam", "Unisex"])
     .label(["Herr", "Dam", "Unisex"]),
   hand: yup
     .string()
-    .required("Välj fattning")
+    // .required("Välj fattning")
     .oneOf(["Höger", "Vänster"])
     .label(["Höger", "Vänster"]),
   shaft: yup
@@ -52,7 +52,7 @@ export const ProductValidationSchema = yup.object().shape({
     .oneOf(["Lady", "Senior", "Regular", "Stiff", "X-Stiff"])
     .label(["Lady", "Senior", "Regular", "Stiff", "X-Stiff"]),
   level: yup
-  .string()
-  .oneOf( ["Avancerad","Medel","Nybörjare"])  
-  .label( ["Avancerad","Medel","Nybörjare"])  
+    .string()
+    .oneOf(["Avancerad", "Medel", "Nybörjare"])
+    .label(["Avancerad", "Medel", "Nybörjare"]),
 });
