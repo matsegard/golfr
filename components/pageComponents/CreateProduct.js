@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Image, Text, TextInput, Alert } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Image,
+  Text,
+  TextInput,
+  Alert,
+  Button,
+} from "react-native";
 import { Select, Box, CheckIcon, Center, ScrollView } from "native-base";
 import Navbar from "../bars/Navbar";
 import { Formik } from "formik";
@@ -8,10 +16,54 @@ import { ProductValidationSchema } from "../schemas/ProductValidationSchema";
 import ImageUpload from "../inputs/ImageUpload";
 import { doc, setDoc, addDoc, collection } from "firebase/firestore";
 import { db } from "../../firebase/firebaseConfig";
-import { getStorage, ref, uploadString, storage } from "firebase/storage";
+import {
+  getStorage,
+  ref,
+  uploadString,
+  storage,
+  getDownloadURL,
+  uploadBytesResumable,
+} from "firebase/storage";
 
 export default function CreateProduct() {
   const [image, setImage] = useState(null);
+  const [imgUrl, setImgUrl] = useState(null);
+
+  const storage = getStorage();
+  const storageRef = ref(storage);
+
+  function test() {
+    let filename = image.uri.substring(image.uri.lastIndexOf("/") + 1);
+    const storageRef = ref(storage, `images/${filename}`);
+    const metadata = {
+      contentType: "image/jpeg",
+    };
+    const uploadTask = uploadBytesResumable(storageRef, image, metadata);
+
+    uploadTask.on("state_changed", (snapshot) => {
+      (error) => {
+        alert(error);
+      },
+        () => {
+          // getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          //   setImgUrl(downloadURL);
+          // });
+        };
+    });
+  }
+
+  function hej() {
+    getDownloadURL(
+      ref(storage, "images/DEDFF67C-EBF4-4B00-8927-D9990169176F.png")
+    )
+      .then((url) => {
+        setImgUrl(url);
+        console.log(imgUrl);
+      })
+      .catch((error) => {
+        console.log("fel");
+      });
+  }
 
   function AddProducts({
     title,
@@ -39,10 +91,9 @@ export default function CreateProduct() {
       hand: hand,
       shaft: shaft,
     });
+    test();
     submitAlert();
   }
-
-  console.log(image);
 
   const submitAlert = () => {
     Alert.alert("Annons skapad");
@@ -62,6 +113,13 @@ export default function CreateProduct() {
         />
       </View>
       <Text style={styles.headerText}>Skapa en annons</Text>
+      <Button title="test" onPress={hej}></Button>
+      <Image
+        source={{
+          uri: imgUrl,
+        }}
+        style={{ width: 100, height: 100 }}
+      />
       <View style={styles.form}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <Formik
@@ -100,7 +158,6 @@ export default function CreateProduct() {
                 },
               });
             }}
-            // onSubmit={(values) => AddProducts(values, image)}
           >
             {({
               handleChange,
