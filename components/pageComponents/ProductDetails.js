@@ -17,23 +17,24 @@ import { faRightLeft } from "@fortawesome/free-solid-svg-icons";
 import { faWeightHanging } from "@fortawesome/free-solid-svg-icons";
 import { faBarsProgress } from "@fortawesome/free-solid-svg-icons";
 import { faCircle } from "@fortawesome/free-solid-svg-icons";
-
-const product = {
-  title: "Taylormade M4",
-  price: 400,
-  description:
-    "Denna tunna träffytan tillsammans med den väldigt tunna framkanten levererar klubbhuvudet hög bollhastighet.",
-  location: "Göteborg, Majorna",
-  clubs: "5 - 6 - 7 - 8 - 9 - PW - Driver - Putter - 3 wood",
-  hcp: "10-20",
-  stiffness: "Stiff",
-  leftRight: "Höger",
-  gender: "Herr",
-};
+import { useRoute } from "@react-navigation/native";
 
 export default function ProductDetails() {
   const [activeImage, setActiveImage] = useState(0);
   const [openModal, setOpenModal] = useState(false);
+
+  const route = useRoute();
+  const {
+    title,
+    price,
+    location,
+    description,
+    stiffness,
+    clubs,
+    hcp,
+    leftRight,
+    gender,
+  } = route.params;
 
   const onScroll = ({ nativeEvent }) => {
     const slide = Math.ceil(
@@ -88,10 +89,10 @@ export default function ProductDetails() {
 
       <View style={styles.infoContainer}>
         <View style={styles.topInfoContainer}>
-          <Text style={styles.titleText}>{product.title}</Text>
+          <Text style={styles.titleText}>{title}</Text>
           <View style={styles.location}>
             <FontAwesomeIcon style={styles.locationIcon} icon={faLocationDot} />
-            <Text>{product.location}</Text>
+            <Text>{location}</Text>
           </View>
         </View>
         <View style={styles.specsContainer}>
@@ -103,7 +104,7 @@ export default function ProductDetails() {
             <View style={styles.iconsText}>
               <FontAwesomeIcon style={styles.icons} icon={faBarsProgress} />
             </View>
-            <Text>HCP {product.hcp}</Text>
+            <Text>HCP {hcp}</Text>
           </View>
           <View
             style={{
@@ -113,7 +114,7 @@ export default function ProductDetails() {
             <View style={styles.iconsText}>
               <FontAwesomeIcon style={styles.icons} icon={faWeightHanging} />
             </View>
-            <Text>{product.stiffness}</Text>
+            <Text>{stiffness}</Text>
           </View>
           <View
             style={{
@@ -123,7 +124,7 @@ export default function ProductDetails() {
             <View style={styles.iconsText}>
               <FontAwesomeIcon style={styles.icons} icon={faRightLeft} />
             </View>
-            <Text>{product.leftRight}</Text>
+            <Text>{leftRight}</Text>
           </View>
           <View
             style={{
@@ -133,26 +134,26 @@ export default function ProductDetails() {
             <View style={styles.iconsText}>
               <FontAwesomeIcon style={styles.icons} icon={faUser} />
             </View>
-            <Text>{product.gender}</Text>
+            <Text>{gender}</Text>
           </View>
         </View>
         <View style={styles.subHeadingContainer}>
           <Text style={styles.subHeadingText}>Klubbor</Text>
-          <Text style={styles.bodyText}>{product.clubs}</Text>
+          <Text style={styles.bodyText}>{clubs}</Text>
         </View>
         <View style={styles.subHeadingContainer}>
           <Text style={styles.subHeadingText}>Beskrivning</Text>
-          <Text style={styles.bodyText}>{product.description}</Text>
+          <Text style={styles.bodyText}>{description}</Text>
         </View>
         {openModal && (
           <DatePickerModal
             openModal={openModal}
             setOpenModal={setOpenModal}
-            price={product.price}
+            price={price}
           />
         )}
         <View style={styles.bottomContainer}>
-          <Text style={styles.bodyText}>{product.price}kr /dag</Text>
+          <Text style={styles.bodyText}>{price}kr /dag</Text>
           <Pressable style={styles.button} onPress={openDatePickerModal}>
             <Text style={styles.buttonText}>Skicka hyrförfrågan</Text>
           </Pressable>
@@ -164,7 +165,7 @@ export default function ProductDetails() {
 
 const styles = StyleSheet.create({
   container: {
-    height:"100%",
+    height: "100%",
     backgroundColor: "white",
   },
   titleText: {

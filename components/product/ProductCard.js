@@ -42,7 +42,19 @@ function ProductCard() {
         {products.map((item, i) => (
           <Pressable
             key={i}
-            onPress={() => navigation.navigate("ProductDetails")}
+            onPress={() => {
+              navigation.navigate("ProductDetails", {
+                title: item.title,
+                price: item.price,
+                description: item.description,
+                location: item.location,
+                clubs: item.clubs,
+                hcp: item.hcp,
+                stiffness: item.stiffness,
+                leftRight: item.leftRight,
+                gender: item.gender,
+              });
+            }}
           >
             <Box
               maxW="80"
