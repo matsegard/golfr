@@ -16,29 +16,23 @@ import { ProductValidationSchema } from "../schemas/ProductValidationSchema";
 import ImageUpload from "../inputs/ImageUpload";
 import { doc, setDoc, addDoc, collection } from "firebase/firestore";
 import { db } from "../../firebase/firebaseConfig";
-import {
-  getStorage,
-  ref,
-  uploadString,
-  storage,
-  getDownloadURL,
-  uploadBytesResumable,
-  uploadBytes,
-} from "firebase/storage";
+import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
 
 export default function CreateProduct() {
   const [image, setImage] = useState(null);
   const [imgUrl, setImgUrl] = useState(null);
 
   async function addImageDatabase() {
-    // let filename = image.substring(image.lastIndexOf("/") + 1);
+    let filename = image.uri.substring(image.uri.lastIndexOf("/") + 1);
     const storage = getStorage();
     const storageRef = ref(storage, "images");
-    const imageRef = ref(storageRef, "image.jpg");
-    const response = await fetch(image);
+    const imageRef = ref(storageRef, filename);
+    const response = await fetch(image.uri);
     const blob = await response.blob();
-    const snapshot = await uploadBytes(imageRef, blob);
-    console.log(snapshot);
+    await uploadBytes(imageRef, blob);
+    await getDownloadURL(imageRef).then((downloadURL) => {
+      setImgUrl(downloadURL);
+    });
   }
 
   function AddProducts({
@@ -52,11 +46,12 @@ export default function CreateProduct() {
     gender,
     hand,
     shaft,
+    image,
   }) {
     addDoc(collection(db, "products"), {
       title: title,
       category: category,
-      image: image,
+      image: imgUrl,
       description: description,
       price: price,
       location: location,
@@ -87,13 +82,7 @@ export default function CreateProduct() {
         />
       </View>
       <Text style={styles.headerText}>Skapa en annons</Text>
-      <Button title="test" onPress={addImageDatabase}></Button>
-      <Image
-        source={{
-          uri: imgUrl,
-        }}
-        style={{ width: 100, height: 100 }}
-      />
+      {/* <Button title="test" onPress={addImageDatabase}></Button> */}
       <View style={styles.form}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <Formik
@@ -114,6 +103,7 @@ export default function CreateProduct() {
               shaft: "",
             }}
             onSubmit={(values, actions) => {
+              addImageDatabase();
               AddProducts(values);
               actions.setSubmitting(false);
               actions.resetForm({

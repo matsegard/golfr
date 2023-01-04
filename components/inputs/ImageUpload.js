@@ -9,13 +9,12 @@ export default function ImageUpload({ setImage, image }) {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
       aspect: [4, 3],
-      quality: 1,
+      quality: 0,
     });
 
     if (!result.canceled) {
-      setImage(result.assets[0].uri);
+      setImage(result.assets[0]);
     }
   };
 
@@ -24,7 +23,10 @@ export default function ImageUpload({ setImage, image }) {
       <FontAwesomeIcon size={30} color="#828282" icon={faCamera} />
       <Button title="Ladda upp en bild" onPress={pickImage} />
       {image && (
-        <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
+        <Image
+          source={{ uri: image.uri }}
+          style={{ width: 200, height: 200 }}
+        />
       )}
     </View>
   );
