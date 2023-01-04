@@ -23,52 +23,27 @@ import {
   storage,
   getDownloadURL,
   uploadBytesResumable,
+  uploadBytes,
 } from "firebase/storage";
 
 export default function CreateProduct() {
   const [image, setImage] = useState(null);
   const [imgUrl, setImgUrl] = useState(null);
 
-  const storage = getStorage();
-  const storageRef = ref(storage);
-
-  function test() {
-    let filename = image.uri.substring(image.uri.lastIndexOf("/") + 1);
-    const storageRef = ref(storage, `images/${filename}`);
-    const metadata = {
-      contentType: "image/jpeg",
-    };
-    const uploadTask = uploadBytesResumable(storageRef, image, metadata);
-
-    uploadTask.on("state_changed", (snapshot) => {
-      (error) => {
-        alert(error);
-      },
-        () => {
-          // getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          //   setImgUrl(downloadURL);
-          // });
-        };
-    });
-  }
-
-  function hej() {
-    getDownloadURL(
-      ref(storage, "images/DEDFF67C-EBF4-4B00-8927-D9990169176F.png")
-    )
-      .then((url) => {
-        setImgUrl(url);
-        console.log(imgUrl);
-      })
-      .catch((error) => {
-        console.log("fel");
-      });
+  async function addImageDatabase() {
+    // let filename = image.substring(image.lastIndexOf("/") + 1);
+    const storage = getStorage();
+    const storageRef = ref(storage, "images");
+    const imageRef = ref(storageRef, "image.jpg");
+    const response = await fetch(image);
+    const blob = await response.blob();
+    const snapshot = await uploadBytes(imageRef, blob);
+    console.log(snapshot);
   }
 
   function AddProducts({
     title,
     category,
-    image,
     description,
     price,
     location,
@@ -91,7 +66,6 @@ export default function CreateProduct() {
       hand: hand,
       shaft: shaft,
     });
-    test();
     submitAlert();
   }
 
@@ -113,7 +87,7 @@ export default function CreateProduct() {
         />
       </View>
       <Text style={styles.headerText}>Skapa en annons</Text>
-      <Button title="test" onPress={hej}></Button>
+      <Button title="test" onPress={addImageDatabase}></Button>
       <Image
         source={{
           uri: imgUrl,

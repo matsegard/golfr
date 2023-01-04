@@ -15,8 +15,7 @@ export default function ImageUpload({ setImage, image }) {
     });
 
     if (!result.canceled) {
-      setImage(result.assets[0]);
-      console.log(image);
+      setImage(result.assets[0].uri);
     }
   };
 
@@ -25,10 +24,7 @@ export default function ImageUpload({ setImage, image }) {
       <FontAwesomeIcon size={30} color="#828282" icon={faCamera} />
       <Button title="Ladda upp en bild" onPress={pickImage} />
       {image && (
-        <Image
-          source={{ uri: image.uri }}
-          style={{ width: 200, height: 200 }}
-        />
+        <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
       )}
     </View>
   );
