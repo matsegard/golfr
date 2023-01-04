@@ -1,13 +1,78 @@
-import React from "react";
-import { StyleSheet, View, Image, Text, TextInput } from "react-native";
+import React, { useState } from "react";
+import {
+  StyleSheet,
+  View,
+  Image,
+  Text,
+  TextInput,
+  Alert,
+  Button,
+} from "react-native";
 import { Select, Box, CheckIcon, Center, ScrollView } from "native-base";
 import Navbar from "../bars/Navbar";
 import { Formik } from "formik";
 import PrimaryButton from "../inputs/PrimaryButton.js";
 import { ProductValidationSchema } from "../schemas/ProductValidationSchema";
 import ImageUpload from "../inputs/ImageUpload";
+import { doc, setDoc, addDoc, collection } from "firebase/firestore";
+import { db } from "../../firebase/firebaseConfig";
+import {
+  getStorage,
+  ref,
+  uploadString,
+  storage,
+  getDownloadURL,
+  uploadBytesResumable,
+  uploadBytes,
+} from "firebase/storage";
 
 export default function CreateProduct() {
+  const [image, setImage] = useState(null);
+  const [imgUrl, setImgUrl] = useState(null);
+
+  async function addImageDatabase() {
+    // let filename = image.substring(image.lastIndexOf("/") + 1);
+    const storage = getStorage();
+    const storageRef = ref(storage, "images");
+    const imageRef = ref(storageRef, "image.jpg");
+    const response = await fetch(image);
+    const blob = await response.blob();
+    const snapshot = await uploadBytes(imageRef, blob);
+    console.log(snapshot);
+  }
+
+  function AddProducts({
+    title,
+    category,
+    description,
+    price,
+    location,
+    clubs,
+    difficulty,
+    gender,
+    hand,
+    shaft,
+  }) {
+    addDoc(collection(db, "products"), {
+      title: title,
+      category: category,
+      image: image,
+      description: description,
+      price: price,
+      location: location,
+      clubs: clubs,
+      difficulty: difficulty,
+      gender: gender,
+      hand: hand,
+      shaft: shaft,
+    });
+    submitAlert();
+  }
+
+  const submitAlert = () => {
+    Alert.alert("Annons skapad");
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.greenBubble}>
@@ -22,6 +87,13 @@ export default function CreateProduct() {
         />
       </View>
       <Text style={styles.headerText}>Skapa en annons</Text>
+      <Button title="test" onPress={addImageDatabase}></Button>
+      <Image
+        source={{
+          uri: imgUrl,
+        }}
+        style={{ width: 100, height: 100 }}
+      />
       <View style={styles.form}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <Formik
@@ -41,7 +113,25 @@ export default function CreateProduct() {
               hand: "",
               shaft: "",
             }}
-            onSubmit={(values) => console.log(values)}
+            onSubmit={(values, actions) => {
+              AddProducts(values);
+              actions.setSubmitting(false);
+              actions.resetForm({
+                values: {
+                  title: "",
+                  category: "",
+                  image: "",
+                  description: "",
+                  price: "",
+                  location: "",
+                  clubs: "",
+                  difficulty: "",
+                  gender: "",
+                  hand: "",
+                  shaft: "",
+                },
+              });
+            }}
           >
             {({
               handleChange,
@@ -213,7 +303,7 @@ export default function CreateProduct() {
                 )}
 
                 <Text style={styles.formLabel}>Bild</Text>
-                <ImageUpload />
+                <ImageUpload setImage={setImage} image={image} />
                 <Text style={styles.formLabel}>Beskrivning</Text>
                 <TextInput
                   multiline
@@ -273,7 +363,7 @@ export default function CreateProduct() {
 
 const styles = StyleSheet.create({
   container: {
-    height:"100%",
+    height: "100%",
     backgroundColor: "FAFAFA",
     justifyContent: "center",
     alignItems: "center",

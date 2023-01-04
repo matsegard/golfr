@@ -9,6 +9,11 @@ import { Input } from "native-base";
 import PrimaryButton from "../inputs/PrimaryButton.js";
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+} from "firebase/auth";
 
 function Login() {
   const [show, setShow] = useState(false);

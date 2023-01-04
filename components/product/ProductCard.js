@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import {
   ScrollView,
   Box,
@@ -13,37 +14,32 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons/faLocationDot";
 import { Pressable, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../firebase/firebaseConfig";
 
 function ProductCard() {
-  const Products = [
-    {
-      Title: "Titlest t100",
-      Price: 299,
-      Description:
-        "Ett toppen golf sett som kommer göra att din tur i det gröna kommer att förvlandlas till en sago stund. Glöma sne och kortaslag, mot stjärnorna och vidare",
-      Place: "Majorna Göteborg",
-    },
-    {
-      Title: "Titlest t300",
-      Price: 2999,
-      Description:
-        "Ett toppen golf sett som kommer göra att din tur i det gröna kommer att förvlandlas till en sago stund. Glöma sne och kortaslag, mot stjärnorna och vidare",
-      Place: "Lunden Göteborg",
-    },
-    {
-      Title: "Titlest t300",
-      Price: 2999,
-      Description:
-        "Ett toppen golf sett som kommer göra att din tur i det gröna kommer att förvlandlas till en sago stund. Glöma sne och kortaslag, mot stjärnorna och vidare",
-      Place: "Lunden Göteborg",
-    },
-  ];
+  const [products, setProducts] = useState([]);
+
+  async function getData() {
+    const productsData = [];
+    const querySnapshot = await getDocs(collection(db, "products"));
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      productsData.push(doc.data());
+    });
+    return setProducts(productsData);
+  }
+
+  useEffect(() => {
+    getData();
+  }, []);
+
   const navigation = useNavigation();
 
   return (
     <ScrollView showsVerticalScrollIndicator={false} height="auto">
       <Box alignItems="center" marginBottom="240">
-        {Products.map((item, i) => (
+        {products.map((item, i) => (
           <Pressable
             key={i}
             onPress={() => navigation.navigate("ProductDetails")}
@@ -91,13 +87,13 @@ function ProductCard() {
                   px="3"
                   py="1.5"
                 >
-                  {item.Price} kr/dag
+                  {item.price} kr/dag
                 </Center>
               </Box>
               <Stack p="4" space={3}>
                 <Stack space={2}>
                   <Heading size="md" ml="-1">
-                    {item.Title}
+                    {item.title}
                   </Heading>
                   <Text
                     fontSize="xs"
@@ -112,11 +108,11 @@ function ProductCard() {
                     mt="-1"
                     mr="5"
                   >
-                    {item.Place}{" "}
+                    {item.location}{" "}
                     <FontAwesomeIcon color="#B6B6B6" icon={faLocationDot} />
                   </Text>
                 </Stack>
-                <Text fontWeight="400">{item.Description}</Text>
+                <Text fontWeight="400">{item.description}</Text>
               </Stack>
             </Box>
           </Pressable>
