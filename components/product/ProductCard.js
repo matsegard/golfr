@@ -8,14 +8,14 @@ import {
   Text,
   Center,
   Stack,
+  HStack,
 } from "native-base";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons/faLocationDot";
-import { Pressable, StyleSheet } from "react-native";
+import { Pressable, StyleSheet, ActivityIndicator } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebase/firebaseConfig";
-import reactDom from "react-dom";
 
 function ProductCard() {
   const [products, setProducts] = useState([]);
@@ -133,16 +133,13 @@ function ProductCard() {
             </Pressable>
           ))
         ) : (
-          <Box
-            sx={{
-              marginLeft: "auto",
-              marginRight: "auto",
-            }}
-          >
-            <Text fontSize="2xl" style={styles.loading}>
-              Loading...
-            </Text>
-          </Box>
+          <HStack justifyContent="center" alignItems="center">
+            <ActivityIndicator
+              style={styles.spinner}
+              size="large"
+              color="#6A8E4E"
+            />
+          </HStack>
         )}
       </Box>
     </ScrollView>
@@ -153,9 +150,9 @@ const styles = StyleSheet.create({
   margin: {
     marginTop: 20,
   },
-  loading: {
+  spinner: {
     margin: "auto",
-    marginTop: 50,
+    marginTop: 60,
   },
 });
 
