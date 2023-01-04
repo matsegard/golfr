@@ -8,7 +8,7 @@ import PrimaryButton from "../inputs/PrimaryButton.js";
 import { useState } from "react";
 import { Formik } from "formik";
 import { LoginSignupValidationSchema } from "../schemas/LoginSignupValidationSchema";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../firebase/firebaseConfig";
 
@@ -17,13 +17,18 @@ function Signup({ navigation }) {
   const [show, setShow] = useState(false);
   const auth = getAuth();
 
+
   function CreateAccount({ email, username, password }) {
-    createUserWithEmailAndPassword(auth, email, password).then(() => {
-      setDoc(doc(db, `users/${auth.currentUser?.uid}`), {
-        username: username,
-        email: email,
-      });
-    });
+      createUserWithEmailAndPassword(auth, email, password)
+      .then(async (userCredential) => {
+        const user = userCredential.user;
+        await updateProfile(auth.currentUser, auth.currentUser.username)
+        setDoc(doc(db, `users/${auth.currentUser?.uid}`), {
+          username: username,
+          email: email,
+        });
+    })
+
     // .then(() =>
     //   updateProfile(auth.currentUser, {
     //     username: username,
