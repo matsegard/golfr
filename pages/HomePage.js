@@ -55,7 +55,6 @@ export default function HomePage({ navigation }) {
         <Text>Open</Text>
       </Pressable>
       {open && <EditProductModal open={open} setOpen={setOpen} />}
-      <ImageUpload />
       <Navbar />
     </View>
   );
