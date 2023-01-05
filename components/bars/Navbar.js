@@ -7,23 +7,26 @@ import { faSquarePlus } from "@fortawesome/free-solid-svg-icons/faSquarePlus";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons/faMagnifyingGlass";
 import { faUser } from "@fortawesome/free-solid-svg-icons/faUser";
 import { useNavigation } from "@react-navigation/native";
-import {  getAuth, onAuthStateChanged } from "firebase/auth"
+import { getAuth, onAuthStateChanged } from "firebase/auth"
 
 function Navbar() {
   const [selected, setSelected] = useState(0);
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+  
   const navigation = useNavigation();
+  const auth = getAuth();
+
+  const currentUser = auth.currentUser;
 
   function addProduct() {
     navigation.navigate("AddProduct");
     setSelected(2);
   }
-  const auth = getAuth();
+
+  
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        const uid = user.uid;
-        const currentUser = auth.currentUser;
         setIsUserLoggedIn(true)
       } else {
         setIsUserLoggedIn(false)
@@ -31,14 +34,16 @@ function Navbar() {
     });
   }, []);
 
- function navigatetoPage(user){
-    const page = isUserLoggedIn ? "Profile" : "Login";
-     navigation.navigate(page, {
-        user
-     }) 
+ function navigatetoPage(){
+      if ( isUserLoggedIn === true ) {
+        navigation.navigate("Profile", {
+          user: currentUser,
+         }) 
+      } else {
+        navigation.navigate("Login") 
+      }
      setSelected(4)
  }
-
 
   return (
     <View style={styles.container}>
@@ -61,7 +66,7 @@ function Navbar() {
           icon={faHouse}
         />
       </Pressable>
-      { isUserLoggedIn ? (
+      { isUserLoggedIn && (
         <Pressable
         onPress={() => setSelected(1)}
         style={{
@@ -80,10 +85,7 @@ function Navbar() {
           icon={faBell}
         />
       </Pressable>
-      ) : (
-        null
-      ) }
-      
+      )}
       <Pressable
         onPress={addProduct}
         addProduct
@@ -132,7 +134,6 @@ function Navbar() {
           borderRadius: "7px",
         }}
       >
-        
         <FontAwesomeIcon
           size={30}
           color={selected === 4 ? "white" : "#828282"}
