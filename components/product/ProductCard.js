@@ -48,14 +48,16 @@ function ProductCard() {
               onPress={() => {
                 navigation.navigate("ProductDetails", {
                   title: item.title,
+                  image: item.image,
                   price: item.price,
                   description: item.description,
                   location: item.location,
                   clubs: item.clubs,
-                  hcp: item.hcp,
-                  stiffness: item.stiffness,
-                  leftRight: item.leftRight,
+                  difficulty: item.difficulty,
+                  shaft: item.shaft,
+                  hand: item.hand,
                   gender: item.gender,
+                  user: item.user,
                 });
               }}
             >
@@ -82,7 +84,7 @@ function ProductCard() {
                   <AspectRatio w="100%" ratio={16 / 9}>
                     <Image
                       source={{
-                        uri: "https://www.holidify.com/images/cmsuploads/compressed/Bangalore_citycover_20190613234056.jpg",
+                        uri: item.image,
                       }}
                       alt="image"
                     />
@@ -126,6 +128,7 @@ function ProductCard() {
                       {item.location}{" "}
                       <FontAwesomeIcon color="#B6B6B6" icon={faLocationDot} />
                     </Text>
+                    <Text fontSize="xs">{item.user}</Text>
                   </Stack>
                   <Text fontWeight="400">{item.description}</Text>
                 </Stack>

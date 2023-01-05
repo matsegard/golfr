@@ -6,18 +6,15 @@ import CategoryBar from "../components/bars/CategoryBar";
 import SearchBar from "../components/inputs/SearchBar";
 
 export default function ProductPage({ navigation }) {
-
   const route = useRoute();
-  const {
-    user,
-  } = route.params;
+  // const { user } = route.params;
 
   return (
     <View style={styles.container}>
       <View style={styles.product}>
         <SearchBar />
-        <Text>{user.displayName}</Text>
-        <Text>{user.email}</Text>
+        {/* <Text>{user.displayName}</Text>
+        <Text>{user.email}</Text> */}
       </View>
       <CategoryBar />
       <View style={styles.top} />
@@ -29,7 +26,7 @@ export default function ProductPage({ navigation }) {
       >
         <ProductCard />
       </Text>
-      
+
       <StatusBar style="auto" />
     </View>
   );
