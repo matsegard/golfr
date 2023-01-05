@@ -20,11 +20,14 @@ import ImageUpload from "../inputs/ImageUpload";
 import { doc, setDoc, addDoc, collection } from "firebase/firestore";
 import { db } from "../../firebase/firebaseConfig";
 import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
-import { async } from "@firebase/util";
+import { getAuth } from "firebase/auth";
 
 export default function CreateProduct() {
   const [image, setImage] = useState(null);
   const [imgUrl, setImgUrl] = useState(null);
+
+  const auth = getAuth();
+  const user = auth.currentUser;
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -67,7 +70,6 @@ export default function CreateProduct() {
     gender,
     hand,
     shaft,
-    image,
   }) {
     addDoc(collection(db, "products"), {
       title: title,
@@ -81,6 +83,7 @@ export default function CreateProduct() {
       gender: gender,
       hand: hand,
       shaft: shaft,
+      user: user.displayName,
     });
     submitAlert();
   }

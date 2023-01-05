@@ -29,11 +29,14 @@ export default function ProductDetails() {
     price,
     location,
     description,
-    stiffness,
+    shaft,
     clubs,
     hcp,
-    leftRight,
+    difficulty,
+    hand,
     gender,
+    image,
+    user,
   } = route.params;
 
   const onScroll = ({ nativeEvent }) => {
@@ -48,7 +51,7 @@ export default function ProductDetails() {
   };
 
   const images = [
-    "https://plus.unsplash.com/premium_photo-1661774316407-56209baefa8c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
+    image,
     "https://images.unsplash.com/photo-1535131749006-b7f58c99034b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
     "https://images.unsplash.com/flagged/photo-1576448438685-9f5e5b283d4f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
   ];
@@ -86,7 +89,6 @@ export default function ProductDetails() {
           ))}
         </View>
       </View>
-
       <View style={styles.infoContainer}>
         <View style={styles.topInfoContainer}>
           <Text style={styles.titleText}>{title}</Text>
@@ -95,6 +97,21 @@ export default function ProductDetails() {
             <Text>{location}</Text>
           </View>
         </View>
+        <View
+          style={{
+            flexDirection: "row",
+          }}
+        >
+          <FontAwesomeIcon style={styles.icons} icon={faUser} />
+          <Text
+            style={{
+              marginLeft: 5,
+            }}
+          >
+            {user}
+          </Text>
+        </View>
+
         <View style={styles.specsContainer}>
           <View
             style={{
@@ -104,7 +121,7 @@ export default function ProductDetails() {
             <View style={styles.iconsText}>
               <FontAwesomeIcon style={styles.icons} icon={faBarsProgress} />
             </View>
-            <Text>HCP {hcp}</Text>
+            <Text>{difficulty}</Text>
           </View>
           <View
             style={{
@@ -114,7 +131,7 @@ export default function ProductDetails() {
             <View style={styles.iconsText}>
               <FontAwesomeIcon style={styles.icons} icon={faWeightHanging} />
             </View>
-            <Text>{stiffness}</Text>
+            <Text>{shaft}</Text>
           </View>
           <View
             style={{
@@ -124,7 +141,7 @@ export default function ProductDetails() {
             <View style={styles.iconsText}>
               <FontAwesomeIcon style={styles.icons} icon={faRightLeft} />
             </View>
-            <Text>{leftRight}</Text>
+            <Text>{hand}</Text>
           </View>
           <View
             style={{

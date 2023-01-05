@@ -33,10 +33,9 @@ export const ProductValidationSchema = yup.object().shape({
     // .required("Ange vilka klubbor settet innehåller")
     .min(3, "Ange vilka klubbor settet innehåller"),
   difficulty: yup
-    .number()
-    .typeError("Ange svårighetsgrad i nummer")
-    // .Optinal("Ange vilka klubbor settet innehåller")
-    .min(3, "Ange vilka klubbor settet innehåller"),
+    .string()
+    .oneOf(["Avancerad", "Medel", "Nybörjare"])
+    .label(["Avancerad", "Medel", "Nybörjare"]),
   gender: yup
     .string()
     // .required("Välj kön")

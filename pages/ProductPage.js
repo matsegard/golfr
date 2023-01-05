@@ -7,11 +7,8 @@ import SearchBar from "../components/inputs/SearchBar";
 import Navbar from "../components/bars/Navbar"
 
 export default function ProductPage({ navigation }) {
-
   const route = useRoute();
-  const {
-    user,
-  } = route.params;
+  // const { user } = route.params;
 
   return (
     <View style={styles.container}>

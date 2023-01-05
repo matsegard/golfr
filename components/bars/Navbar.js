@@ -7,7 +7,10 @@ import { faSquarePlus } from "@fortawesome/free-solid-svg-icons/faSquarePlus";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons/faMagnifyingGlass";
 import { faUser } from "@fortawesome/free-solid-svg-icons/faUser";
 import { useNavigation } from "@react-navigation/native";
+
 import { getAuth, onAuthStateChanged } from "firebase/auth"
+=======
+
 
 function Navbar() {
   const [selected, setSelected] = useState(0);
@@ -18,9 +21,16 @@ function Navbar() {
 
   const currentUser = auth.currentUser;
 
+  const auth = getAuth();
+  const user = auth.currentUser;
+
   function addProduct() {
-    navigation.navigate("AddProduct");
     setSelected(2);
+    if (user) {
+      navigation.navigate("AddProduct");
+    } else {
+      navigation.navigate("Login");
+    }
   }
 
   
