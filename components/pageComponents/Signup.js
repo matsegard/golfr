@@ -17,35 +17,20 @@ function Signup({ navigation }) {
   const [show, setShow] = useState(false);
   const auth = getAuth();
 
-  // const CreateAccount = async ({ email, username, password }) => {
-  //   const { user } = await createUserWithEmailAndPassword(auth, email, password).then(() => {
-  //     setDoc(doc(db, `users/${auth.currentUser?.uid}`), {
-  //       username: username,
-  //       email: email,
-  //     });
-  //     updateProfile(user, {
-  //       displayName: username
-        
-  //     })
-  //   });
-
   const CreateAccount = async ({ email, username, password }) => {
-      const { user } = await createUserWithEmailAndPassword(auth, email, password)
+    const { user } = await createUserWithEmailAndPassword(auth, email, password);
 
-      
-      await updateProfile(user, {
-        displayName: username
-      });
-    
-  }
-  
-    // .then(() =>
-    //   updateProfile(auth.currentUser, {
-    //     username: username,
-    //   })
-    // )
-    // .catch((error) => {});
+    await updateProfile(user, {
+      displayName: username
+    });
 
+    await setDoc(doc(db, `users/${auth.currentUser?.uid}`), {
+      username: username,
+      email: email,
+    })
+
+    await reload(user);
+ }
 
   return (
     <View style={styles.container}>
