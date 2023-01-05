@@ -100,7 +100,6 @@ export default function ProductDetails() {
         <View
           style={{
             flexDirection: "row",
-            justifyContent: "center",
           }}
         >
           <FontAwesomeIcon style={styles.icons} icon={faUser} />
