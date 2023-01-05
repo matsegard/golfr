@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   View,
@@ -11,35 +11,50 @@ import {
 import { Select, Box, CheckIcon, Center, ScrollView } from "native-base";
 import Navbar from "../bars/Navbar";
 import { Formik } from "formik";
+import * as ImagePicker from "expo-image-picker";
+import { faCamera } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import PrimaryButton from "../inputs/PrimaryButton.js";
 import { ProductValidationSchema } from "../schemas/ProductValidationSchema";
 import ImageUpload from "../inputs/ImageUpload";
 import { doc, setDoc, addDoc, collection } from "firebase/firestore";
 import { db } from "../../firebase/firebaseConfig";
-import {
-  getStorage,
-  ref,
-  uploadString,
-  storage,
-  getDownloadURL,
-  uploadBytesResumable,
-  uploadBytes,
-} from "firebase/storage";
+import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
+import { async } from "@firebase/util";
 
 export default function CreateProduct() {
   const [image, setImage] = useState(null);
   const [imgUrl, setImgUrl] = useState(null);
 
-  async function addImageDatabase() {
-    // let filename = image.substring(image.lastIndexOf("/") + 1);
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      aspect: [4, 3],
+      quality: 0.1,
+    });
+
+    if (!result.canceled) {
+      setImage(result.assets[0]);
+    }
+  };
+
+  useEffect(() => {
+    addImageDatabase();
+  }, [image]);
+
+  const addImageDatabase = async () => {
     const storage = getStorage();
+    let filename = image.uri.substring(image.uri.lastIndexOf("/") + 1);
     const storageRef = ref(storage, "images");
-    const imageRef = ref(storageRef, "image.jpg");
-    const response = await fetch(image);
+    const imageRef = ref(storageRef, filename);
+    const response = await fetch(image.uri);
     const blob = await response.blob();
-    const snapshot = await uploadBytes(imageRef, blob);
-    console.log(snapshot);
-  }
+    await uploadBytes(imageRef, blob);
+    await getDownloadURL(imageRef).then((downloadURL) => {
+      setImgUrl(downloadURL);
+    });
+  };
 
   function AddProducts({
     title,
@@ -52,11 +67,12 @@ export default function CreateProduct() {
     gender,
     hand,
     shaft,
+    image,
   }) {
     addDoc(collection(db, "products"), {
       title: title,
       category: category,
-      image: image,
+      image: imgUrl,
       description: description,
       price: price,
       location: location,
@@ -87,13 +103,6 @@ export default function CreateProduct() {
         />
       </View>
       <Text style={styles.headerText}>Skapa en annons</Text>
-      <Button title="test" onPress={addImageDatabase}></Button>
-      <Image
-        source={{
-          uri: imgUrl,
-        }}
-        style={{ width: 100, height: 100 }}
-      />
       <View style={styles.form}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <Formik
@@ -201,18 +210,33 @@ export default function CreateProduct() {
                       <Text style={styles.errorMessage}>{errors.clubs}</Text>
                     )}
                     <Text style={styles.formLabel}>Svårighetsgrad</Text>
-                    <TextInput
-                      style={styles.input}
-                      placeholder="Ange klubbornas svårighetsgrad"
-                      keyboardType="numeric"
-                      value={values.klubbor}
-                      onChangeText={handleChange("difficulty")}
-                      onBlur={handleBlur("difficulty")}
-                    />
-                    {errors.difficulty && (
-                      <Text style={styles.errorMessage}>
-                        {errors.difficulty}
-                      </Text>
+                    <Center>
+                      <Box maxW="300" style={{ marginBottom: 20 }}>
+                        <Select
+                          variant="underlined"
+                          selectedValue={values.difficulty}
+                          value={values.difficulty}
+                          onChangeText={handleChange("difficulty")}
+                          onBlur={handleBlur("difficulty")}
+                          minWidth="100%"
+                          label="Ange klubbornas svårighetsgrad"
+                          accessibilityLabel="Ange klubbornas svårighetsgrad"
+                          placeholder="Ange klubbornas svårighetsgrad"
+                          _selectedItem={{
+                            bg: "#6A8E4E",
+                            endIcon: <CheckIcon size="4" />,
+                          }}
+                          mt={3}
+                          onValueChange={handleChange("difficulty")}
+                        >
+                          <Select.Item label="Avancerad" value="Avancerad" />
+                          <Select.Item label="Medel" value="Medel" />
+                          <Select.Item label="Nybörjare" value="Nybörjare" />
+                        </Select>
+                      </Box>
+                    </Center>
+                    {errors.gender && (
+                      <Text style={styles.errorMessage}>{errors.gender}</Text>
                     )}
                     <Text style={styles.formLabel}>Kön</Text>
                     <Center>
@@ -303,7 +327,23 @@ export default function CreateProduct() {
                 )}
 
                 <Text style={styles.formLabel}>Bild</Text>
-                <ImageUpload setImage={setImage} image={image} />
+                {/* <ImageUpload setImage={setImage} image={image} /> */}
+                <View
+                  style={{
+                    flex: 1,
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <FontAwesomeIcon size={30} color="#828282" icon={faCamera} />
+                  <Button title="Ladda upp en bild" onPress={pickImage} />
+                  {image && (
+                    <Image
+                      source={{ uri: image.uri }}
+                      style={{ width: 200, height: 200 }}
+                    />
+                  )}
+                </View>
                 <Text style={styles.formLabel}>Beskrivning</Text>
                 <TextInput
                   multiline
