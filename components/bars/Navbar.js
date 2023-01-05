@@ -7,21 +7,17 @@ import { faSquarePlus } from "@fortawesome/free-solid-svg-icons/faSquarePlus";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons/faMagnifyingGlass";
 import { faUser } from "@fortawesome/free-solid-svg-icons/faUser";
 import { useNavigation } from "@react-navigation/native";
-
-import { getAuth, onAuthStateChanged } from "firebase/auth"
-=======
-
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 function Navbar() {
   const [selected, setSelected] = useState(0);
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
-  
+
   const navigation = useNavigation();
   const auth = getAuth();
 
   const currentUser = auth.currentUser;
 
-  const auth = getAuth();
   const user = auth.currentUser;
 
   function addProduct() {
@@ -33,27 +29,26 @@ function Navbar() {
     }
   }
 
-  
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        setIsUserLoggedIn(true)
+        setIsUserLoggedIn(true);
       } else {
-        setIsUserLoggedIn(false)
+        setIsUserLoggedIn(false);
       }
     });
   }, []);
 
- function navigatetoPage(){
-      if ( isUserLoggedIn === true ) {
-        navigation.navigate("Profile", {
-          user: currentUser,
-         }) 
-      } else {
-        navigation.navigate("Login") 
-      }
-     setSelected(4)
- }
+  function navigatetoPage() {
+    if (isUserLoggedIn === true) {
+      navigation.navigate("Profile", {
+        user: currentUser,
+      });
+    } else {
+      navigation.navigate("Login");
+    }
+    setSelected(4);
+  }
 
   return (
     <View style={styles.container}>
@@ -76,25 +71,25 @@ function Navbar() {
           icon={faHouse}
         />
       </Pressable>
-      { isUserLoggedIn && (
+      {isUserLoggedIn && (
         <Pressable
-        onPress={() => setSelected(1)}
-        style={{
-          backgroundColor: selected === 1 ? "#6A8E4E" : "transparent",
-          color: selected === 1 ? "white" : "#828282",
-          height: 45,
-          width: 45,
-          alignItems: "center",
-          justifyContent: "center",
-          borderRadius: "7px",
-        }}
-      >
-        <FontAwesomeIcon
-          size={30}
-          color={selected === 1 ? "white" : "#828282"}
-          icon={faBell}
-        />
-      </Pressable>
+          onPress={() => setSelected(1)}
+          style={{
+            backgroundColor: selected === 1 ? "#6A8E4E" : "transparent",
+            color: selected === 1 ? "white" : "#828282",
+            height: 45,
+            width: 45,
+            alignItems: "center",
+            justifyContent: "center",
+            borderRadius: "7px",
+          }}
+        >
+          <FontAwesomeIcon
+            size={30}
+            color={selected === 1 ? "white" : "#828282"}
+            icon={faBell}
+          />
+        </Pressable>
       )}
       <Pressable
         onPress={addProduct}
