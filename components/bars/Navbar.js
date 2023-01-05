@@ -1,5 +1,5 @@
 import { Pressable, StyleSheet, View } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faHouse } from "@fortawesome/free-solid-svg-icons/faHouse";
 import { faBell } from "@fortawesome/free-solid-svg-icons/faBell";
@@ -7,15 +7,33 @@ import { faSquarePlus } from "@fortawesome/free-solid-svg-icons/faSquarePlus";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons/faMagnifyingGlass";
 import { faUser } from "@fortawesome/free-solid-svg-icons/faUser";
 import { useNavigation } from "@react-navigation/native";
+import {  getAuth, onAuthStateChanged } from "firebase/auth"
 
 function Navbar() {
   const [selected, setSelected] = useState(0);
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
   const navigation = useNavigation();
 
   function addProduct() {
     navigation.navigate("AddProduct");
     setSelected(2);
   }
+  const auth = getAuth();
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const uid = user.uid;
+        const currentUser = auth.currentUser;
+        console.log("logged in navbar", currentUser);
+        setIsUserLoggedIn(true)
+      } else {
+        console.log("NOT logged in navbar");
+        setIsUserLoggedIn(false)
+      }
+    });
+  }, []);
+
+ 
 
   return (
     <View style={styles.container}>
@@ -38,7 +56,8 @@ function Navbar() {
           icon={faHouse}
         />
       </Pressable>
-      <Pressable
+      { isUserLoggedIn ? (
+        <Pressable
         onPress={() => setSelected(1)}
         style={{
           backgroundColor: selected === 1 ? "#6A8E4E" : "transparent",
@@ -56,6 +75,10 @@ function Navbar() {
           icon={faBell}
         />
       </Pressable>
+      ) : (
+        null
+      ) }
+      
       <Pressable
         onPress={addProduct}
         addProduct

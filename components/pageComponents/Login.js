@@ -24,10 +24,9 @@ function Login() {
   function signIn({ email, password }) {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        const user = userCredential.user;
-        console.log("SIGNED IN", auth.currentUser); 
+        const user = userCredential.user; 
         navigation.navigate("Products", {
-        user: auth.currentUser,
+          user: auth.currentUser,
         });
       })
       .catch((error) => {
@@ -39,8 +38,6 @@ function Login() {
         }
       });
   }
-
-  
 
   // // TO BE REMOVED
   // onAuthStateChanged(auth, (user) => {
