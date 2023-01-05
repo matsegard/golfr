@@ -8,6 +8,7 @@ import {
   Text,
   Center,
   Stack,
+  Pressable,
 } from "native-base";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
@@ -22,14 +23,24 @@ import {
   onSnapshot,
 } from "firebase/firestore";
 import { db } from "../../firebase/firebaseConfig";
+import EditProductModal from "../modals/EditProductModal";
 
 const MyProfileProducts = () => {
+  const [open, setOpen] = useState(false);
   const [myProducts, setMyProducts] = useState([]);
   // const [loading, setLoading] = useState(true);
+
   const auth = getAuth();
   const user = auth.currentUser;
 
-  console.log(user);
+  const showModal = () => {
+    setOpen(!open);
+  };
+
+  async function deleteProduct() {
+    console.log("delete");
+  }
+
   async function getData() {
     const productsFromDb = [];
     const q = query(
@@ -103,18 +114,30 @@ const MyProfileProducts = () => {
                 </Text>
               </Stack>
               <Box flexDirection="row" justifyContent="flex-end">
-                <FontAwesomeIcon
-                  style={{ marginRight: 20, marginBottom: 10 }}
-                  color="#E46969"
-                  size={30}
-                  icon={faTrashCan}
-                />
-                <FontAwesomeIcon
-                  style={{ marginRight: 15 }}
-                  color="#6A8E4E"
-                  size={30}
-                  icon={faPen}
-                />
+                <Pressable onPress={deleteProduct}>
+                  <FontAwesomeIcon
+                    style={{ marginRight: 20, marginBottom: 10 }}
+                    color="#E46969"
+                    size={30}
+                    icon={faTrashCan}
+                  />
+                </Pressable>
+                <Pressable onPress={showModal}>
+                  <FontAwesomeIcon
+                    style={{ marginRight: 15 }}
+                    color="#6A8E4E"
+                    size={30}
+                    icon={faPen}
+                    onPress={showModal}
+                  />
+                </Pressable>
+                {open && (
+                  <EditProductModal
+                    open={open}
+                    setOpen={setOpen}
+                    product={product}
+                  />
+                )}
               </Box>
             </Box>
           ))}

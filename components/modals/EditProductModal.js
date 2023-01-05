@@ -6,7 +6,7 @@ import { Formik } from "formik";
 import { Box, CheckIcon } from "native-base";
 import ImagePicker from "../inputs/ImageUpload";
 
-export default function EditProductModal({ open, setOpen }) {
+export default function EditProductModal({ open, setOpen, product }) {
   return (
     <Center>
       <Modal
@@ -23,17 +23,17 @@ export default function EditProductModal({ open, setOpen }) {
               validateOnBlur={false}
               validationSchema={ProductValidationSchema}
               initialValues={{
-                title: "",
-                category: "",
-                image: "",
-                description: "",
-                price: "",
-                location: "",
-                clubs: "",
-                difficulty: "",
-                gender: "",
-                hand: "",
-                shaft: "",
+                title: product.title,
+                category: product.category,
+                image: product.image,
+                description: product.description,
+                price: product.price,
+                location: product.location,
+                clubs: product.clubs,
+                difficulty: product.difficulty,
+                gender: product.gender,
+                hand: product.hand,
+                shaft: product.shaft,
               }}
               onSubmit={(values) => console.log(values)}
             >
@@ -108,10 +108,10 @@ export default function EditProductModal({ open, setOpen }) {
                       <Box maxW="300" style={{ marginBottom: 20 }}>
                         <Select
                           variant="underlined"
-                          selectedValue={values.level}
-                          value={values.level}
-                          onChangeText={handleChange("level")}
-                          onBlur={handleBlur("level")}
+                          selectedValue={values.difficulty}
+                          value={values.difficulty}
+                          onChangeText={handleChange("difficulty")}
+                          onBlur={handleBlur("difficulty")}
                           minWidth="100%"
                           label="Välj svårighetsgrad"
                           accessibilityLabel="Välj svårighetsgrad "
@@ -121,7 +121,7 @@ export default function EditProductModal({ open, setOpen }) {
                             endIcon: <CheckIcon size="4" />,
                           }}
                           mt={3}
-                          onValueChange={handleChange("level")}
+                          onValueChange={handleChange("difficulty")}
                         >
                           <Select.Item label="Avancerad" value="Avancerad" />
                           <Select.Item label="Medel" value="Medel" />

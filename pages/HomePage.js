@@ -51,9 +51,7 @@ export default function HomePage({ navigation }) {
         btnWidth={{ width: 200 }}
         onPress={() => console.log("I am the third button")}
       />
-      <Pressable title="Open" onPress={showModal}>
-        <Text>Open</Text>
-      </Pressable>
+
       {open && <EditProductModal open={open} setOpen={setOpen} />}
       <Navbar />
     </View>
