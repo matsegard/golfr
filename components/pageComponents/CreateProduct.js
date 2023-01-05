@@ -28,7 +28,6 @@ export default function CreateProduct() {
 
   const auth = getAuth();
   const user = auth.currentUser;
-  console.log(user);
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
