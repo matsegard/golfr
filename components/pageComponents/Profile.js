@@ -1,14 +1,16 @@
+import React, { useState } from "react";
 import { StyleSheet, View, Image, Text } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faQuestion } from "@fortawesome/free-solid-svg-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Pressable } from "react-native";
 import { Input } from "native-base";
-import { useState } from "react";
 import PrimaryButton from "../inputs/PrimaryButton";
+import { useNavigation } from "@react-navigation/native";
 
 function Profile() {
   const [editMode, setEditMode] = useState(false);
+  const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
@@ -148,13 +150,23 @@ function Profile() {
           </View>
         )}
       </View>
+      <PrimaryButton
+        label="Mina annonser"
+        btnWidth={{
+          width: 152,
+          position: "absolute",
+          right: "50%",
+          bottom: -670,
+        }}
+        onPress={() => navigation.navigate("MyProducts")}
+      />
       {editMode ? (
         <PrimaryButton
           label="Spara"
           btnWidth={{
             width: 152,
             position: "absolute",
-            right: 50,
+            right: "50%",
             bottom: -670,
           }}
           onPress={() => setEditMode(!editMode)}
