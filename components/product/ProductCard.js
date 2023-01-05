@@ -53,9 +53,9 @@ function ProductCard() {
                   description: item.description,
                   location: item.location,
                   clubs: item.clubs,
-                  hcp: item.hcp,
-                  stiffness: item.stiffness,
-                  leftRight: item.leftRight,
+                  difficulty: item.difficulty,
+                  shaft: item.shaft,
+                  hand: item.hand,
                   gender: item.gender,
                   user: item.user,
                 });

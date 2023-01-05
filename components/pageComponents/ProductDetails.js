@@ -29,10 +29,11 @@ export default function ProductDetails() {
     price,
     location,
     description,
-    stiffness,
+    shaft,
     clubs,
     hcp,
-    leftRight,
+    difficulty,
+    hand,
     gender,
     image,
     user,
@@ -96,7 +97,22 @@ export default function ProductDetails() {
             <Text>{location}</Text>
           </View>
         </View>
-        <Text>{user}</Text>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "center",
+          }}
+        >
+          <FontAwesomeIcon style={styles.icons} icon={faUser} />
+          <Text
+            style={{
+              marginLeft: 5,
+            }}
+          >
+            {user}
+          </Text>
+        </View>
+
         <View style={styles.specsContainer}>
           <View
             style={{
@@ -106,7 +122,7 @@ export default function ProductDetails() {
             <View style={styles.iconsText}>
               <FontAwesomeIcon style={styles.icons} icon={faBarsProgress} />
             </View>
-            <Text>HCP {hcp}</Text>
+            <Text>{difficulty}</Text>
           </View>
           <View
             style={{
@@ -116,7 +132,7 @@ export default function ProductDetails() {
             <View style={styles.iconsText}>
               <FontAwesomeIcon style={styles.icons} icon={faWeightHanging} />
             </View>
-            <Text>{stiffness}</Text>
+            <Text>{shaft}</Text>
           </View>
           <View
             style={{
@@ -126,7 +142,7 @@ export default function ProductDetails() {
             <View style={styles.iconsText}>
               <FontAwesomeIcon style={styles.icons} icon={faRightLeft} />
             </View>
-            <Text>{leftRight}</Text>
+            <Text>{hand}</Text>
           </View>
           <View
             style={{
