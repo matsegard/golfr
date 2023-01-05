@@ -34,6 +34,7 @@ export default function ProductDetails() {
     hcp,
     leftRight,
     gender,
+    image,
   } = route.params;
 
   const onScroll = ({ nativeEvent }) => {
@@ -48,7 +49,7 @@ export default function ProductDetails() {
   };
 
   const images = [
-    "https://plus.unsplash.com/premium_photo-1661774316407-56209baefa8c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
+    image,
     "https://images.unsplash.com/photo-1535131749006-b7f58c99034b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
     "https://images.unsplash.com/flagged/photo-1576448438685-9f5e5b283d4f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
   ];
