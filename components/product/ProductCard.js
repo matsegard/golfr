@@ -128,6 +128,7 @@ function ProductCard() {
                       {item.location}{" "}
                       <FontAwesomeIcon color="#B6B6B6" icon={faLocationDot} />
                     </Text>
+                    <Text fontSize="xs">{item.user}</Text>
                   </Stack>
                   <Text fontWeight="400">{item.description}</Text>
                 </Stack>
