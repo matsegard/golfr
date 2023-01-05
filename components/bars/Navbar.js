@@ -24,16 +24,21 @@ function Navbar() {
       if (user) {
         const uid = user.uid;
         const currentUser = auth.currentUser;
-        console.log("logged in navbar", currentUser);
         setIsUserLoggedIn(true)
       } else {
-        console.log("NOT logged in navbar");
         setIsUserLoggedIn(false)
       }
     });
   }, []);
 
- 
+ function navigatetoPage(user){
+    const page = isUserLoggedIn ? "Profile" : "Login";
+     navigation.navigate(page, {
+        user
+     }) 
+     setSelected(4)
+ }
+
 
   return (
     <View style={styles.container}>
@@ -117,7 +122,7 @@ function Navbar() {
         />
       </Pressable>
       <Pressable
-        onPress={() => setSelected(4)}
+        onPress={navigatetoPage}
         style={{
           backgroundColor: selected === 4 ? "#6A8E4E" : "transparent",
           height: 45,
@@ -127,6 +132,7 @@ function Navbar() {
           borderRadius: "7px",
         }}
       >
+        
         <FontAwesomeIcon
           size={30}
           color={selected === 4 ? "white" : "#828282"}
