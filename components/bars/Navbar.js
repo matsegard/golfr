@@ -1,5 +1,5 @@
 import { Pressable, StyleSheet, View } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faHouse } from "@fortawesome/free-solid-svg-icons/faHouse";
 import { faBell } from "@fortawesome/free-solid-svg-icons/faBell";
@@ -7,11 +7,19 @@ import { faSquarePlus } from "@fortawesome/free-solid-svg-icons/faSquarePlus";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons/faMagnifyingGlass";
 import { faUser } from "@fortawesome/free-solid-svg-icons/faUser";
 import { useNavigation } from "@react-navigation/native";
-import { getAuth } from "firebase/auth";
+
+import { getAuth, onAuthStateChanged } from "firebase/auth"
+=======
+
 
 function Navbar() {
   const [selected, setSelected] = useState(0);
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+  
   const navigation = useNavigation();
+  const auth = getAuth();
+
+  const currentUser = auth.currentUser;
 
   const auth = getAuth();
   const user = auth.currentUser;
@@ -24,6 +32,28 @@ function Navbar() {
       navigation.navigate("Login");
     }
   }
+
+  
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setIsUserLoggedIn(true)
+      } else {
+        setIsUserLoggedIn(false)
+      }
+    });
+  }, []);
+
+ function navigatetoPage(){
+      if ( isUserLoggedIn === true ) {
+        navigation.navigate("Profile", {
+          user: currentUser,
+         }) 
+      } else {
+        navigation.navigate("Login") 
+      }
+     setSelected(4)
+ }
 
   return (
     <View style={styles.container}>
@@ -46,7 +76,8 @@ function Navbar() {
           icon={faHouse}
         />
       </Pressable>
-      <Pressable
+      { isUserLoggedIn && (
+        <Pressable
         onPress={() => setSelected(1)}
         style={{
           backgroundColor: selected === 1 ? "#6A8E4E" : "transparent",
@@ -64,6 +95,7 @@ function Navbar() {
           icon={faBell}
         />
       </Pressable>
+      )}
       <Pressable
         onPress={addProduct}
         addProduct
@@ -102,7 +134,7 @@ function Navbar() {
         />
       </Pressable>
       <Pressable
-        onPress={() => setSelected(4)}
+        onPress={navigatetoPage}
         style={{
           backgroundColor: selected === 4 ? "#6A8E4E" : "transparent",
           height: 45,

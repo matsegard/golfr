@@ -9,11 +9,8 @@ import { useState } from "react";
 import { Formik } from "formik";
 import { LoginSignupValidationSchema } from "../schemas/LoginSignupValidationSchema";
 import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
-import { db } from "../../firebase/firebaseConfig";
 
 function Signup({ navigation }) {
-  const [editMode, setEditMode] = useState(false);
   const [show, setShow] = useState(false);
   const auth = getAuth();
 
@@ -23,11 +20,6 @@ function Signup({ navigation }) {
     await updateProfile(user, {
       displayName: username
     });
-
-    await setDoc(doc(db, `users/${auth.currentUser?.uid}`), {
-      username: username,
-      email: email,
-    })
 
     await reload(user);
  }

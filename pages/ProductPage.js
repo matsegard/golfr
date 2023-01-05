@@ -4,6 +4,7 @@ import { useRoute } from "@react-navigation/native";
 import ProductCard from "../components/product/ProductCard";
 import CategoryBar from "../components/bars/CategoryBar";
 import SearchBar from "../components/inputs/SearchBar";
+import Navbar from "../components/bars/Navbar"
 
 export default function ProductPage({ navigation }) {
   const route = useRoute();
@@ -13,8 +14,6 @@ export default function ProductPage({ navigation }) {
     <View style={styles.container}>
       <View style={styles.product}>
         <SearchBar />
-        {/* <Text>{user.displayName}</Text>
-        <Text>{user.email}</Text> */}
       </View>
       <CategoryBar />
       <View style={styles.top} />
@@ -26,8 +25,8 @@ export default function ProductPage({ navigation }) {
       >
         <ProductCard />
       </Text>
-
       <StatusBar style="auto" />
+      <Navbar />
     </View>
   );
 }

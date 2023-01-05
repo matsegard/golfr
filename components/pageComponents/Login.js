@@ -12,8 +12,6 @@ import { useNavigation } from "@react-navigation/native";
 import {
   getAuth,
   signInWithEmailAndPassword,
-  onAuthStateChanged,
-  signOut
 } from "firebase/auth";
 
 function Login() {
@@ -24,10 +22,9 @@ function Login() {
   function signIn({ email, password }) {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        const user = userCredential.user;
-        console.log("SIGNED IN", auth.currentUser); 
+        const user = userCredential.user; 
         navigation.navigate("Products", {
-        user: auth.currentUser,
+          user: auth.currentUser,
         });
       })
       .catch((error) => {
@@ -40,8 +37,6 @@ function Login() {
       });
   }
 
-  
-
   // // TO BE REMOVED
   // onAuthStateChanged(auth, (user) => {
   //   if (user) {
@@ -51,19 +46,6 @@ function Login() {
   //     console.log("NOT logged in");
   //   }
   // });
-
-  // SIGN OUT FUNCTIONALITY
-  function testSignOut() {
-    signOut(auth)
-      .then(() => {
-        console.log("SIGNED OUT");
-        console.log(auth.currentUser);
-      
-      })
-      .catch((error) => {
-        console.log("ERROR");
-      });
-  }
 
   return (
     <View style={styles.container}>
@@ -99,16 +81,6 @@ function Login() {
           }) => (
             <>
               <View style={styles.editFormContainer}>
-              <PrimaryButton
-                label="LogOut"
-                btnWidth={{
-                  width: 182,
-                  right: 50,
-                  bottom: -110,
-                  position: "absolute",
-                }}
-                onPress={() => testSignOut()}
-              />
                 <View style={styles.form}>
                   <Text
                     style={{

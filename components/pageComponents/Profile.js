@@ -6,9 +6,36 @@ import { Pressable } from "react-native";
 import { Input } from "native-base";
 import { useState } from "react";
 import PrimaryButton from "../inputs/PrimaryButton";
+import { useRoute } from "@react-navigation/native";
+import {
+  signOut,
+  getAuth,
+  currentUser
+} from "firebase/auth";
+import React, { useEffect } from "react";
+
 
 function Profile() {
   const [editMode, setEditMode] = useState(false);
+  const auth = getAuth();
+  const route = useRoute();
+
+  const {
+    user
+  } = route.params;
+  
+
+  // SIGN OUT FUNCTIONALITY
+  function testSignOut() {
+    signOut(auth)
+      .then(() => {
+        console.log("SIGNED OUT");
+        console.log(auth.currentUser);
+      })
+      .catch((error) => {
+        console.log("ERROR");
+      });
+  }
 
   return (
     <View style={styles.container}>
@@ -23,7 +50,7 @@ function Profile() {
       />
       <View style={styles.bubbleText}>
         <FontAwesomeIcon color="white" size={22} icon={faQuestion} />
-        <Text style={styles.logout}>Logout</Text>
+        <Text style={styles.logout} onPress={() => testSignOut()} >Logout</Text>
       </View>
       <View style={styles.profilePic}></View>
       <Pressable style={styles.addProfilePic}>
@@ -44,7 +71,7 @@ function Profile() {
               >
                 Username
               </Text>
-              <Text>Lorem Ipsum</Text>
+              <Text>{user.displayName}</Text>
               <View
                 style={{
                   width: 280,
@@ -64,7 +91,7 @@ function Profile() {
               >
                 Email
               </Text>
-              <Text>Lorem Ipsum</Text>
+              <Text>{user.email}</Text>
               <View
                 style={{
                   width: 280,
@@ -84,7 +111,7 @@ function Profile() {
               >
                 Password
               </Text>
-              <Text>Lorem Ipsum</Text>
+              <Text>{user.password}</Text>
               <View
                 style={{
                   width: 280,
