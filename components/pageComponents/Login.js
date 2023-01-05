@@ -13,11 +13,11 @@ import {
   getAuth,
   signInWithEmailAndPassword,
   onAuthStateChanged,
+  signOut
 } from "firebase/auth";
 
 function Login() {
   const [show, setShow] = useState(false);
-
   const navigation = useNavigation();
   const auth = getAuth();
 
@@ -25,7 +25,10 @@ function Login() {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        console.log("SIGNED IN", auth.currentUser);
+        console.log("SIGNED IN", auth.currentUser); 
+        navigation.navigate("Products", {
+        user: auth.currentUser,
+        });
       })
       .catch((error) => {
         if (error.code === "auth/email-already-in-use") {
@@ -37,27 +40,30 @@ function Login() {
       });
   }
 
-  // TO BE REMOVED
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      const uid = user.uid;
-      console.log("logged in", auth.currentUser);
-    } else {
-      console.log("NOT logged in");
-    }
-  });
+  
+
+  // // TO BE REMOVED
+  // onAuthStateChanged(auth, (user) => {
+  //   if (user) {
+  //     const uid = user.uid;
+  //     console.log("logged in", auth.currentUser);
+  //   } else {
+  //     console.log("NOT logged in");
+  //   }
+  // });
 
   // SIGN OUT FUNCTIONALITY
-  // function testSignOut() {
-  //   signOut(auth)
-  //     .then(() => {
-  //       console.log("SIGNED OUT");
-  //       console.log(auth.currentUser);
-  //     })
-  //     .catch((error) => {
-  //       console.log("ERROR");
-  //     });
-  // }
+  function testSignOut() {
+    signOut(auth)
+      .then(() => {
+        console.log("SIGNED OUT");
+        console.log(auth.currentUser);
+      
+      })
+      .catch((error) => {
+        console.log("ERROR");
+      });
+  }
 
   return (
     <View style={styles.container}>
@@ -70,7 +76,8 @@ function Login() {
         ]}
         source={require("../../assets/Ellipse.png")}
       />
-      <Text style={styles.loginText}>Login</Text>
+      <Text style={styles.loginText}>Logga in</Text>
+    
 
       <View style={styles.forms}>
         <Formik
@@ -80,7 +87,7 @@ function Login() {
             email: "",
             password: "",
           }}
-          onSubmit={(values) => console.log(values)}
+          onSubmit={(values) => signIn(values)}
         >
           {({
             handleChange,
@@ -92,6 +99,16 @@ function Login() {
           }) => (
             <>
               <View style={styles.editFormContainer}>
+              <PrimaryButton
+                label="LogOut"
+                btnWidth={{
+                  width: 182,
+                  right: 50,
+                  bottom: -110,
+                  position: "absolute",
+                }}
+                onPress={() => testSignOut()}
+              />
                 <View style={styles.form}>
                   <Text
                     style={{
@@ -183,7 +200,7 @@ function Login() {
                 <Text style={styles.forgotPassword}>Glömt ditt lösenord?</Text>
               </Pressable>
               <PrimaryButton
-                label="Login"
+                label="logga in"
                 btnWidth={{
                   width: 182,
                   right: 50,
