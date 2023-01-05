@@ -57,6 +57,7 @@ function ProductCard() {
                   stiffness: item.stiffness,
                   leftRight: item.leftRight,
                   gender: item.gender,
+                  user: item.user,
                 });
               }}
             >

@@ -35,6 +35,7 @@ export default function ProductDetails() {
     leftRight,
     gender,
     image,
+    user,
   } = route.params;
 
   const onScroll = ({ nativeEvent }) => {
@@ -87,7 +88,6 @@ export default function ProductDetails() {
           ))}
         </View>
       </View>
-
       <View style={styles.infoContainer}>
         <View style={styles.topInfoContainer}>
           <Text style={styles.titleText}>{title}</Text>
@@ -96,6 +96,7 @@ export default function ProductDetails() {
             <Text>{location}</Text>
           </View>
         </View>
+        <Text>{user}</Text>
         <View style={styles.specsContainer}>
           <View
             style={{
