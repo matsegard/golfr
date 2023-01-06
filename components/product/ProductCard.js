@@ -50,9 +50,9 @@ function ProductCard({ selectedCategory }) {
     <ScrollView showsVerticalScrollIndicator={false} height="auto">
       <Box alignItems="center" marginBottom="240">
         {!loading ? (
-          filteredList.map((item, i) => (
+          filteredList.map((item) => (
             <Pressable
-              key={i}
+              key={item.uri}
               onPress={() => {
                 navigation.navigate("ProductDetails", {
                   title: item.title,
