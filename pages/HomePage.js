@@ -4,7 +4,7 @@ import Navbar from "../components/bars/Navbar";
 import EditProductModal from "../components/modals/EditProductModal";
 import { useState } from "react";
 import ImageUpload from "../components/inputs/ImageUpload";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, addDoc, collection } from "firebase/firestore";
 import { db } from "../firebase/firebaseConfig";
 
 export default function HomePage({ navigation }) {
@@ -14,12 +14,12 @@ export default function HomePage({ navigation }) {
     setOpen(!open);
   };
 
-  function databaseTest() {
-    setDoc(doc(db, "cities", "uid"), {
-      name: "hedemora",
-      state: "CA",
-      country: "USA",
+  async function databaseTest() {
+    const docRef = await addDoc(collection(db, "cities"), {
+      name: "Tokyo",
+      country: "Japan",
     });
+    console.log("Document written with ID: ", docRef.id);
   }
 
   return (

@@ -21,24 +21,29 @@ import {
   query,
   where,
   onSnapshot,
+  doc,
+  deleteDoc,
 } from "firebase/firestore";
 import { db } from "../../firebase/firebaseConfig";
 import EditProductModal from "../modals/EditProductModal";
+import { useNavigation } from "@react-navigation/native";
 
 const MyProfileProducts = () => {
   const [open, setOpen] = useState(false);
   const [myProducts, setMyProducts] = useState([]);
   // const [loading, setLoading] = useState(true);
-
+  const navigation = useNavigation();
   const auth = getAuth();
   const user = auth.currentUser;
+  let docId;
 
   const showModal = () => {
     setOpen(!open);
   };
 
   async function deleteProduct() {
-    console.log("delete");
+    console.log("delete product");
+    await deleteDoc(docRef);
   }
 
   async function getData() {
@@ -50,6 +55,9 @@ const MyProfileProducts = () => {
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
       // doc.data() is never undefined for query doc snapshots
+      docId = doc.id;
+      console.log(doc.id);
+      // console.log(docId);
       productsFromDb.push(doc.data());
     });
     setMyProducts(productsFromDb);
@@ -73,8 +81,9 @@ const MyProfileProducts = () => {
           >
             Mina annonser
           </Text>
-          {myProducts.map((product) => (
+          {myProducts.map((product, i) => (
             <Box
+              key={i}
               maxW="80"
               rounded="lg"
               marginBottom="5"
@@ -94,10 +103,10 @@ const MyProfileProducts = () => {
               }}
             >
               <Box>
-                <AspectRatio w="100%" ratio={16 / 5}>
+                <AspectRatio w="100%" ratio={16 / 10}>
                   <Image
                     source={{
-                      uri: "https://www.holidify.com/images/cmsuploads/compressed/Bangalore_citycover_20190613234056.jpg",
+                      uri: product.image,
                     }}
                     alt="image"
                   />
@@ -122,13 +131,29 @@ const MyProfileProducts = () => {
                     icon={faTrashCan}
                   />
                 </Pressable>
-                <Pressable onPress={showModal}>
+                <Pressable
+                  onPress={() => {
+                    navigation.navigate("Redigera", {
+                      title: product.title,
+                      image: product.image,
+                      price: product.price,
+                      category: product.category,
+                      description: product.description,
+                      location: product.location,
+                      clubs: product.clubs,
+                      difficulty: product.difficulty,
+                      shaft: product.shaft,
+                      hand: product.hand,
+                      gender: product.gender,
+                      user: product.user,
+                    });
+                  }}
+                >
                   <FontAwesomeIcon
                     style={{ marginRight: 15 }}
                     color="#6A8E4E"
                     size={30}
                     icon={faPen}
-                    onPress={showModal}
                   />
                 </Pressable>
                 {open && (
