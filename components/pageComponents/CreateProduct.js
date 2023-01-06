@@ -390,7 +390,7 @@ export default function CreateProduct() {
                 >
                   <PrimaryButton
                     label="Lägg till annons"
-                    btnWidth={{ width: 200, marginTop: 10 }}
+                    btnWidth={{ width: 200, marginTop: 25 }}
                     onPress={handleSubmit}
                     disabled={!isValid}
                   />

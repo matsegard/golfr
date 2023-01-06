@@ -35,15 +35,9 @@ const MyProfileProducts = () => {
   const navigation = useNavigation();
   const auth = getAuth();
   const user = auth.currentUser;
-  let docId;
-
-  const showModal = () => {
-    setOpen(!open);
-  };
 
   async function deleteProduct() {
-    console.log("delete product");
-    await deleteDoc(docRef);
+    await deleteDoc(doc(db, "products", id));
   }
 
   async function getData() {
@@ -55,10 +49,8 @@ const MyProfileProducts = () => {
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
       // doc.data() is never undefined for query doc snapshots
-      docId = doc.id;
       console.log(doc.id);
-      // console.log(docId);
-      productsFromDb.push(doc.data());
+      productsFromDb.push({ data: doc.data(), id: doc.id });
     });
     setMyProducts(productsFromDb);
     // setLoading(false);
@@ -106,7 +98,7 @@ const MyProfileProducts = () => {
                 <AspectRatio w="100%" ratio={16 / 10}>
                   <Image
                     source={{
-                      uri: product.image,
+                      uri: product.data.image,
                     }}
                     alt="image"
                   />
@@ -115,11 +107,11 @@ const MyProfileProducts = () => {
               <Stack p="4" space={3}>
                 <Stack space={2}>
                   <Heading size="md" ml="-1">
-                    {product.title}
+                    {product.data.title}
                   </Heading>
                 </Stack>
                 <Text numberOfLines={2} fontWeight="400">
-                  {product.description}
+                  {product.data.description}
                 </Text>
               </Stack>
               <Box flexDirection="row" justifyContent="flex-end">
@@ -127,42 +119,36 @@ const MyProfileProducts = () => {
                   <FontAwesomeIcon
                     style={{ marginRight: 20, marginBottom: 10 }}
                     color="#E46969"
-                    size={30}
+                    size={25}
                     icon={faTrashCan}
                   />
                 </Pressable>
                 <Pressable
                   onPress={() => {
                     navigation.navigate("Redigera", {
-                      title: product.title,
-                      image: product.image,
-                      price: product.price,
-                      category: product.category,
-                      description: product.description,
-                      location: product.location,
-                      clubs: product.clubs,
-                      difficulty: product.difficulty,
-                      shaft: product.shaft,
-                      hand: product.hand,
-                      gender: product.gender,
-                      user: product.user,
+                      title: product.data.title,
+                      image: product.data.image,
+                      price: product.data.price,
+                      category: product.data.category,
+                      description: product.data.description,
+                      location: product.data.location,
+                      clubs: product.data.clubs,
+                      difficulty: product.data.difficulty,
+                      shaft: product.data.shaft,
+                      hand: product.data.hand,
+                      gender: product.data.gender,
+                      user: product.data.user,
                     });
                   }}
                 >
                   <FontAwesomeIcon
                     style={{ marginRight: 15 }}
                     color="#6A8E4E"
-                    size={30}
+                    size={25}
                     icon={faPen}
                   />
                 </Pressable>
-                {open && (
-                  <EditProductModal
-                    open={open}
-                    setOpen={setOpen}
-                    product={product}
-                  />
-                )}
+                {open && <EditProductModal />}
               </Box>
             </Box>
           ))}

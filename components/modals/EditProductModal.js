@@ -7,7 +7,7 @@ import { Box, CheckIcon } from "native-base";
 import ImagePicker from "../inputs/ImageUpload";
 import { useRoute } from "@react-navigation/native";
 
-export default function EditProductModal({ open, setOpen, product }) {
+export default function EditProductModal() {
   const route = useRoute();
   const {
     title,
@@ -17,7 +17,6 @@ export default function EditProductModal({ open, setOpen, product }) {
     category,
     shaft,
     clubs,
-    hcp,
     difficulty,
     hand,
     gender,
@@ -58,6 +57,7 @@ export default function EditProductModal({ open, setOpen, product }) {
             }) => (
               <>
                 <Text style={styles.formLabel}>Titel</Text>
+                <Text style={styles.formLabel}>{image}</Text>
                 <TextInput
                   style={styles.input}
                   placeholder="Skriv en titel"
@@ -233,7 +233,7 @@ export default function EditProductModal({ open, setOpen, product }) {
                 )}
 
                 <Text style={styles.formLabel}>Bild</Text>
-                <ImagePicker />
+                <ImagePicker currentImage={image} />
                 <Text style={styles.formLabel}>Beskrivning</Text>
                 <TextInput
                   multiline
@@ -276,7 +276,7 @@ export default function EditProductModal({ open, setOpen, product }) {
                 >
                   <PrimaryButton
                     label="Spara"
-                    btnWidth={{ width: 200, marginTop: 10 }}
+                    btnWidth={{ width: 200, marginTop: 25 }}
                     onPress={handleSubmit}
                     disabled={!isValid}
                   />
@@ -324,6 +324,7 @@ const styles = StyleSheet.create({
     width: "70%",
     flex: 0.9,
     marginBottom: 80,
+    marginTop: 30,
   },
   formLabel: {
     fontFamily: "MontserratMedium",
