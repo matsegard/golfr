@@ -17,7 +17,7 @@ import { useNavigation } from "@react-navigation/native";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebase/firebaseConfig";
 
-function ProductCard({ selectedCategory, setSelectedCategory }) {
+function ProductCard({ selectedCategory }) {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
@@ -37,6 +37,7 @@ function ProductCard({ selectedCategory, setSelectedCategory }) {
   useEffect(() => {
     getData();
   }, []);
+
 
   return (
     <ScrollView showsVerticalScrollIndicator={false} height="auto">

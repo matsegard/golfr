@@ -25,10 +25,7 @@ export default function ProductPage() {
           fontSize: 30,
         }}
       >
-        <ProductCard
-          selectedCategory={selectedCategory}
-          setSelectedCategory={setSelectedCategory}
-        />
+        <ProductCard selectedCategory={selectedCategory} />
       </Text>
       <StatusBar style="auto" />
       <Navbar />
