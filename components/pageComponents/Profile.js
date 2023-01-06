@@ -19,12 +19,18 @@ function Profile() {
   const [editMode, setEditMode] = useState(false);
   const auth = getAuth();
   const route = useRoute();
-
   const {
     user
   } = route.params;
+// funkar om man är inloggad blir error om man ej är 
+if(auth ==! true) {
+  console.log('inte inloggad')
+} else {
+   user
+}
   
-
+  
+console.log(auth)
   // SIGN OUT FUNCTIONALITY
   function testSignOut() {
     signOut(auth)
