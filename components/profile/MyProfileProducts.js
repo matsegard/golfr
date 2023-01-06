@@ -10,6 +10,7 @@ import {
   Stack,
   Pressable,
 } from "native-base";
+import { Alert } from "react-native";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
@@ -31,13 +32,16 @@ import { useNavigation } from "@react-navigation/native";
 const MyProfileProducts = () => {
   const [open, setOpen] = useState(false);
   const [myProducts, setMyProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
   // const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
   const auth = getAuth();
   const user = auth.currentUser;
 
-  async function deleteProduct() {
-    await deleteDoc(doc(db, "products", id));
+  async function deleteProduct(product) {
+    await deleteDoc(doc(db, "products", product.id));
+    setLoading(true);
+    Alert.alert("Annons raderad");
   }
 
   async function getData() {
@@ -49,26 +53,25 @@ const MyProfileProducts = () => {
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
       // doc.data() is never undefined for query doc snapshots
-      console.log(doc.id);
       productsFromDb.push({ data: doc.data(), id: doc.id });
     });
     setMyProducts(productsFromDb);
-    // setLoading(false);
+    setLoading(false);
     return;
   }
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [loading]);
 
   return (
     <>
       <ScrollView showsVerticalScrollIndicator={false} height="auto">
         <Box alignItems="center" marginBottom="240">
           <Text
-            marginTop="3"
+            marginTop="5"
             fontSize="xl"
-            marginBottom="3"
+            marginBottom="5"
             fontFamily="MontserratBold"
           >
             Mina annonser
@@ -115,7 +118,7 @@ const MyProfileProducts = () => {
                 </Text>
               </Stack>
               <Box flexDirection="row" justifyContent="flex-end">
-                <Pressable onPress={deleteProduct}>
+                <Pressable onPress={() => deleteProduct(product)}>
                   <FontAwesomeIcon
                     style={{ marginRight: 20, marginBottom: 10 }}
                     color="#E46969"
