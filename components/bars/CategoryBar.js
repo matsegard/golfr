@@ -1,17 +1,17 @@
 import { View, Pressable, Text } from "native-base";
 import { StyleSheet } from "react-native";
-import React, { useState } from "react";
+import React, { useMemo } from "react";
 
-const CategoryBar = () => {
-  const [selectedCategory, setSelectedCategory] = useState("");
-
-  const categories = [
-    { id: 1, title: "Klubbor" },
-    { id: 2, title: "Golfset" },
-    { id: 3, title: "Vagn" },
-    { id: 4, title: "Golfbil" },
-    { id: 5, title: "Övrigt" },
-  ];
+const CategoryBar = ({ selectedCategory, setSelectedCategory }) => {
+  const categories = useMemo(() => {
+    return [
+      { id: 1, title: "Golfklubba" },
+      { id: 2, title: "Golfset" },
+      { id: 3, title: "Vagn" },
+      { id: 4, title: "Golfbil" },
+      { id: 5, title: "Övrigt" },
+    ];
+  }, []);
 
   return (
     <View style={styles.container}>

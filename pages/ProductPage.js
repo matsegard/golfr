@@ -1,21 +1,23 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
-import { useRoute } from "@react-navigation/native";
 import ProductCard from "../components/product/ProductCard";
 import CategoryBar from "../components/bars/CategoryBar";
 import SearchBar from "../components/inputs/SearchBar";
-import Navbar from "../components/bars/Navbar"
+import Navbar from "../components/bars/Navbar";
+import React, { useState } from "react";
 
-export default function ProductPage({ navigation }) {
-  const route = useRoute();
-  // const { user } = route.params;
+export default function ProductPage() {
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   return (
     <View style={styles.container}>
       <View style={styles.product}>
         <SearchBar />
       </View>
-      <CategoryBar />
+      <CategoryBar
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
+      />
       <View style={styles.top} />
       <Text
         style={{
@@ -23,7 +25,10 @@ export default function ProductPage({ navigation }) {
           fontSize: 30,
         }}
       >
-        <ProductCard />
+        <ProductCard
+          selectedCategory={selectedCategory}
+          setSelectedCategory={setSelectedCategory}
+        />
       </Text>
       <StatusBar style="auto" />
       <Navbar />
