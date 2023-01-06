@@ -3,79 +3,39 @@ import { StyleSheet } from "react-native";
 import React, { useState } from "react";
 
 const CategoryBar = () => {
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState("");
+
+  const categories = [
+    { id: 1, title: "Klubbor" },
+    { id: 2, title: "Golfset" },
+    { id: 3, title: "Vagn" },
+    { id: 4, title: "Golfbil" },
+    { id: 5, title: "Övrigt" },
+  ];
 
   return (
     <View style={styles.container}>
-      <Pressable onPress={() => setSelectedCategory(0)}>
-        <Text
-          style={{
-            fontFamily: "MontserratSemiBold",
-            fontSize: 13,
-            marginBottom: 15,
-            color: selectedCategory === 0 ? "#A4CB6D" : "#9B9B9B",
-          }}
-          fontSize="xl"
+      {categories.map((category) => (
+        <Pressable
+          key={category.id}
+          onPress={() => setSelectedCategory(`${category.title}`)}
         >
-          Klubbor
-        </Text>
-      </Pressable>
-
-      <Pressable onPress={() => setSelectedCategory(1)}>
-        <Text
-          style={{
-            fontFamily: "MontserratSemiBold",
-            fontSize: 13,
-            marginBottom: 15,
-            color: selectedCategory === 1 ? "#A4CB6D" : "#9B9B9B",
-          }}
-          fontSize="xl"
-        >
-          Golfset
-        </Text>
-      </Pressable>
-
-      <Pressable onPress={() => setSelectedCategory(2)}>
-        <Text
-          style={{
-            fontFamily: "MontserratSemiBold",
-            fontSize: 13,
-            marginBottom: 15,
-            color: selectedCategory === 2 ? "#A4CB6D" : "#9B9B9B",
-          }}
-          fontSize="xl"
-        >
-          Vagn
-        </Text>
-      </Pressable>
-
-      <Pressable onPress={() => setSelectedCategory(3)}>
-        <Text
-          style={{
-            fontFamily: "MontserratSemiBold",
-            fontSize: 13,
-            marginBottom: 15,
-            color: selectedCategory === 3 ? "#A4CB6D" : "#9B9B9B",
-          }}
-          fontSize="xl"
-        >
-          Golfbil
-        </Text>
-      </Pressable>
-
-      <Pressable onPress={() => setSelectedCategory(4)}>
-        <Text
-          style={{
-            fontFamily: "MontserratSemiBold",
-            fontSize: 13,
-            marginBottom: 15,
-            color: selectedCategory === 4 ? "#A4CB6D" : "#9B9B9B",
-          }}
-          fontSize="xl"
-        >
-          Övrigt
-        </Text>
-      </Pressable>
+          <Text
+            style={{
+              fontFamily: "MontserratSemiBold",
+              fontSize: 13,
+              marginBottom: 15,
+              color:
+                selectedCategory === `${category.title}`
+                  ? "#A4CB6D"
+                  : "#9B9B9B",
+            }}
+            fontSize="xl"
+          >
+            {category.title}
+          </Text>
+        </Pressable>
+      ))}
     </View>
   );
 };
