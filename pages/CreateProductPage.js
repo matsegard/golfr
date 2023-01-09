@@ -6,8 +6,6 @@ import CreateProduct from "../components/pageComponents/CreateProduct";
 export default function CreateProductPage() {
   return (
     <View>
-      <CreateProduct />
-
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
