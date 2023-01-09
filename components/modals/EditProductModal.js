@@ -1,18 +1,32 @@
-import { StyleSheet, View, Text, TextInput, Alert } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  TextInput,
+  Alert,
+  Button,
+  Image,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import { Modal, Center, Select, ScrollView } from "native-base";
 import PrimaryButton from "../inputs/PrimaryButton";
 import { ProductValidationSchema } from "../schemas/ProductValidationSchema";
 import { Formik } from "formik";
 import { Box, CheckIcon } from "native-base";
-import ImagePicker from "../inputs/ImageUpload";
 import { useRoute } from "@react-navigation/native";
 import { doc, updateDoc, setDoc } from "firebase/firestore";
 import { db } from "../../firebase/firebaseConfig";
 import { useNavigation } from "@react-navigation/native";
+import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faCamera } from "@fortawesome/free-solid-svg-icons";
+import * as ImagePicker from "expo-image-picker";
 
 export default function EditProductModal() {
+  const [newImage, setNewImage] = useState(image);
+  const [newImageUrl, setNewImageUrl] = useState(null);
   const navigation = useNavigation();
+
   const route = useRoute();
   const {
     title,
@@ -55,7 +69,7 @@ export default function EditProductModal() {
       gender: gender,
       hand: hand,
       shaft: shaft,
-      image: image,
+      image: newImage.uri,
     })
       .then((updateRef) => {
         console.log("Uppdaterad");
@@ -66,20 +80,37 @@ export default function EditProductModal() {
       .catch((error) => {
         console.log(error);
       });
-    // await updateDoc(updateRef, {
-    //   title: title,
-    //   category: category,
-    //   description: description,
-    //   price: price,
-    //   location: location,
-    //   clubs: clubs,
-    //   difficulty: difficulty,
-    //   gender: gender,
-    //   hand: hand,
-    //   shaft: shaft,
-    //   image: image,
-    // });
   }
+
+  useEffect(() => {
+    addNewImageDatabase();
+  }, [image]);
+
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      aspect: [4, 3],
+      quality: 0.1,
+    });
+
+    if (!result.canceled) {
+      setNewImage(result.assets[0]);
+    }
+  };
+
+  const addNewImageDatabase = async () => {
+    const storage = getStorage();
+    let filename = newImage.uri.substring(newImage.uri.lastIndexOf("/") + 1);
+    const storageRef = ref(storage, "images");
+    const imageRef = ref(storageRef, filename);
+    const response = await fetch(newImage.uri);
+    const blob = await response.blob();
+    await uploadBytes(imageRef, blob);
+    await getDownloadURL(imageRef).then((downloadURL) => {
+      setNewImageUrl(downloadURL);
+    });
+  };
 
   return (
     <ScrollView vertical>
@@ -307,7 +338,31 @@ export default function EditProductModal() {
                 )}
 
                 <Text style={styles.formLabel}>Bild</Text>
-                <ImagePicker currentImage={image} />
+                <View
+                  style={{
+                    flex: 1,
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <FontAwesomeIcon size={30} color="#828282" icon={faCamera} />
+                  <Button title="Ladda upp en bild" onPress={pickImage} />
+                  {newImage ? (
+                    <Image
+                      source={{
+                        uri: newImage.uri,
+                      }}
+                      style={{ width: 200, height: 200 }}
+                    />
+                  ) : (
+                    <Image
+                      source={{
+                        uri: image,
+                      }}
+                      style={{ width: 200, height: 200 }}
+                    />
+                  )}
+                </View>
                 <Text style={styles.formLabel}>Beskrivning</Text>
                 <TextInput
                   multiline

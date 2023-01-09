@@ -4,8 +4,8 @@ import * as ImagePicker from "expo-image-picker";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 
-export default function ImageUpload({ currentImage }) {
-  const [image, setImage] = useState(null);
+export default function ImageUpload({ currentImage, newImage, setNewImage }) {
+  // const [image, setImage] = useState(null);
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -15,7 +15,8 @@ export default function ImageUpload({ currentImage }) {
     });
 
     if (!result.canceled) {
-      setImage(result.assets[0]);
+      // setImage(result.assets[0]);
+      setNewImage(result.assets[0].uri);
     }
   };
 
@@ -23,10 +24,10 @@ export default function ImageUpload({ currentImage }) {
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <FontAwesomeIcon size={30} color="#828282" icon={faCamera} />
       <Button title="Ladda upp en bild" onPress={pickImage} />
-      {image ? (
+      {newImage ? (
         <Image
           source={{
-            uri: image.uri,
+            uri: newImage,
           }}
           style={{ width: 200, height: 200 }}
         />

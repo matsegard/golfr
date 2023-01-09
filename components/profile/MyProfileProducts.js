@@ -32,14 +32,13 @@ import { useNavigation } from "@react-navigation/native";
 const MyProfileProducts = () => {
   const [myProducts, setMyProducts] = useState([]);
   const [update, setUpdate] = useState(false);
-  // const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
   const auth = getAuth();
   const user = auth.currentUser;
 
   async function deleteProduct(product) {
     await deleteDoc(doc(db, "products", product.id));
-    setLoading(true);
+    setUpdate(true);
     Alert.alert("Annons raderad");
   }
 

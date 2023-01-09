@@ -33,10 +33,10 @@ export default function HomePage({ navigation }) {
         title="Gå till profilen"
         onPress={() => navigation.navigate("Profile")}
       />
-      <Button
+      {/* <Button
         title="Gå till redigera produkt"
         onPress={() => navigation.navigate("Redigera")}
-      />
+      /> */}
       <Button
         title="Gå till mina annonser"
         onPress={() => navigation.navigate("MyProducts")}
