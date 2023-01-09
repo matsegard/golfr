@@ -3,8 +3,8 @@ import { StyleSheet, Text, View } from "react-native";
 import ProductCard from "../components/product/ProductCard";
 import CategoryBar from "../components/bars/CategoryBar";
 import SearchBar from "../components/inputs/SearchBar";
-import Navbar from "../components/bars/Navbar";
 import React, { useState } from "react";
+import Navbar from "../components/bars/Navbar";
 
 export default function ProductPage() {
   const [selectedCategory, setSelectedCategory] = useState("");

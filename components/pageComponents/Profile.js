@@ -7,30 +7,22 @@ import { Input } from "native-base";
 import { useState } from "react";
 import PrimaryButton from "../inputs/PrimaryButton";
 import { useRoute } from "@react-navigation/native";
-import {
-  signOut,
-  getAuth,
-  currentUser
-} from "firebase/auth";
+import { signOut, getAuth, currentUser } from "firebase/auth";
 import React, { useEffect } from "react";
-
 
 function Profile() {
   const [editMode, setEditMode] = useState(false);
   const auth = getAuth();
   const route = useRoute();
-  const {
-    user
-  } = route.params;
-// funkar om man är inloggad blir error om man ej är 
-if(auth ==! true) {
-  console.log('inte inloggad')
-} else {
-   user
-}
-  
-  
-console.log(auth)
+  const { user } = route.params;
+  // funkar om man är inloggad blir error om man ej är
+  if (auth == !true) {
+    console.log("inte inloggad");
+  } else {
+    user;
+  }
+
+  console.log(auth);
   // SIGN OUT FUNCTIONALITY
   function testSignOut() {
     signOut(auth)
@@ -56,7 +48,9 @@ console.log(auth)
       />
       <View style={styles.bubbleText}>
         <FontAwesomeIcon color="white" size={22} icon={faQuestion} />
-        <Text style={styles.logout} onPress={() => testSignOut()} >Logout</Text>
+        <Text style={styles.logout} onPress={() => testSignOut()}>
+          Logout
+        </Text>
       </View>
       <View style={styles.profilePic}></View>
       <Pressable style={styles.addProfilePic}>
@@ -210,6 +204,7 @@ console.log(auth)
 
 const styles = StyleSheet.create({
   container: {
+    height: "100%",
     backgroundColor: "FAFAFA",
     justifyContent: "center",
     alignItems: "center",
@@ -225,7 +220,8 @@ const styles = StyleSheet.create({
     width: "88%",
     flexDirection: "row",
     justifyContent: "space-between",
-    margin: 15,
+    position: "absolute",
+    top: 20,
   },
   logout: {
     color: "white",

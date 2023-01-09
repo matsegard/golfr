@@ -6,7 +6,7 @@ import { faBell } from "@fortawesome/free-solid-svg-icons/faBell";
 import { faSquarePlus } from "@fortawesome/free-solid-svg-icons/faSquarePlus";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons/faMagnifyingGlass";
 import { faUser } from "@fortawesome/free-solid-svg-icons/faUser";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 function Navbar() {
@@ -15,19 +15,9 @@ function Navbar() {
 
   const navigation = useNavigation();
   const auth = getAuth();
-
+  const route = useRoute();
   const currentUser = auth.currentUser;
-
   const user = auth.currentUser;
-
-  function addProduct() {
-    setSelected(2);
-    if (user) {
-      navigation.navigate("AddProduct");
-    } else {
-      navigation.navigate("Login");
-    }
-  }
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -37,9 +27,26 @@ function Navbar() {
         setIsUserLoggedIn(false);
       }
     });
+
+    checkCurrentPage();
   }, []);
 
-  function navigatetoPage() {
+  function checkCurrentPage() {
+    const routeName = route.name;
+    if (routeName === "Products") {
+      setSelected(0);
+    } else if (routeName === "Notifications") {
+      setSelected(1);
+    } else if (routeName === "AddProduct") {
+      setSelected(2);
+    } else if (routeName === "Search") {
+      setSelected(3);
+    } else if (routeName === "Profile" || "Login" || "Signup") {
+      setSelected(4);
+    }
+  }
+
+  function navigateToProfile() {
     if (isUserLoggedIn === true) {
       navigation.navigate("Profile", {
         user: currentUser,
@@ -47,13 +54,32 @@ function Navbar() {
     } else {
       navigation.navigate("Login");
     }
-    setSelected(4);
+  }
+
+  function navigateToAddProduct() {
+    if (user) {
+      navigation.navigate("AddProduct");
+    } else {
+      navigation.navigate("Login");
+    }
+  }
+
+  function navigateToNoti() {
+    if (user) {
+      navigation.navigate("Notifications");
+    } else {
+      navigation.navigate("Login");
+    }
+  }
+
+  function navigateToProducts() {
+    navigation.navigate("Products");
   }
 
   return (
     <View style={styles.container}>
       <Pressable
-        onPress={() => setSelected(0)}
+        onPress={navigateToProducts}
         style={{
           backgroundColor: selected === 0 ? "#6A8E4E" : "transparent",
           color: selected === 0 ? "white" : "#828282",
@@ -73,7 +99,7 @@ function Navbar() {
       </Pressable>
       {isUserLoggedIn && (
         <Pressable
-          onPress={() => setSelected(1)}
+          onPress={navigateToNoti}
           style={{
             backgroundColor: selected === 1 ? "#6A8E4E" : "transparent",
             color: selected === 1 ? "white" : "#828282",
@@ -92,7 +118,7 @@ function Navbar() {
         </Pressable>
       )}
       <Pressable
-        onPress={addProduct}
+        onPress={navigateToAddProduct}
         addProduct
         style={{
           backgroundColor: selected === 2 ? "#6A8E4E" : "transparent",
@@ -111,7 +137,7 @@ function Navbar() {
         />
       </Pressable>
       <Pressable
-        onPress={() => setSelected(3)}
+        onPress={navigateToProducts}
         style={{
           backgroundColor: selected === 3 ? "#6A8E4E" : "transparent",
           color: selected === 3 ? "white" : "#828282",
@@ -129,7 +155,7 @@ function Navbar() {
         />
       </Pressable>
       <Pressable
-        onPress={navigatetoPage}
+        onPress={navigateToProfile}
         style={{
           backgroundColor: selected === 4 ? "#6A8E4E" : "transparent",
           height: 45,
