@@ -153,7 +153,9 @@ function ProductCard({ selectedCategory }) {
           </HStack>
         )}
         {filteredList.length === 0 && (
-          <Text paddingTop={60}>No Result</Text>
+          <Text paddingTop={60}>
+            Det finns inga annonser i den här kategorin
+          </Text>
         )}
       </Box>
     </ScrollView>
