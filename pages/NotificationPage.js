@@ -1,7 +1,12 @@
-import { View } from "native-base";
+import { StyleSheet, View } from "react-native";
+import Notifications from "../components/notification/Notifications";
 
 const NotificationPage = () => {
-  return <View></View>;
+  return (
+    <View>
+      <Notifications />
+    </View>
+  );
 };
 
 export default NotificationPage;
