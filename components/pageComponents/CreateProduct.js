@@ -15,7 +15,6 @@ import { faCamera } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import PrimaryButton from "../inputs/PrimaryButton.js";
 import { ProductValidationSchema } from "../schemas/ProductValidationSchema";
-import ImageUpload from "../inputs/ImageUpload";
 import { doc, setDoc, addDoc, collection } from "firebase/firestore";
 import { db } from "../../firebase/firebaseConfig";
 import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
