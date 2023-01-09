@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Image, Text } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faQuestion } from "@fortawesome/free-solid-svg-icons";
@@ -9,7 +9,6 @@ import PrimaryButton from "../inputs/PrimaryButton";
 import { useNavigation } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
 import { signOut, getAuth, currentUser } from "firebase/auth";
-import React, { useEffect } from "react";
 
 function Profile() {
   const navigation = useNavigation();
