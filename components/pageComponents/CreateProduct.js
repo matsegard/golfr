@@ -58,7 +58,7 @@ export default function CreateProduct() {
     });
   };
 
-  function AddProducts({
+  async function AddProducts({
     title,
     category,
     description,
@@ -70,7 +70,7 @@ export default function CreateProduct() {
     hand,
     shaft,
   }) {
-    addDoc(collection(db, "products"), {
+    const docRef = await addDoc(collection(db, "products"), {
       title: title,
       category: category,
       image: imgUrl,
@@ -84,6 +84,7 @@ export default function CreateProduct() {
       shaft: shaft,
       user: user.displayName,
     });
+    console.log(docRef.id);
     submitAlert();
   }
 
@@ -388,7 +389,7 @@ export default function CreateProduct() {
                 >
                   <PrimaryButton
                     label="Lägg till annons"
-                    btnWidth={{ width: 200, marginTop: 10 }}
+                    btnWidth={{ width: 200, marginTop: 25 }}
                     onPress={handleSubmit}
                     disabled={!isValid}
                   />

@@ -45,7 +45,6 @@
 //         <Text>Open</Text>
 //       </Pressable>
 //       {open && <EditProductModal open={open} setOpen={setOpen} />} */}
-
 //     </View>
 //   );
 // }

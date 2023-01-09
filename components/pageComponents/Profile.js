@@ -1,16 +1,18 @@
+import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Image, Text } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faQuestion } from "@fortawesome/free-solid-svg-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Pressable } from "react-native";
 import { Input } from "native-base";
-import { useState } from "react";
 import PrimaryButton from "../inputs/PrimaryButton";
+import { useNavigation } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
 import { signOut, getAuth, currentUser } from "firebase/auth";
 import React, { useEffect } from "react";
 
 function Profile() {
+  const navigation = useNavigation();
   const [editMode, setEditMode] = useState(false);
   const auth = getAuth();
   const route = useRoute();
@@ -29,6 +31,7 @@ function Profile() {
       .then(() => {
         console.log("SIGNED OUT");
         console.log(auth.currentUser);
+        navigation.navigate("Products");
       })
       .catch((error) => {
         console.log("ERROR");
@@ -175,13 +178,23 @@ function Profile() {
           </View>
         )}
       </View>
+      <PrimaryButton
+        label="Mina annonser"
+        btnWidth={{
+          width: 152,
+          position: "absolute",
+          right: "50%",
+          bottom: -670,
+        }}
+        onPress={() => navigation.navigate("MyProducts")}
+      />
       {editMode ? (
         <PrimaryButton
           label="Spara"
           btnWidth={{
             width: 152,
             position: "absolute",
-            right: 50,
+            right: "50%",
             bottom: -670,
           }}
           onPress={() => setEditMode(!editMode)}
