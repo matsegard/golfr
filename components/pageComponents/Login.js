@@ -25,11 +25,14 @@ function Login() {
         });
       })
       .catch((error) => {
-        if (error.code === "auth/email-already-in-use") {
-          console.log("That email address is already in use!");
+        if (error.code === 'auth/user-not-found') {
+          console.log(" adressen existerar inte");
         }
-        if (error.code === "auth/invalid-email") {
-          console.log("That email address is invalid!");
+        if (error.code === 'auth/invalid-email') {
+          console.log("Email adressen existerar inte");
+        }
+        if (error.code === 'auth/wrong-password') {
+            console.log("Lösenordet existerar inte");
         }
       });
   }
@@ -65,15 +68,8 @@ function Login() {
             email: "",
             password: "",
           }}
-          onSubmit={(values, actions) => {
-            signIn(values)
-            actions.setSubmitting(false);
-            actions.resetForm({
-              values: {
-              email:"",
-              password:"",
-              },
-            });
+          onSubmit={(values) => {
+            signIn(values) 
           }}
           
         >
