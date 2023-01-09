@@ -44,18 +44,23 @@ const MyProfileProducts = () => {
 
   async function getData() {
     const productsFromDb = [];
-    const q = query(
-      collection(db, "products"),
-      where("user", "==", user.displayName)
-    );
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-      // doc.data() is never undefined for query doc snapshots
-      productsFromDb.push({ data: doc.data(), id: doc.id });
-    });
-    setMyProducts(productsFromDb);
-    setUpdate(false);
-    return;
+    if (user) {
+      const q = query(
+        collection(db, "products"),
+        where("user", "==", user.displayName)
+      );
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        productsFromDb.push({ data: doc.data(), id: doc.id });
+      });
+      setMyProducts(productsFromDb);
+      setUpdate(false);
+      return;
+    } else {
+      Alert.alert("Du måste logga in för att se dina annonser");
+      navigation.navigate("Login");
+    }
   }
 
   useEffect(() => {
