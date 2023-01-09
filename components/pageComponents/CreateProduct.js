@@ -189,7 +189,7 @@ export default function CreateProduct() {
                       onValueChange={handleChange("category")}
                     >
                       <Select.Item label="Golfset" value="Golfset" />
-                      <Select.Item label="Vagn/bag" value="Vagn/bag" />
+                      <Select.Item label="Vagn" value="Vagn" />
                       <Select.Item label="Golfklubba" value="Golfklubba" />
                       <Select.Item label="Golfbil" value="Golfbil" />
                       <Select.Item label="Övrigt" value="Övrigt" />

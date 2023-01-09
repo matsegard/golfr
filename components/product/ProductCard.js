@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   ScrollView,
   Box,
@@ -17,10 +17,11 @@ import { useNavigation } from "@react-navigation/native";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebase/firebaseConfig";
 
-function ProductCard() {
+function ProductCard({ selectedCategory }) {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
+  const filteredList = useMemo(getFilteredList, [selectedCategory, products]);
 
   async function getData() {
     const productsData = [];
@@ -34,6 +35,13 @@ function ProductCard() {
     return;
   }
 
+  function getFilteredList() {
+    if (!selectedCategory) {
+      return products;
+    }
+    return products.filter((item) => item.category === selectedCategory);
+  }
+
   useEffect(() => {
     getData();
   }, []);
@@ -42,9 +50,9 @@ function ProductCard() {
     <ScrollView showsVerticalScrollIndicator={false} height="auto">
       <Box alignItems="center" marginBottom="240">
         {!loading ? (
-          products.map((item, i) => (
+          filteredList.map((item) => (
             <Pressable
-              key={i}
+              key={item.uri}
               onPress={() => {
                 navigation.navigate("ProductDetails", {
                   title: item.title,
@@ -86,7 +94,7 @@ function ProductCard() {
                       source={{
                         uri: item.image,
                       }}
-                      alt="image"
+                      alt={item.title}
                     />
                   </AspectRatio>
                   <Center
@@ -143,6 +151,9 @@ function ProductCard() {
               color="#6A8E4E"
             />
           </HStack>
+        )}
+        {filteredList.length === 0 && (
+          <Text paddingTop={60}>No Result</Text>
         )}
       </Box>
     </ScrollView>
