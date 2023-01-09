@@ -216,6 +216,7 @@ function Profile() {
 
 const styles = StyleSheet.create({
   container: {
+    height: "100%",
     backgroundColor: "FAFAFA",
     justifyContent: "center",
     alignItems: "center",
@@ -231,7 +232,8 @@ const styles = StyleSheet.create({
     width: "88%",
     flexDirection: "row",
     justifyContent: "space-between",
-    margin: 15,
+    position: "absolute",
+    top: 20,
   },
   logout: {
     color: "white",

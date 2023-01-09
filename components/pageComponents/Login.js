@@ -9,10 +9,7 @@ import { Input } from "native-base";
 import PrimaryButton from "../inputs/PrimaryButton.js";
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import {
-  getAuth,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 function Login() {
   const [show, setShow] = useState(false);
@@ -22,7 +19,7 @@ function Login() {
   function signIn({ email, password }) {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        const user = userCredential.user; 
+        const user = userCredential.user;
         navigation.navigate("Products", {
           user: auth.currentUser,
         });
@@ -59,7 +56,6 @@ function Login() {
         source={require("../../assets/Ellipse.png")}
       />
       <Text style={styles.loginText}>Logga in</Text>
-    
 
       <View style={styles.forms}>
         <Formik
@@ -186,7 +182,7 @@ function Login() {
                 btnWidth={{
                   width: 182,
                   right: 50,
-                  bottom: -110,
+                  bottom: -100,
                   position: "absolute",
                 }}
                 onPress={handleSubmit}
@@ -205,6 +201,7 @@ function Login() {
 
 const styles = StyleSheet.create({
   container: {
+    height: "100%",
     backgroundColor: "FAFAFA",
     justifyContent: "center",
     alignItems: "center",
@@ -222,12 +219,12 @@ const styles = StyleSheet.create({
     letterSpacing: ".3%",
     textDecorationLine: "underline",
     position: "absolute",
-    top: 680,
+    top: 640,
   },
   loginText: {
     fontSize: 20,
     fontFamily: "MontserratBold",
-    top: 240,
+    bottom: 150,
   },
   forms: {
     position: "absolute",
