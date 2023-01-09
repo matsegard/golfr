@@ -19,7 +19,7 @@ import { db } from "../../firebase/firebaseConfig";
 
 function ProductCard() {
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [update, setUpdate] = useState(false);
   const navigation = useNavigation();
 
   async function getData() {
@@ -30,13 +30,9 @@ function ProductCard() {
       productsData.push(doc.data());
     });
     setProducts(productsData);
-    setLoading(false);
+    setUpdate(true);
     return;
   }
-
-  useEffect(() => {
-    getData();
-  }, []);
 
   return (
     <ScrollView showsVerticalScrollIndicator={false} height="auto">

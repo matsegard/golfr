@@ -30,9 +30,8 @@ import EditProductModal from "../modals/EditProductModal";
 import { useNavigation } from "@react-navigation/native";
 
 const MyProfileProducts = () => {
-  const [open, setOpen] = useState(false);
   const [myProducts, setMyProducts] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [update, setUpdate] = useState(false);
   // const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
   const auth = getAuth();
@@ -56,13 +55,13 @@ const MyProfileProducts = () => {
       productsFromDb.push({ data: doc.data(), id: doc.id });
     });
     setMyProducts(productsFromDb);
-    setLoading(false);
+    setUpdate(false);
     return;
   }
 
   useEffect(() => {
     getData();
-  }, [loading]);
+  }, [update]);
 
   return (
     <>
@@ -141,6 +140,8 @@ const MyProfileProducts = () => {
                       hand: product.data.hand,
                       gender: product.data.gender,
                       user: product.data.user,
+                      id: product.id,
+                      setUpdate,
                     });
                   }}
                 >
@@ -151,7 +152,6 @@ const MyProfileProducts = () => {
                     icon={faPen}
                   />
                 </Pressable>
-                {open && <EditProductModal />}
               </Box>
             </Box>
           ))}

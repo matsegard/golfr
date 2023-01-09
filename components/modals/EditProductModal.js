@@ -1,4 +1,5 @@
-import { StyleSheet, View, Text, TextInput } from "react-native";
+import { StyleSheet, View, Text, TextInput, Alert } from "react-native";
+import React, { useEffect, useState } from "react";
 import { Modal, Center, Select, ScrollView } from "native-base";
 import PrimaryButton from "../inputs/PrimaryButton";
 import { ProductValidationSchema } from "../schemas/ProductValidationSchema";
@@ -6,8 +7,12 @@ import { Formik } from "formik";
 import { Box, CheckIcon } from "native-base";
 import ImagePicker from "../inputs/ImageUpload";
 import { useRoute } from "@react-navigation/native";
+import { doc, updateDoc, setDoc } from "firebase/firestore";
+import { db } from "../../firebase/firebaseConfig";
+import { useNavigation } from "@react-navigation/native";
 
 export default function EditProductModal() {
+  const navigation = useNavigation();
   const route = useRoute();
   const {
     title,
@@ -22,7 +27,59 @@ export default function EditProductModal() {
     gender,
     image,
     user,
+    id,
+    setUpdate,
   } = route.params;
+
+  async function updateProduct({
+    title,
+    category,
+    description,
+    price,
+    location,
+    clubs,
+    difficulty,
+    gender,
+    hand,
+    shaft,
+  }) {
+    const updateRef = doc(db, "products", id);
+    updateDoc(updateRef, {
+      title: title,
+      category: category,
+      description: description,
+      price: price,
+      location: location,
+      clubs: clubs,
+      difficulty: difficulty,
+      gender: gender,
+      hand: hand,
+      shaft: shaft,
+      image: image,
+    })
+      .then((updateRef) => {
+        console.log("Uppdaterad");
+        Alert.alert("Annons uppdaterad");
+        navigation.navigate("MyProducts");
+        setUpdate(true);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    // await updateDoc(updateRef, {
+    //   title: title,
+    //   category: category,
+    //   description: description,
+    //   price: price,
+    //   location: location,
+    //   clubs: clubs,
+    //   difficulty: difficulty,
+    //   gender: gender,
+    //   hand: hand,
+    //   shaft: shaft,
+    //   image: image,
+    // });
+  }
 
   return (
     <ScrollView vertical>
@@ -45,7 +102,25 @@ export default function EditProductModal() {
               hand: hand,
               shaft: shaft,
             }}
-            onSubmit={(values) => console.log(values)}
+            onSubmit={(values, actions) => {
+              updateProduct(values);
+              actions.setSubmitting(false);
+              actions.resetForm({
+                values: {
+                  title: "",
+                  category: "",
+                  image: "",
+                  description: "",
+                  price: "",
+                  location: "",
+                  clubs: "",
+                  difficulty: "",
+                  gender: "",
+                  hand: "",
+                  shaft: "",
+                },
+              });
+            }}
           >
             {({
               handleChange,
@@ -57,7 +132,6 @@ export default function EditProductModal() {
             }) => (
               <>
                 <Text style={styles.formLabel}>Titel</Text>
-                <Text style={styles.formLabel}>{image}</Text>
                 <TextInput
                   style={styles.input}
                   placeholder="Skriv en titel"
