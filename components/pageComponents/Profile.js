@@ -6,6 +6,7 @@ import { Pressable } from "react-native";
 import { Input } from "native-base";
 import { useState } from "react";
 import PrimaryButton from "../inputs/PrimaryButton";
+import { useNavigation } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
 import {
   signOut,
@@ -16,6 +17,7 @@ import React, { useEffect } from "react";
 
 
 function Profile() {
+  const navigation = useNavigation();
   const [editMode, setEditMode] = useState(false);
   const auth = getAuth();
   const route = useRoute();
@@ -37,6 +39,7 @@ console.log(auth)
       .then(() => {
         console.log("SIGNED OUT");
         console.log(auth.currentUser);
+        navigation.navigate("Products");
       })
       .catch((error) => {
         console.log("ERROR");
