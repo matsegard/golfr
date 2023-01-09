@@ -69,7 +69,17 @@ function Login() {
             email: "",
             password: "",
           }}
-          onSubmit={(values) => signIn(values)}
+          onSubmit={(values, actions) => {
+            signIn(values)
+            actions.setSubmitting(false);
+            actions.resetForm({
+              values: {
+              email:"",
+              password:"",
+              },
+            });
+          }}
+          
         >
           {({
             handleChange,
