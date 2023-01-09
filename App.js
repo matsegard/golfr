@@ -39,15 +39,28 @@ export default function App() {
   return (
     <NavigationContainer>
       <NativeBaseProvider>
-        <Stack.Navigator>
-          <Stack.Screen name="Home" component={HomePage} />
+        <Stack.Navigator initialRouteName="Products">
+          {/* <Stack.Screen name="Home" component={HomePage} /> */}
           <Stack.Screen name="Products" component={ProductPage} />
-          <Stack.Screen name="MyProducts" component={MyProductsPage} />
+          <Stack.Screen
+            name="MyProducts"
+            component={MyProductsPage}
+            options={{
+              title: "Mina annonser",
+              headerStyle: {
+                backgroundColor: "#6A8E4E",
+              },
+              headerTintColor: "#fff",
+              headerTitleStyle: {
+                fontWeight: "bold",
+              },
+            }}
+          />
           <Stack.Screen
             name="AddProduct"
             component={CreateProductPage}
             options={{
-              title: "AddProduct",
+              title: "Skapa annons",
               headerStyle: {
                 backgroundColor: "#6A8E4E",
               },

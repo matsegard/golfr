@@ -8,21 +8,29 @@ import PrimaryButton from "../inputs/PrimaryButton.js";
 import { useState } from "react";
 import { Formik } from "formik";
 import { LoginSignupValidationSchema } from "../schemas/LoginSignupValidationSchema";
-import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
 
 function Signup({ navigation }) {
   const [show, setShow] = useState(false);
   const auth = getAuth();
 
   const CreateAccount = async ({ email, username, password }) => {
-    const { user } = await createUserWithEmailAndPassword(auth, email, password);
+    const { user } = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
 
     await updateProfile(user, {
-      displayName: username
+      displayName: username,
     });
 
     await reload(user);
- }
+  };
 
   return (
     <View style={styles.container}>
@@ -183,6 +191,7 @@ function Signup({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
+    height: "100%",
     backgroundColor: "FAFAFA",
     justifyContent: "center",
     alignItems: "center",
@@ -205,7 +214,7 @@ const styles = StyleSheet.create({
   loginText: {
     fontSize: 20,
     fontFamily: "MontserratBold",
-    top: 240,
+    bottom: 150,
   },
   forms: {
     position: "absolute",

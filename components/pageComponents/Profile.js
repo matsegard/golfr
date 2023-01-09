@@ -9,6 +9,7 @@ import PrimaryButton from "../inputs/PrimaryButton";
 import { useNavigation } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
 import { signOut, getAuth, currentUser } from "firebase/auth";
+import React, { useEffect } from "react";
 
 function Profile() {
   const navigation = useNavigation();
@@ -216,6 +217,7 @@ function Profile() {
 
 const styles = StyleSheet.create({
   container: {
+    height: "100%",
     backgroundColor: "FAFAFA",
     justifyContent: "center",
     alignItems: "center",
@@ -231,7 +233,8 @@ const styles = StyleSheet.create({
     width: "88%",
     flexDirection: "row",
     justifyContent: "space-between",
-    margin: 15,
+    position: "absolute",
+    top: 20,
   },
   logout: {
     color: "white",

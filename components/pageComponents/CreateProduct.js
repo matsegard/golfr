@@ -9,7 +9,6 @@ import {
   Button,
 } from "react-native";
 import { Select, Box, CheckIcon, Center, ScrollView } from "native-base";
-import Navbar from "../bars/Navbar";
 import { Formik } from "formik";
 import * as ImagePicker from "expo-image-picker";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
@@ -400,7 +399,6 @@ export default function CreateProduct() {
           </Formik>
         </ScrollView>
       </View>
-      <Navbar />
     </View>
   );
 }
