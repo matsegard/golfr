@@ -152,6 +152,9 @@ function ProductCard({ selectedCategory }) {
             />
           </HStack>
         )}
+        {filteredList.length === 0 && (
+          <Text paddingTop={60}>No Result</Text>
+        )}
       </Box>
     </ScrollView>
   );
