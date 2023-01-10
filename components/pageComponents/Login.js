@@ -101,14 +101,9 @@ function errorMessage(){
             email: "",
             password: "",
           }}
-
           onSubmit={(values) => {
-            signIn(values) 
-
-          onSubmit={(values, actions) => {
-            signIn(values);
-
-          }}
+          signIn(values); 
+           }}
         >
           {({
             handleChange,
@@ -138,7 +133,21 @@ function errorMessage(){
                     onChangeText={handleChange("email")}
                     onBlur={handleBlur("email")}
                     value={values.email}
+                    
                   />
+                {errors.email && (
+                      <Text
+                        style={{
+                          position: "absolute",
+                          fontSize: 12,
+                          color: "red",
+                          top: 62,
+                          
+                        }}
+                      >
+                        {errors.email}
+                      </Text>
+                    )}
             
                 </View>
                 <View style={styles.form}>
@@ -202,16 +211,13 @@ function errorMessage(){
                 <Text style={styles.forgotPassword}>Glömt ditt lösenord?</Text>
               </Pressable>
               <PrimaryButton
-                label="Logga in"
+                label="logga in"
                 btnWidth={{
                   width: 182,
                   right: 50,
                   bottom: -100,
                   position: "absolute",
                 }}
-                disabled={
-                  !isValid || (values.email === "" && values.password === "")
-                }
                 onPress={handleSubmit}
               />
             </>
