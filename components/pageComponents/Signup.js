@@ -7,6 +7,7 @@ import { Input } from "native-base";
 import PrimaryButton from "../inputs/PrimaryButton.js";
 import { useState } from "react";
 import { Formik } from "formik";
+import { useNavigation } from "@react-navigation/native";
 import { LoginSignupValidationSchema } from "../schemas/LoginSignupValidationSchema";
 import {
   getAuth,
@@ -14,8 +15,9 @@ import {
   updateProfile,
 } from "firebase/auth";
 
-function Signup({ navigation }) {
+function Signup() {
   const [show, setShow] = useState(false);
+  const navigation = useNavigation();
   const auth = getAuth();
 
   const CreateAccount = async ({ email, username, password }) => {
@@ -49,6 +51,7 @@ function Signup({ navigation }) {
           validateOnBlur={false}
           validationSchema={LoginSignupValidationSchema}
           initialValues={{
+            username: "",
             email: "",
             password: "",
           }}
@@ -173,9 +176,15 @@ function Signup({ navigation }) {
                 btnWidth={{
                   width: 182,
                   right: 50,
-                  bottom: -90,
+                  bottom: -70,
                   position: "absolute",
                 }}
+                disabled={
+                  !isValid ||
+                  (values.username === "" &&
+                    values.email === "" &&
+                    values.password === "")
+                }
                 onPress={handleSubmit}
               />
             </>
@@ -209,7 +218,7 @@ const styles = StyleSheet.create({
     letterSpacing: ".3%",
     textDecorationLine: "underline",
     position: "absolute",
-    top: 720,
+    top: 680,
   },
   loginText: {
     fontSize: 20,
