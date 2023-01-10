@@ -1,14 +1,19 @@
-import { StyleSheet, TouchableHighlight, Text } from "react-native";
+import { StyleSheet, Text, Pressable } from "react-native";
 
-function PrimaryButton({ label, onPress, btnWidth }) {
+function PrimaryButton({ label, onPress, btnWidth, disabled }) {
   return (
-    <TouchableHighlight
-      style={{ ...styles.container, ...btnWidth }}
+    <Pressable
+      disabled={disabled}
+      style={{
+        ...styles.container,
+        ...btnWidth,
+        opacity: disabled ? 0.5 : 1,
+      }}
       onPress={onPress}
       underlayColor="#608345"
     >
       <Text style={styles.btnText}>{label}</Text>
-    </TouchableHighlight>
+    </Pressable>
   );
 }
 

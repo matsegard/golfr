@@ -3,6 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import ProductPage from "./pages/ProductPage";
 import DatePicker from "./components/modals/DatePickerModal";
 import ProfilePage from "./pages/ProfilePage";
+import NotificationPage from "./pages/NotificationPage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import ProductDetails from "./pages/ProductDetailsPage";
@@ -42,6 +43,7 @@ export default function App() {
         <Stack.Navigator initialRouteName="Products">
           {/* <Stack.Screen name="Home" component={HomePage} /> */}
           <Stack.Screen name="Products" component={ProductPage} />
+          <Stack.Screen name="Notifications" component={NotificationPage} />
           <Stack.Screen
             name="MyProducts"
             component={MyProductsPage}
