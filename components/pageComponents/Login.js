@@ -66,16 +66,15 @@ function Login() {
             password: "",
           }}
           onSubmit={(values, actions) => {
-            signIn(values)
+            signIn(values);
             actions.setSubmitting(false);
             actions.resetForm({
               values: {
-              email:"",
-              password:"",
+                email: "",
+                password: "",
               },
             });
           }}
-          
         >
           {({
             handleChange,
@@ -178,13 +177,16 @@ function Login() {
                 <Text style={styles.forgotPassword}>Glömt ditt lösenord?</Text>
               </Pressable>
               <PrimaryButton
-                label="logga in"
+                label="Logga in"
                 btnWidth={{
                   width: 182,
                   right: 50,
                   bottom: -100,
                   position: "absolute",
                 }}
+                disabled={
+                  !isValid || (values.email === "" && values.password === "")
+                }
                 onPress={handleSubmit}
               />
             </>

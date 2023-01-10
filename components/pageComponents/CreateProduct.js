@@ -108,8 +108,6 @@ export default function CreateProduct() {
       <View style={styles.form}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <Formik
-            validateOnChange={false}
-            validateOnBlur={false}
             validationSchema={ProductValidationSchema}
             initialValues={{
               title: "",
@@ -390,7 +388,20 @@ export default function CreateProduct() {
                     label="Lägg till annons"
                     btnWidth={{ width: 200, marginTop: 25 }}
                     onPress={handleSubmit}
-                    disabled={!isValid}
+                    disabled={
+                      !isValid ||
+                      (values.title == "" &&
+                        values.category == "" &&
+                        values.image == "" &&
+                        values.description == "" &&
+                        values.price == "" &&
+                        values.location == "" &&
+                        values.clubs == "" &&
+                        values.difficulty == "" &&
+                        values.gender == "" &&
+                        values.hand == "" &&
+                        values.shaft == "")
+                    }
                   />
                 </View>
               </>
