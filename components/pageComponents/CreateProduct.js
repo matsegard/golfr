@@ -19,6 +19,7 @@ import { doc, setDoc, addDoc, collection } from "firebase/firestore";
 import { db } from "../../firebase/firebaseConfig";
 import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import { getAuth } from "firebase/auth";
+import { boolean } from "yup";
 
 export default function CreateProduct() {
   const [image, setImage] = useState(null);
@@ -82,8 +83,15 @@ export default function CreateProduct() {
       hand: hand,
       shaft: shaft,
       user: user.displayName,
+      booking: {
+        booked: false,
+        startDate: null,
+        endDate: null,
+        accepted: false,
+        denied: false,
+        renter: null,
+      },
     });
-    console.log(docRef.id);
     submitAlert();
   }
 
@@ -185,7 +193,7 @@ export default function CreateProduct() {
                       onValueChange={handleChange("category")}
                     >
                       <Select.Item label="Golfset" value="Golfset" />
-                      <Select.Item label="Vagn" value="Vagn" />
+                      <Select.Item label="Vagn/bag" value="Vagn/bag" />
                       <Select.Item label="Golfklubba" value="Golfklubba" />
                       <Select.Item label="Golfbil" value="Golfbil" />
                       <Select.Item label="Övrigt" value="Övrigt" />

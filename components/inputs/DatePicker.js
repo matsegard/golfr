@@ -2,7 +2,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import { Text, View, Button, TextInput } from "react-native";
 import React, { useState } from "react";
 
-export default function DatePicker({ price }) {
+export default function DatePicker({ price, productId }) {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [mode, setMode] = useState("date");
@@ -38,6 +38,25 @@ export default function DatePicker({ price }) {
     return diffDays;
   };
 
+  async function updateProduct({ endDate, startDate }) {
+    const bookingRef = doc(db, "products", productId);
+    updateDoc(bookingRef, {
+      booked: true,
+      startDate: startDate,
+      endDate: endDate,
+    })
+      .then((bookingRef) => {
+        console.log("Hyrförfrågan skickad");
+        Alert.alert("Hyrförfrågan skickad");
+        navigation.navigate("ProductDetails");
+        setUpdate(true);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  console.log(endDate, startDate, productId);
   return (
     <View
       style={{
@@ -120,7 +139,7 @@ export default function DatePicker({ price }) {
               fontFamily: "MontserratMedium",
               fontSize: 18,
               marginRight: 10,
-              marginBottom: 10
+              marginBottom: 10,
             }}
           >
             Totalpris:

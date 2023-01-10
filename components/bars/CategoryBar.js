@@ -7,7 +7,7 @@ const CategoryBar = ({ selectedCategory, setSelectedCategory }) => {
     return [
       { id: 1, title: "Golfklubba" },
       { id: 2, title: "Golfset" },
-      { id: 3, title: "Vagn" },
+      { id: 3, title: "Vagn/bag" },
       { id: 4, title: "Golfbil" },
       { id: 5, title: "Övrigt" },
     ];
