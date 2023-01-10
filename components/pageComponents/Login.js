@@ -46,16 +46,8 @@ function Login() {
         }
       });
   }
-  const animatedValue = React.useRef(new Animated.Value(0)).current;
-  const animated = () => {
-    Animated.timing(animatedValue,{
-     toValue: 0,
-      duration: 2000,
-      useNativeDriver: true
-     
-    }).start();
-  };
-function myFunction(){
+
+function errorMessage(){
   setErrorCode(false)
 
 }
@@ -84,7 +76,7 @@ function myFunction(){
         
       />
            {errorCode && (
-                         <Alert animatedValue={animated} w="50%" borderBottomRadius="2xl" position="absolute" top="0" backgroundColor="danger.400"  >
+                         <Alert w="50%" borderBottomRadius="2xl" position="absolute" top="0" backgroundColor="danger.400"  >
                          <VStack space={2} flexShrink={1} w="100%" alignItems="center"  >
                            <HStack flexShrink={1} space={2} justifyContent="space-between">
                              <HStack space={2} flexShrink={1}>
@@ -134,7 +126,7 @@ function myFunction(){
                     Email
                   </Text>
                   <Input
-                    onChange = {myFunction}
+                    onChange = {errorMessage}
                     variant="underlined"
                     placeholder="Email"
                     style={styles.editForm}
@@ -156,7 +148,7 @@ function myFunction(){
                   </Text>
                   <View style={styles.passwordCont}>
                     <Input
-                      onChange = {myFunction}
+                      onChange = {errorMessage}
                       style={styles.editForm}
                       variant="underlined"
                       type={show ? "text" : "password"}
