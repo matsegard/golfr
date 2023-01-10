@@ -16,7 +16,7 @@ function HelpInfo() {
                placement={position == "auto" ? undefined : position} trigger={triggerProps => {
         return <Button width="50%" alignSelf="center" variant="solid" backgroundColor="gray.200" {...triggerProps}>
               <Text>Hur fungerar det?</Text> 
-              <FontAwesomeIcon icon="fa-light fa-arrow-down" />
+             
             </Button>;
         }}>
           <Text>Hur fungerar våran app, vart loggar man in och hur loggar man ut?  
