@@ -85,10 +85,10 @@ export default function CreateProduct() {
       user: user.displayName,
       booking: {
         booked: false,
+        pendingBooking: false,
         startDate: null,
         endDate: null,
         accepted: false,
-        denied: false,
         renter: null,
       },
     });

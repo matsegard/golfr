@@ -169,6 +169,7 @@ export default function ProductDetails() {
             openModal={openModal}
             setOpenModal={setOpenModal}
             price={price}
+            user={user}
           />
         )}
         <View style={styles.bottomContainer}>
