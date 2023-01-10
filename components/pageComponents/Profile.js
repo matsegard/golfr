@@ -180,10 +180,10 @@ function Profile() {
       <PrimaryButton
         label="Mina annonser"
         btnWidth={{
-          width: 152,
+          width: 150,
           position: "absolute",
           right: "50%",
-          bottom: -670,
+          bottom: 150,
         }}
         onPress={() => navigation.navigate("MyProducts")}
       />
@@ -191,10 +191,10 @@ function Profile() {
         <PrimaryButton
           label="Spara"
           btnWidth={{
-            width: 152,
+            width: 150,
             position: "absolute",
-            right: "50%",
-            bottom: -670,
+            right: 40,
+            bottom: 150,
           }}
           onPress={() => setEditMode(!editMode)}
         />
@@ -202,10 +202,10 @@ function Profile() {
         <PrimaryButton
           label="Redigera profil"
           btnWidth={{
-            width: 152,
+            width: 150,
             position: "absolute",
             right: 50,
-            bottom: -670,
+            bottom: 150,
           }}
           onPress={() => setEditMode(!editMode)}
         />
