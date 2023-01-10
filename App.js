@@ -13,6 +13,7 @@ import { NativeBaseProvider } from "native-base";
 import { useFonts } from "expo-font";
 import MyProductsPage from "./pages/MyProductsPage";
 import EditProductModal from "./components/modals/EditProductModal";
+import HelpPage from "./pages/HelpPage";
 // import * as SplashScreen from "expo-splash-screen";
 
 export default function App() {
@@ -133,6 +134,20 @@ export default function App() {
             component={ProductDetails}
             options={{
               title: "Produkt",
+              headerStyle: {
+                backgroundColor: "#6A8E4E",
+              },
+              headerTintColor: "#fff",
+              headerTitleStyle: {
+                fontWeight: "bold",
+              },
+            }}
+          />
+          <Stack.Screen
+            name="HelpPage"
+            component={HelpPage}
+            options={{
+              title: "Hjälp",
               headerStyle: {
                 backgroundColor: "#6A8E4E",
               },
