@@ -13,8 +13,8 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { faArrowDown } from "@fortawesome/free-solid-svg-icons";
-import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
+import { faChevronUp } from "@fortawesome/free-solid-svg-icons";
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import PrimaryButton from "../inputs/PrimaryButton";
 
 function HelpInfo() {
@@ -31,55 +31,92 @@ function HelpInfo() {
       id: 123,
     },
     {
-      question: "Pineapple?",
-      answer: "100% Pure pineapple juice from concentrate",
+      question: "Apple?",
+      answer: "100% Pure apple juice from concentrate",
       id: 456,
     },
     {
-      question: "Pineapple?",
-      answer: "100% Pure pineapple juice from concentrate",
+      question: "Banan?",
+      answer: "100% Pure banana juice from concentrate",
       id: 789,
     },
   ];
 
-  function handleOpenQuestion(id) {
+  const handleOpenQuestion = (id) => {
     const item = QnA?.map((qa) => {
       if (qa?.id === id) {
         setChangeArrow(!changeArrow);
       }
       return item;
     });
-  }
+  };
 
   return (
     <View height="100%">
       <Text
-        fontSize="20"
-        fontFamily="Montserrat"
-        fontWeight="bold"
+        style={{
+          fontSize: 20,
+          fontFamily: "Montserrat",
+          fontWeight: "bold",
+
+          marginTop: 10,
+          marginBottom: 15,
+        }}
         marginX="auto"
-        marginY="10"
       >
         Hjälpcenter
       </Text>
       {QnA.map((c) => (
-        <VStack key={c.id} alignSelf="flex-start" w="100%" margin="3">
+        <VStack
+          key={c.id}
+          alignSelf="flex-start"
+          w="100%"
+          margin="2"
+          marginBottom="10"
+        >
           <Pressable
-            backgroundColor="#EAEAEA"
-            height="40"
-            width="80%"
-            alignSelf="center"
-            borderRadius="10"
+            style={{
+              backgroundColor: "#EAEAEA",
+              height: 70,
+              width: "80%",
+              alignSelf: "center",
+              borderRadius: "10",
+            }}
             onPress={() => handleOpenQuestion(c.id)}
           >
-            <View flexDirection="row">
-              <Text marginRight="3">{c.question}</Text>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-evenly",
+              }}
+              marginY="auto"
+            >
+              <Text
+                style={{
+                  fontFamily: "MontserratBold",
+                  fontWeight: "bold",
+                  fontSize: 20,
+                  color: "#6E6E6E",
+                  letterSpacing: "-1%",
+                }}
+              >
+                {c.question}
+              </Text>
               <View justifyContent="end">
-                {changeArrow ? (
-                  <FontAwesomeIcon backgroundColor="black" icon={faArrowDown} />
+                {!changeArrow ? (
+                  <FontAwesomeIcon
+                    backgroundColor="black"
+                    icon={faChevronDown}
+                    color="#6E6E6E"
+                    size={22}
+                  />
                 ) : (
                   <>
-                    <FontAwesomeIcon icon={faArrowUp} />
+                    <FontAwesomeIcon
+                      icon={faChevronUp}
+                      color="#6E6E6E"
+                      size={22}
+                    />
                     <View
                       width="90%"
                       shouldOverlapWithTrigger={shouldOverlapWithTrigger}
