@@ -30,6 +30,10 @@ const Notifications = () => {
     }
   }
 
+  async function acceptBooking() {
+    console.log("hej");
+  }
+
   useEffect(() => {
     getBookings();
   }, []);
@@ -39,12 +43,21 @@ const Notifications = () => {
     <View style={styles.container}>
       <ScrollView vertical>
         <View style={styles.adsContainer}>
-          <Text style={styles.title}>Mina annonser</Text>
+          <Text style={styles.title}></Text>
           {bookings.map((booking) => (
             <>
               <View style={styles.adsCard}>
                 <Text style={styles.cardText}>
-                  {booking.data.booking.renter} vill hyra din produkt mellan
+                  <Text
+                    style={{
+                      fontFamily: "montserratMedium",
+                      fontWeight: "bold",
+                      marginRight: 10,
+                    }}
+                  >
+                    {booking.data.booking.renter}
+                  </Text>
+                  vill hyra din produkt mellan
                   {booking.data.booking.startDate} -{" "}
                   {booking.data.booking.endDate}
                 </Text>
@@ -68,6 +81,7 @@ const Notifications = () => {
                   <PrimaryButton
                     label="Acceptera"
                     btnWidth={{ width: 130, marginTop: 25 }}
+                    onPress={acceptBooking}
                   />
                   <PrimaryButton
                     label="Neka"

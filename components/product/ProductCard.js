@@ -44,7 +44,7 @@ function ProductCard({ selectedCategory }) {
 
   useEffect(() => {
     getData();
-  }, [loading]);
+  }, []);
 
   return (
     <ScrollView showsVerticalScrollIndicator={false} height="auto">
