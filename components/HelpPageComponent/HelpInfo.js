@@ -75,7 +75,7 @@ function HelpInfo() {
          </VStack>
          <VStack  marginBottom="16" marginTop="5" alignSelf="flex-start" w="100%">
                   <Button  width="50%" alignSelf="center" backgroundColor="gray.200">
-          <Pressable onPress={() => setChangeArrow(!changeArrow2)} >
+          <Pressable onPress={() => setChangeArrow2(!changeArrow2)} >
                <View flexDirection="row" >
                  <Text marginRight="3" >Hur fungerar det?</Text> 
                  <View justifyContent="end" >
