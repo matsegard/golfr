@@ -1,86 +1,86 @@
 import { Center, ScrollView } from "native-base";
 import { StyleSheet, Text, View, Image } from "react-native";
 import PrimaryButton from "../inputs/PrimaryButton";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { db } from "../../firebase/firebaseConfig";
+import React, { useEffect, useMemo, useState } from "react";
+import { getAuth } from "firebase/auth";
 
 const Notifications = () => {
+  const [bookings, setBookings] = useState([]);
+  const auth = getAuth();
+  const user = auth.currentUser;
+
+  async function getBookings() {
+    const bookingsFromDb = [];
+    if (user) {
+      const q = query(
+        collection(db, "products"),
+        where("booking.pendingBooking", "==", true)
+      );
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        bookingsFromDb.push({ data: doc.data(), id: doc.id });
+      });
+      setBookings(bookingsFromDb);
+      // console.log(bookings);
+      return;
+    } else {
+    }
+  }
+
+  useEffect(() => {
+    getBookings();
+  }, []);
+
+  console.log(bookings);
   return (
     <View style={styles.container}>
       <ScrollView vertical>
         <View style={styles.adsContainer}>
           <Text style={styles.title}>Mina annonser</Text>
-          <View style={styles.adsCard}>
-            <Text style={styles.cardText}>
-              MaxAndersson vill hyra din produkt mellan 10-06-2023 - 13-06-2023
-            </Text>
-            <View style={styles.product}>
-              <Image
-                style={styles.image}
-                source={{
-                  uri: "https://images.unsplash.com/photo-1587174486073-ae5e5cff23aa?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
-                }}
-              ></Image>
-              <View>
-                <Text style={styles.productTitle}>Title</Text>
-                <Text style={styles.productText}>Beskrivning</Text>
+          {bookings.map((booking) => (
+            <>
+              <View style={styles.adsCard}>
+                <Text style={styles.cardText}>
+                  {booking.data.booking.renter} vill hyra din produkt mellan
+                  {booking.data.booking.startDate} -{" "}
+                  {booking.data.booking.endDate}
+                </Text>
+                <View style={styles.product}>
+                  <Image
+                    style={styles.image}
+                    source={{
+                      uri: booking.data.image,
+                    }}
+                  ></Image>
+                  <View>
+                    <Text style={styles.productTitle}>
+                      {booking.data.title}
+                    </Text>
+                    <Text style={styles.productText}>
+                      {booking.data.description}
+                    </Text>
+                  </View>
+                </View>
+                <View style={styles.buttonContainer}>
+                  <PrimaryButton
+                    label="Acceptera"
+                    btnWidth={{ width: 130, marginTop: 25 }}
+                  />
+                  <PrimaryButton
+                    label="Neka"
+                    btnWidth={{
+                      width: 130,
+                      marginTop: 20,
+                      backgroundColor: "#c32f27",
+                    }}
+                  />
+                </View>
               </View>
-            </View>
-            <View style={styles.buttonContainer}>
-              <PrimaryButton
-                label="Acceptera"
-                btnWidth={{ width: 130, marginTop: 25 }}
-                // onPress={handleSubmit}
-                // disabled={!isValid}
-              />
-              <PrimaryButton
-                label="Neka"
-                btnWidth={{
-                  width: 130,
-                  marginTop: 20,
-                  backgroundColor: "#c32f27",
-                }}
-                // onPress={handleSubmit}
-                // disabled={!isValid}
-              />
-            </View>
-          </View>
-        </View>
-        <View style={styles.adsContainer}>
-          <Text style={styles.title}>Hyrda produkter</Text>
-          <View style={styles.adsCard}>
-            <Text style={styles.cardText}>
-              MaxAndersson vill hyra din produkt mellan 10-06-2023 - 13-06-2023
-            </Text>
-            <View style={styles.product}>
-              <Image
-                style={styles.image}
-                source={{
-                  uri: "https://images.unsplash.com/photo-1587174486073-ae5e5cff23aa?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
-                }}
-              ></Image>
-              <View>
-                <Text style={styles.productTitle}>Title</Text>
-                <Text style={styles.productText}>Beskrivning</Text>
-              </View>
-            </View>
-            <View style={styles.buttonContainer}>
-              <PrimaryButton
-                label="Acceptera"
-                btnWidth={{ width: 130, marginTop: 25 }}
-                // onPress={handleSubmit}
-                // disabled={!isValid}
-              />
-              <PrimaryButton
-                label="Neka"
-                btnWidth={{
-                  width: 130,
-                  marginTop: 20,
-                  backgroundColor: "#c32f27",
-                }}
-                // onPress={handleSubmit}
-                // disabled={!isValid}
-              />
-            </View>
-          </View>
+            </>
+          ))}
         </View>
       </ScrollView>
     </View>
