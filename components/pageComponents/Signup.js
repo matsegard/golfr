@@ -9,6 +9,7 @@ import { useState } from "react";
 import { Formik } from "formik";
 import { useNavigation } from "@react-navigation/native";
 import { LoginSignupValidationSchema } from "../schemas/LoginSignupValidationSchema";
+
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -33,6 +34,7 @@ function Signup() {
 
     await reload(user);
   };
+ 
 
   return (
     <View style={styles.container}>
