@@ -45,6 +45,7 @@ export default function DatePicker({ price, productId, user }) {
     return diffDays;
   };
 
+  let totalDays = daysBetween(startDate, endDate);
   let totalPrice = price * daysBetween(startDate, endDate);
 
   async function updateProduct() {
@@ -62,6 +63,7 @@ export default function DatePicker({ price, productId, user }) {
         endDate: endDateDb,
         totalPrice: totalPrice,
         renter: auth.currentUser.displayName,
+        totalDays: totalDays,
       },
     })
       .then((bookingRef) => {

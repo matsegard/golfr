@@ -123,7 +123,7 @@ const MyProfileProducts = () => {
               <Box flexDirection="row" justifyContent="flex-end">
                 <Pressable onPress={() => deleteProduct(product)}>
                   <FontAwesomeIcon
-                    style={{ marginRight: 20, marginBottom: 10 }}
+                    style={{ marginRight: 20, marginBottom: 20 }}
                     color="#E46969"
                     size={25}
                     icon={faTrashCan}

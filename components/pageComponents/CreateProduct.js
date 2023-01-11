@@ -83,12 +83,14 @@ export default function CreateProduct() {
       hand: hand,
       shaft: shaft,
       user: user.displayName,
-      booked: false,
-      pendingBooking: false,
-      startDate: null,
-      endDate: null,
-      accepted: false,
-      renter: null,
+      booking: {
+        booked: false,
+        pendingBooking: false,
+        startDate: null,
+        endDate: null,
+        accepted: false,
+        renter: null,
+      },
     });
     submitAlert();
   }

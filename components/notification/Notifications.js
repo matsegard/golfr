@@ -1,7 +1,14 @@
 import { Center, ScrollView } from "native-base";
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image, Alert } from "react-native";
 import PrimaryButton from "../inputs/PrimaryButton";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  query,
+  where,
+  doc,
+  updateDoc,
+} from "firebase/firestore";
 import { db } from "../../firebase/firebaseConfig";
 import React, { useEffect, useMemo, useState } from "react";
 import { getAuth } from "firebase/auth";
@@ -30,36 +37,49 @@ const Notifications = () => {
     }
   }
 
-  async function acceptBooking() {
-    console.log("hej");
+  async function acceptBooking(id) {
+    const acceptBookingRef = doc(db, "products", id);
+    updateDoc(acceptBookingRef, {
+      booking: {
+        pendingBooking: false,
+        booked: true,
+      },
+    })
+      .then((bookingRef) => {
+        console.log("Hyrförfrågan Accepterad");
+        Alert.alert("Hyrförfrågan Accepterad");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  function declineBooking(id) {
+    console.log(id);
   }
 
   useEffect(() => {
     getBookings();
   }, []);
 
-  console.log(bookings);
   return (
     <View style={styles.container}>
       <ScrollView vertical>
         <View style={styles.adsContainer}>
-          <Text style={styles.title}></Text>
+          <Text style={styles.title}>Förfrågningar</Text>
           {bookings.map((booking) => (
             <>
               <View style={styles.adsCard}>
                 <Text style={styles.cardText}>
                   <Text
                     style={{
-                      fontFamily: "montserratMedium",
-                      fontWeight: "bold",
-                      marginRight: 10,
+                      fontFamily: "MontserratSemiBold",
+                      fontSize: 15,
                     }}
                   >
-                    {booking.data.booking.renter}
+                    {booking.data.booking.renter}{" "}
                   </Text>
-                  vill hyra din produkt mellan
-                  {booking.data.booking.startDate} -{" "}
-                  {booking.data.booking.endDate}
+                  har skickat en förfrågan att hyra den här produkten
                 </Text>
                 <View style={styles.product}>
                   <Image
@@ -73,7 +93,24 @@ const Notifications = () => {
                       {booking.data.title}
                     </Text>
                     <Text style={styles.productText}>
-                      {booking.data.description}
+                      Totalpris:{" "}
+                      <Text style={{ fontFamily: "montserratSemiBold" }}>
+                        {booking.data.booking.totalPrice}
+                      </Text>{" "}
+                      /kr
+                    </Text>
+                    <Text style={styles.productText}>
+                      Datum:{" "}
+                      <Text style={{ fontFamily: "montserratSemiBold" }}>
+                        {booking.data.booking.startDate} -{" "}
+                        {booking.data.booking.endDate}
+                      </Text>
+                    </Text>
+                    <Text style={styles.productText}>
+                      Antal dagar:{" "}
+                      <Text style={{ fontFamily: "montserratSemiBold" }}>
+                        {booking.data.booking.totalDays}
+                      </Text>
                     </Text>
                   </View>
                 </View>
@@ -81,14 +118,19 @@ const Notifications = () => {
                   <PrimaryButton
                     label="Acceptera"
                     btnWidth={{ width: 130, marginTop: 25 }}
-                    onPress={acceptBooking}
+                    onPress={() => {
+                      acceptBooking(booking.id);
+                    }}
                   />
                   <PrimaryButton
                     label="Neka"
                     btnWidth={{
                       width: 130,
                       marginTop: 20,
-                      backgroundColor: "#c32f27",
+                      backgroundColor: "#a5a5a5",
+                    }}
+                    onPress={() => {
+                      declineBooking(booking.id);
                     }}
                   />
                 </View>
@@ -116,7 +158,7 @@ const styles = StyleSheet.create({
   },
   adsCard: {
     backgroundColor: "white",
-    width: "80%",
+    width: "90%",
     height: "auto",
     borderRadius: 10,
     marginTop: 20,
@@ -133,6 +175,9 @@ const styles = StyleSheet.create({
   product: {
     flexDirection: "row",
     marginTop: 20,
+    // backgroundColor: "blue",
+
+    maxHeight: 100,
   },
   productTitle: {
     marginLeft: 10,
@@ -141,11 +186,14 @@ const styles = StyleSheet.create({
   productText: {
     marginLeft: 10,
     marginTop: 10,
+    width: 230,
     fontFamily: "MontserratRegular",
+    maxHeight: 100,
   },
   buttonContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "center",
   },
 });
 
