@@ -16,11 +16,11 @@ import { Pressable, StyleSheet, ActivityIndicator } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../firebase/firebaseConfig";
+import { useFocusEffect } from "@react-navigation/native";
 
 function ProductCard({ selectedCategory }) {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [updatePage, setUpdatePage] = useState(false);
   const navigation = useNavigation();
   const filteredList = useMemo(getFilteredList, [selectedCategory, products]);
 
@@ -33,7 +33,6 @@ function ProductCard({ selectedCategory }) {
       productsData.push({ data: doc.data(), id: doc.id });
     });
     setProducts(productsData);
-    // setUpdatePage(true);
     setLoading(false);
     return;
   }
@@ -45,9 +44,15 @@ function ProductCard({ selectedCategory }) {
     return products.filter((item) => item.data.category === selectedCategory);
   }
 
-  useEffect(() => {
-    getData();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      getData();
+    }, [])
+  );
+
+  // useEffect(() => {
+  //   getData();
+  // }, []);
 
   return (
     <ScrollView showsVerticalScrollIndicator={false} height="auto">

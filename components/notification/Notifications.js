@@ -12,20 +12,23 @@ import {
 import { db } from "../../firebase/firebaseConfig";
 import React, { useEffect, useMemo, useState } from "react";
 import { getAuth } from "firebase/auth";
+import { useFocusEffect } from "@react-navigation/native";
 
 const Notifications = () => {
   const [bookings, setBookings] = useState([]);
   const [acceptedBookings, setAcceptedBookings] = useState([]);
   const [myBookings, setMyBookings] = useState([]);
+  const [update, setUpdate] = useState(false);
   const auth = getAuth();
   const user = auth.currentUser;
 
   async function getBookings() {
     const bookingsFromDb = [];
-    if (user === user.email) {
+    if (user) {
       const q = query(
         collection(db, "products"),
-        where("pendingBooking", "==", true)
+        where("pendingBooking", "==", true),
+        where("user", "==", user.displayName)
       );
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
@@ -41,10 +44,11 @@ const Notifications = () => {
 
   async function getBookingsRentedOut() {
     const acceptedBookingsFromDb = [];
-    if (user === user.email) {
+    if (user) {
       const q = query(
         collection(db, "products"),
-        where("accepted", "==", true)
+        where("accepted", "==", true),
+        where("user", "==", user.displayName)
       );
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
@@ -52,13 +56,12 @@ const Notifications = () => {
         acceptedBookingsFromDb.push({ data: doc.data(), id: doc.id });
       });
       setAcceptedBookings(acceptedBookingsFromDb);
-
       return;
     }
   }
 
   async function acceptBooking(id) {
-    if (user === user.email) {
+    if (user) {
       const acceptBookingRef = doc(db, "products", id);
       updateDoc(acceptBookingRef, {
         pendingBooking: false,
@@ -67,6 +70,7 @@ const Notifications = () => {
         .then((acceptBookingRef) => {
           console.log("Hyrförfrågan Accepterad");
           Alert.alert("Hyrförfrågan Accepterad");
+          setUpdate(true);
         })
         .catch((error) => {
           console.log(error);
@@ -75,7 +79,7 @@ const Notifications = () => {
   }
 
   async function declineBooking(id) {
-    if (user === user.email) {
+    if (user) {
       const acceptBookingRef = doc(db, "products", id);
       updateDoc(acceptBookingRef, {
         pendingBooking: false,
@@ -84,6 +88,7 @@ const Notifications = () => {
         .then((acceptBookingRef) => {
           console.log("Hyrförfrågan Accepterad");
           Alert.alert("Hyrförfrågan Accepterad");
+          setUpdate(true);
         })
         .catch((error) => {
           console.log(error);
@@ -93,7 +98,7 @@ const Notifications = () => {
 
   async function getMyBookings() {
     const myBookingsFromDb = [];
-    if (user != user.email) {
+    if (user) {
       const q = query(
         collection(db, "products"),
         where("renter", "==", user.displayName)
@@ -109,11 +114,19 @@ const Notifications = () => {
     }
   }
 
-  useEffect(() => {
-    getBookings();
-    getBookingsRentedOut();
-    getMyBookings();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      getBookings();
+      getBookingsRentedOut();
+      getMyBookings();
+    }, [])
+  );
+
+  // useEffect(() => {
+  //   getBookings();
+  //   getBookingsRentedOut();
+  //   getMyBookings();
+  // }, [update]);
 
   return (
     <View style={styles.container}>
@@ -213,19 +226,32 @@ const Notifications = () => {
                     {acceptedBooking.data.title}
                   </Text>
                   <Text style={styles.productText}>
-                    Totalpris: {acceptedBooking.data.totalPrice}
-                    <Text
-                      style={{ fontFamily: "montserratSemiBold" }}
-                    ></Text>{" "}
+                    Totalpris:
+                    <Text style={{ fontFamily: "montserratSemiBold" }}>
+                      {" "}
+                      {acceptedBooking.data.totalPrice}
+                    </Text>{" "}
                     /kr
                   </Text>
                   <Text style={styles.productText}>
-                    Slutdatum: {acceptedBooking.data.endDate}
-                    <Text style={{ fontFamily: "montserratSemiBold" }}></Text>
+                    Datum:
+                    <Text style={{ fontFamily: "montserratSemiBold" }}>
+                      {" "}
+                      {acceptedBooking.data.startDate} -{" "}
+                      {acceptedBooking.data.endDate}
+                    </Text>
                   </Text>
                   <Text style={styles.productText}>
-                    Antal dagar: {acceptedBooking.data.totalDays}
-                    <Text style={{ fontFamily: "montserratSemiBold" }}></Text>
+                    Antal dagar:{" "}
+                    <Text style={{ fontFamily: "montserratSemiBold" }}>
+                      {acceptedBooking.data.totalDays}
+                    </Text>
+                  </Text>
+                  <Text style={styles.productText}>
+                    Hyrare:{" "}
+                    <Text style={{ fontFamily: "montserratSemiBold" }}>
+                      {acceptedBooking.data.renter}
+                    </Text>
                   </Text>
                 </View>
               </View>
@@ -318,7 +344,7 @@ const styles = StyleSheet.create({
   adsCard: {
     backgroundColor: "white",
     width: "90%",
-    height: 230,
+    height: 260,
     borderRadius: 10,
     marginTop: 20,
     padding: 20,
