@@ -86,8 +86,8 @@ const Notifications = () => {
         accepted: false,
       })
         .then((acceptBookingRef) => {
-          console.log("Hyrförfrågan Accepterad");
-          Alert.alert("Hyrförfrågan Accepterad");
+          console.log("Hyrförfrågan Nekad");
+          Alert.alert("Hyrförfrågan Nekad");
           setUpdate(true);
         })
         .catch((error) => {
@@ -119,7 +119,7 @@ const Notifications = () => {
       getBookings();
       getBookingsRentedOut();
       getMyBookings();
-    }, [])
+    }, [update])
   );
 
   // useEffect(() => {
@@ -291,23 +291,29 @@ const Notifications = () => {
                     {myBooking.data.title}
                   </Text>
                   <Text style={styles.productText}>
-                    Totalpris: {myBooking.data.totalPrice}
-                    <Text
-                      style={{ fontFamily: "montserratSemiBold" }}
-                    ></Text>{" "}
+                    Totalpris:{" "}
+                    <Text style={{ fontFamily: "montserratSemiBold" }}>
+                      {myBooking.data.totalPrice}
+                    </Text>{" "}
                     /kr
                   </Text>
                   <Text style={styles.productText}>
-                    Datum: {myBooking.data.startDate} - {myBooking.data.endDate}
-                    <Text style={{ fontFamily: "montserratSemiBold" }}></Text>
+                    Datum:{" "}
+                    <Text style={{ fontFamily: "montserratSemiBold" }}>
+                      {myBooking.data.startDate} - {myBooking.data.endDate}
+                    </Text>
                   </Text>
                   <Text style={styles.productText}>
-                    Antal dagar: {myBooking.data.totalDays}
-                    <Text style={{ fontFamily: "montserratSemiBold" }}></Text>
+                    Antal dagar:{" "}
+                    <Text style={{ fontFamily: "montserratSemiBold" }}>
+                      {myBooking.data.totalDays}
+                    </Text>
                   </Text>
                   <Text style={styles.productText}>
-                    Uthyrare: {myBooking.data.user}
-                    <Text style={{ fontFamily: "montserratSemiBold" }}></Text>
+                    Uthyrare:{" "}
+                    <Text style={{ fontFamily: "montserratSemiBold" }}>
+                      {myBooking.data.user}
+                    </Text>
                   </Text>
                 </View>
               </View>
@@ -371,7 +377,7 @@ const styles = StyleSheet.create({
   productText: {
     marginLeft: 10,
     marginTop: 10,
-    width: 230,
+    width: 240,
     fontFamily: "MontserratRegular",
     maxHeight: 100,
   },
