@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { Pressable } from "react-native";
-import { Input, Alert, VStack, HStack  } from "native-base";
+import { Input, VStack, HStack , Alert } from "native-base";
 import PrimaryButton from "../inputs/PrimaryButton.js";
 import { useState } from "react";
 import { Formik } from "formik";
@@ -29,11 +29,10 @@ function Signup() {
       password
     ) 
     .then(() => {
-      console.log("funkar lyssande så länge")
-
+      navigation.navigate("Products");
+      
     }).catch((errors) =>{
       if (errors.code === "auth/email-already-in-use") {
-         console.log(" adressen finns redan");
          setEmailExist(true)
       }
       })
@@ -77,6 +76,7 @@ function Signup() {
                     </VStack>
                     </Alert> 
              )}
+          
       <Text style={styles.loginText}>Registrera dig</Text>
       <View style={styles.forms}>
         <Formik
