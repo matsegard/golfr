@@ -1,12 +1,19 @@
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { Text, View, Button, TextInput } from "react-native";
+import { Text, View, Button, TextInput, Alert } from "react-native";
 import React, { useState } from "react";
+import PrimaryButton from "../inputs/PrimaryButton";
+import { doc, updateDoc, setDoc } from "firebase/firestore";
+import { db } from "../../firebase/firebaseConfig";
+import { getAuth, currentUser } from "firebase/auth";
+import { useNavigation } from "@react-navigation/native";
 
-export default function DatePicker({ price }) {
+export default function DatePicker({ price, productId, user }) {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
+  const auth = getAuth();
+  const navigation = useNavigation();
 
   const showMode = (currentMode) => {
     setShow(true);
@@ -37,6 +44,36 @@ export default function DatePicker({ price }) {
     );
     return diffDays;
   };
+
+  let totalDays = daysBetween(startDate, endDate);
+  let totalPrice = price * daysBetween(startDate, endDate);
+
+  async function updateProduct() {
+    if (user === auth.currentUser.displayName) {
+      return Alert.alert("Du kan inte hyra din egna produkt");
+    }
+    const endDateDb = endDate.toLocaleDateString();
+    const startDateDb = startDate.toLocaleDateString();
+
+    const bookingRef = doc(db, "products", productId);
+    updateDoc(bookingRef, {
+      pendingBooking: true,
+      accepted: false,
+      startDate: startDateDb,
+      endDate: endDateDb,
+      totalPrice: totalPrice,
+      renter: auth.currentUser.displayName,
+      totalDays: totalDays,
+    })
+      .then((bookingRef) => {
+        console.log("Hyrförfrågan skickad");
+        Alert.alert("Hyrförfrågan skickad");
+        navigation.navigate("Products");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
   return (
     <View
@@ -120,7 +157,7 @@ export default function DatePicker({ price }) {
               fontFamily: "MontserratMedium",
               fontSize: 18,
               marginRight: 10,
-              marginBottom: 10
+              marginBottom: 10,
             }}
           >
             Totalpris:
@@ -131,8 +168,21 @@ export default function DatePicker({ price }) {
               fontSize: 18,
             }}
           >
-            {price * daysBetween(startDate, endDate)}kr
+            {totalPrice}kr
           </Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <PrimaryButton
+            label="Avbryt"
+            btnWidth={{ width: 80, margin: 20 }}
+            secondaryColor={{ backgroundColor: "gray" }}
+            onPress={() => setOpenModal(false)}
+          />
+          <PrimaryButton
+            label="Skicka"
+            btnWidth={{ width: 80, margin: 20 }}
+            onPress={() => updateProduct()}
+          />
         </View>
       </View>
     </View>

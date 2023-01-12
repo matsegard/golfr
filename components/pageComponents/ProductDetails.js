@@ -37,6 +37,7 @@ export default function ProductDetails() {
     gender,
     image,
     user,
+    id,
   } = route.params;
 
   const onScroll = ({ nativeEvent }) => {
@@ -164,9 +165,11 @@ export default function ProductDetails() {
         </View>
         {openModal && (
           <DatePickerModal
+            productId={id}
             openModal={openModal}
             setOpenModal={setOpenModal}
             price={price}
+            user={user}
           />
         )}
         <View style={styles.bottomContainer}>

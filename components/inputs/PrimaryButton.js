@@ -1,12 +1,13 @@
 import { StyleSheet, Text, Pressable } from "react-native";
 
-function PrimaryButton({ label, onPress, btnWidth, disabled }) {
+function PrimaryButton({ label, onPress, btnWidth, disabled, secondaryColor }) {
   return (
     <Pressable
       disabled={disabled}
       style={{
         ...styles.container,
         ...btnWidth,
+        ...secondaryColor,
         opacity: disabled ? 0.5 : 1,
       }}
       onPress={onPress}

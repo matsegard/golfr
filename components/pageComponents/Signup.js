@@ -14,6 +14,7 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   updateProfile,
+  reload,
 } from "firebase/auth";
 
 function Signup() {

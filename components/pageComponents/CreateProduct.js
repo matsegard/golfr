@@ -19,11 +19,12 @@ import { doc, setDoc, addDoc, collection } from "firebase/firestore";
 import { db } from "../../firebase/firebaseConfig";
 import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import { getAuth } from "firebase/auth";
+import { useNavigation } from "@react-navigation/native";
 
 export default function CreateProduct() {
   const [image, setImage] = useState(null);
   const [imgUrl, setImgUrl] = useState(null);
-
+  const navigation = useNavigation();
   const auth = getAuth();
   const user = auth.currentUser;
 
@@ -82,13 +83,20 @@ export default function CreateProduct() {
       hand: hand,
       shaft: shaft,
       user: user.displayName,
+      pendingBooking: false,
+      startDate: null,
+      endDate: null,
+      accepted: false,
+      renter: null,
+      totalPrice: null,
+      totalDays: null,
     });
-    console.log(docRef.id);
     submitAlert();
   }
 
   const submitAlert = () => {
     Alert.alert("Annons skapad");
+    navigation.navigate("Products");
   };
 
   return (
@@ -185,7 +193,7 @@ export default function CreateProduct() {
                       onValueChange={handleChange("category")}
                     >
                       <Select.Item label="Golfset" value="Golfset" />
-                      <Select.Item label="Vagn" value="Vagn" />
+                      <Select.Item label="Vagn/bag" value="Vagn/bag" />
                       <Select.Item label="Golfklubba" value="Golfklubba" />
                       <Select.Item label="Golfbil" value="Golfbil" />
                       <Select.Item label="Övrigt" value="Övrigt" />
