@@ -15,6 +15,7 @@ import { getAuth } from "firebase/auth";
 
 const Notifications = () => {
   const [bookings, setBookings] = useState([]);
+  const [acceptedBookings, setAcceptedBookings] = useState([]);
   const auth = getAuth();
   const user = auth.currentUser;
 
@@ -23,7 +24,7 @@ const Notifications = () => {
     if (user) {
       const q = query(
         collection(db, "products"),
-        where("booking.pendingBooking", "==", true)
+        where("pendingBooking", "==", true)
       );
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
@@ -37,13 +38,30 @@ const Notifications = () => {
     }
   }
 
+  async function getBookingsRentedOut() {
+    const acceptedBookingsFromDb = [];
+    if (user) {
+      const q = query(
+        collection(db, "products"),
+        where("accepted", "==", true)
+      );
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        acceptedBookingsFromDb.push({ data: doc.data(), id: doc.id });
+      });
+      setAcceptedBookings(acceptedBookingsFromDb);
+
+      return;
+    } else {
+    }
+  }
+
   async function acceptBooking(id) {
     const acceptBookingRef = doc(db, "products", id);
     updateDoc(acceptBookingRef, {
-      booking: {
-        pendingBooking: false,
-        booked: true,
-      },
+      pendingBooking: false,
+      accepted: true,
     })
       .then((bookingRef) => {
         console.log("Hyrförfrågan Accepterad");
@@ -54,14 +72,27 @@ const Notifications = () => {
       });
   }
 
-  function declineBooking(id) {
-    console.log(id);
+  async function declineBooking(id) {
+    const acceptBookingRef = doc(db, "products", id);
+    updateDoc(acceptBookingRef, {
+      pendingBooking: false,
+      accepted: false,
+    })
+      .then((bookingRef) => {
+        console.log("Hyrförfrågan Accepterad");
+        Alert.alert("Hyrförfrågan Accepterad");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   useEffect(() => {
     getBookings();
+    getBookingsRentedOut();
   }, []);
 
+  console.log(acceptedBookings);
   return (
     <View style={styles.container}>
       <ScrollView vertical>
@@ -77,7 +108,7 @@ const Notifications = () => {
                       fontSize: 15,
                     }}
                   >
-                    {booking.data.booking.renter}{" "}
+                    {booking.data.renter}{" "}
                   </Text>
                   har skickat en förfrågan att hyra den här produkten
                 </Text>
@@ -95,21 +126,20 @@ const Notifications = () => {
                     <Text style={styles.productText}>
                       Totalpris:{" "}
                       <Text style={{ fontFamily: "montserratSemiBold" }}>
-                        {booking.data.booking.totalPrice}
+                        {booking.data.totalPrice}
                       </Text>{" "}
                       /kr
                     </Text>
                     <Text style={styles.productText}>
                       Datum:{" "}
                       <Text style={{ fontFamily: "montserratSemiBold" }}>
-                        {booking.data.booking.startDate} -{" "}
-                        {booking.data.booking.endDate}
+                        {booking.data.startDate} - {booking.data.endDate}
                       </Text>
                     </Text>
                     <Text style={styles.productText}>
                       Antal dagar:{" "}
                       <Text style={{ fontFamily: "montserratSemiBold" }}>
-                        {booking.data.booking.totalDays}
+                        {booking.data.totalDays}
                       </Text>
                     </Text>
                   </View>
@@ -137,6 +167,96 @@ const Notifications = () => {
               </View>
             </>
           ))}
+        </View>
+        <View style={styles.adsContainer}>
+          <Text style={styles.title}>Uthyrda produkter</Text>
+          {acceptedBookings.map((acceptedBooking) => (
+            <View style={styles.adsCard}>
+              <Text style={styles.cardText}>
+                <Text
+                  style={{
+                    fontFamily: "MontserratSemiBold",
+                    fontSize: 15,
+                  }}
+                ></Text>
+                Uthyrd produkt
+              </Text>
+              <View style={styles.product}>
+                <Image
+                  style={styles.image}
+                  source={{ uri: acceptedBooking.data.image }}
+                ></Image>
+                <View>
+                  <Text style={styles.productTitle}>
+                    {acceptedBooking.data.title}
+                  </Text>
+                  <Text style={styles.productText}>
+                    Totalpris: {acceptedBooking.data.totalPrice}
+                    <Text
+                      style={{ fontFamily: "montserratSemiBold" }}
+                    ></Text>{" "}
+                    /kr
+                  </Text>
+                  <Text style={styles.productText}>
+                    Slutdatum: {acceptedBooking.data.endDate}
+                    <Text style={{ fontFamily: "montserratSemiBold" }}></Text>
+                  </Text>
+                  <Text style={styles.productText}>
+                    Antal dagar: {acceptedBooking.data.totalDays}
+                    <Text style={{ fontFamily: "montserratSemiBold" }}></Text>
+                  </Text>
+                </View>
+              </View>
+            </View>
+          ))}
+        </View>
+        <View style={styles.adsContainer}>
+          <Text style={styles.title}>Kommer snart</Text>
+          <View style={styles.adsCard}>
+            <Text style={styles.cardText}>
+              <Text
+                style={{
+                  fontFamily: "MontserratSemiBold",
+                  fontSize: 15,
+                }}
+              ></Text>
+              Hyrda produkter
+            </Text>
+            <View style={styles.product}>
+              <Image style={styles.image} source={{}}></Image>
+              <View>
+                <Text style={styles.productTitle}></Text>
+                <Text style={styles.productText}>
+                  Totalpris:{" "}
+                  <Text style={{ fontFamily: "montserratSemiBold" }}></Text> /kr
+                </Text>
+                <Text style={styles.productText}>
+                  Datum:{" "}
+                  <Text style={{ fontFamily: "montserratSemiBold" }}></Text>
+                </Text>
+                <Text style={styles.productText}>
+                  Antal dagar:{" "}
+                  <Text style={{ fontFamily: "montserratSemiBold" }}></Text>
+                </Text>
+              </View>
+            </View>
+            <View style={styles.buttonContainer}>
+              <PrimaryButton
+                label="Acceptera"
+                btnWidth={{ width: 130, marginTop: 25 }}
+                onPress={() => {}}
+              />
+              <PrimaryButton
+                label="Neka"
+                btnWidth={{
+                  width: 130,
+                  marginTop: 20,
+                  backgroundColor: "#a5a5a5",
+                }}
+                onPress={() => {}}
+              />
+            </View>
+          </View>
         </View>
       </ScrollView>
     </View>

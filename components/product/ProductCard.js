@@ -14,23 +14,26 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons/faLocationDot";
 import { Pressable, StyleSheet, ActivityIndicator } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../firebase/firebaseConfig";
 
 function ProductCard({ selectedCategory }) {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [updatePage, setUpdatePage] = useState(false);
   const navigation = useNavigation();
   const filteredList = useMemo(getFilteredList, [selectedCategory, products]);
 
   async function getData() {
     const productsData = [];
-    const querySnapshot = await getDocs(collection(db, "products"));
+    const q = query(collection(db, "products"), where("accepted", "==", false));
+    const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
       // doc.data() is never undefined for query doc snapshots
       productsData.push({ data: doc.data(), id: doc.id });
     });
     setProducts(productsData);
+    // setUpdatePage(true);
     setLoading(false);
     return;
   }

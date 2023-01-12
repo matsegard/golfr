@@ -57,18 +57,18 @@ export default function DatePicker({ price, productId, user }) {
 
     const bookingRef = doc(db, "products", productId);
     updateDoc(bookingRef, {
-      booking: {
-        pendingBooking: true,
-        startDate: startDateDb,
-        endDate: endDateDb,
-        totalPrice: totalPrice,
-        renter: auth.currentUser.displayName,
-        totalDays: totalDays,
-      },
+      pendingBooking: true,
+      accepted: false,
+      startDate: startDateDb,
+      endDate: endDateDb,
+      totalPrice: totalPrice,
+      renter: auth.currentUser.displayName,
+      totalDays: totalDays,
     })
       .then((bookingRef) => {
         console.log("Hyrförfrågan skickad");
         Alert.alert("Hyrförfrågan skickad");
+        navigation.navigate("Products");
       })
       .catch((error) => {
         console.log(error);

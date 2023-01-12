@@ -19,12 +19,12 @@ import { doc, setDoc, addDoc, collection } from "firebase/firestore";
 import { db } from "../../firebase/firebaseConfig";
 import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import { getAuth } from "firebase/auth";
-import { boolean } from "yup";
+import { useNavigation } from "@react-navigation/native";
 
 export default function CreateProduct() {
   const [image, setImage] = useState(null);
   const [imgUrl, setImgUrl] = useState(null);
-
+  const navigation = useNavigation();
   const auth = getAuth();
   const user = auth.currentUser;
 
@@ -83,20 +83,20 @@ export default function CreateProduct() {
       hand: hand,
       shaft: shaft,
       user: user.displayName,
-      booking: {
-        booked: false,
-        pendingBooking: false,
-        startDate: null,
-        endDate: null,
-        accepted: false,
-        renter: null,
-      },
+      pendingBooking: false,
+      startDate: null,
+      endDate: null,
+      accepted: false,
+      renter: null,
+      totalPrice: null,
+      totalDays: null,
     });
     submitAlert();
   }
 
   const submitAlert = () => {
     Alert.alert("Annons skapad");
+    navigation.navigate("Products");
   };
 
   return (
