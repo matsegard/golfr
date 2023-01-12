@@ -123,7 +123,7 @@ const Notifications = () => {
           <Text style={styles.title}>Förfrågningar</Text>
           {bookings.map((booking) => (
             <>
-              <View style={styles.adsCard}>
+              <View key={booking.id} style={styles.adsCard}>
                 <Text style={styles.cardText}>
                   <Text
                     style={{
@@ -194,7 +194,7 @@ const Notifications = () => {
         <View style={styles.adsContainer}>
           <Text style={styles.title}>Uthyrda produkter</Text>
           {acceptedBookings.map((acceptedBooking) => (
-            <View style={styles.adsCard}>
+            <View key={acceptedBooking.id} style={styles.adsCard}>
               <Text style={styles.cardText}>
                 <Text
                   style={{
@@ -236,7 +236,7 @@ const Notifications = () => {
         <View style={styles.adsContainer}>
           <Text style={styles.title}>Hyrda produkter</Text>
           {myBookings.map((myBooking) => (
-            <View style={styles.adsCard}>
+            <View key={myBooking.id} style={styles.adsCard}>
               {myBooking.data.accepted ? (
                 <Text
                   style={{
