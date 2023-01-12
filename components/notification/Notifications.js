@@ -54,7 +54,6 @@ const Notifications = () => {
       setAcceptedBookings(acceptedBookingsFromDb);
 
       return;
-    } else {
     }
   }
 
