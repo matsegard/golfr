@@ -29,7 +29,7 @@ function Profile() {
       .then(() => {
         console.log("SIGNED OUT");
         console.log(auth.currentUser);
-        navigation.navigate("Products");
+        navigation.navigate("Login");
       })
       .catch((error) => {
         console.log("ERROR");
