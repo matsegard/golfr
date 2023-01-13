@@ -336,13 +336,13 @@ export default function EditProductModal() {
                     </Center>
                   </>
                 )}
-
                 <Text style={styles.formLabel}>Bild</Text>
                 <View
                   style={{
                     flex: 1,
                     alignItems: "center",
                     justifyContent: "center",
+                    marginBottom: 15,
                   }}
                 >
                   <FontAwesomeIcon size={30} color="#828282" icon={faCamera} />
@@ -352,22 +352,34 @@ export default function EditProductModal() {
                       source={{
                         uri: newImage.uri,
                       }}
-                      style={{ width: 200, height: 200 }}
+                      style={{ width: 200, height: 200, borderRadius: 10 }}
                     />
                   ) : (
                     <Image
                       source={{
                         uri: image,
                       }}
-                      style={{ width: 200, height: 200 }}
+                      style={{ width: 200, height: 200, borderRadius: 10 }}
                     />
                   )}
+                  {!newImage ||
+                    (newImageUrl == null && (
+                      <Text
+                        style={{
+                          fontFamily: "MontserratMedium",
+                          alignSelf: "center",
+                          marginTop: 10,
+                        }}
+                      >
+                        Bilden laddas upp...
+                      </Text>
+                    ))}
                 </View>
+
                 <Text style={styles.formLabel}>Beskrivning</Text>
                 <TextInput
                   multiline
                   numberOfLines={3}
-                  ellipsizeMode="tail"
                   style={styles.inputDescription}
                   placeholder="Beskrivning"
                   value={values.description}
@@ -407,7 +419,7 @@ export default function EditProductModal() {
                     label="Spara"
                     btnWidth={{ width: 200, marginTop: 25 }}
                     onPress={handleSubmit}
-                    disabled={!isValid}
+                    disabled={!isValid || newImageUrl == null}
                   />
                 </View>
               </>
@@ -448,6 +460,7 @@ const styles = StyleSheet.create({
     padding: 10,
     width: "100%",
     borderBottomWidth: 1,
+    borderBottomColor: "#B6B6B6",
   },
   form: {
     width: "70%",
