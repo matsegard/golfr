@@ -1,5 +1,13 @@
-import { Center, ScrollView } from "native-base";
-import { StyleSheet, Text, View, Image, Alert } from "react-native";
+import { Badge } from "native-base";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  Alert,
+  ScrollView,
+  Pressable,
+} from "react-native";
 import PrimaryButton from "../inputs/PrimaryButton";
 import {
   collection,
@@ -18,6 +26,9 @@ const Notifications = () => {
   const [bookings, setBookings] = useState([]);
   const [acceptedBookings, setAcceptedBookings] = useState([]);
   const [myBookings, setMyBookings] = useState([]);
+  const [openMenu1, setOpenMenu1] = useState(false);
+  const [openMenu2, setOpenMenu2] = useState(false);
+  const [openMenu3, setOpenMenu3] = useState(false);
   const [update, setUpdate] = useState(false);
   const auth = getAuth();
   const user = auth.currentUser;
@@ -109,7 +120,6 @@ const Notifications = () => {
         myBookingsFromDb.push({ data: doc.data(), id: doc.id });
       });
       setMyBookings(myBookingsFromDb);
-      console.log(myBookings);
       return;
     }
   }
@@ -127,192 +137,296 @@ const Notifications = () => {
       <ScrollView vertical>
         <View style={{ marginBottom: 100 }}>
           <View style={styles.adsContainer}>
-            <Text style={styles.title}>Förfrågningar</Text>
-            {bookings.map((booking) => (
+            <View
+              style={{
+                alignItems: "center",
+                justifyContent: "center",
+                flexDirection: "row",
+              }}
+            >
+              <Pressable onPress={() => setOpenMenu1(!openMenu1)}>
+                <Text style={styles.title}>Förfrågningar</Text>
+              </Pressable>
+              <View
+                style={{
+                  backgroundColor: "#6A994E",
+                  width: 25,
+                  height: 25,
+                  borderRadius: "100%",
+                  justifyContent: "center",
+                  alignSelf: "center",
+                  marginBottom: -20,
+                }}
+              >
+                <Text
+                  style={{
+                    color: "white",
+                    fontSize: 18,
+                    alignSelf: "center",
+                  }}
+                >
+                  {bookings.length}
+                </Text>
+              </View>
+            </View>
+            {openMenu1 && (
               <>
-                <View key={booking.id} style={styles.adsCard}>
-                  <Text style={styles.cardText}>
-                    <Text
-                      style={{
-                        fontFamily: "MontserratSemiBold",
-                        fontSize: 15,
-                      }}
-                    >
-                      {booking.data.renter}{" "}
+                {bookings.map((booking) => (
+                  <>
+                    <View key={booking.id} style={styles.adsCard}>
+                      <Text style={styles.cardText}>
+                        <Text
+                          style={{
+                            fontFamily: "MontserratSemiBold",
+                            fontSize: 15,
+                          }}
+                        >
+                          {booking.data.renter}{" "}
+                        </Text>
+                        har skickat en förfrågan att hyra den här produkten
+                      </Text>
+                      <View style={styles.product}>
+                        <Image
+                          style={styles.image}
+                          source={{
+                            uri: booking.data.image,
+                          }}
+                        ></Image>
+                        <View>
+                          <Text style={styles.productTitle}>
+                            {booking.data.title}
+                          </Text>
+                          <Text style={styles.productText}>
+                            Totalpris:{" "}
+                            <Text style={{ fontFamily: "montserratSemiBold" }}>
+                              {booking.data.totalPrice}
+                            </Text>{" "}
+                            /kr
+                          </Text>
+                          <Text style={styles.productText}>
+                            Datum:{" "}
+                            <Text style={{ fontFamily: "montserratSemiBold" }}>
+                              {booking.data.startDate} - {booking.data.endDate}
+                            </Text>
+                          </Text>
+                          <Text style={styles.productText}>
+                            Antal dagar:{" "}
+                            <Text style={{ fontFamily: "montserratSemiBold" }}>
+                              {booking.data.totalDays}
+                            </Text>
+                          </Text>
+                        </View>
+                      </View>
+                      <View style={styles.buttonContainer}>
+                        <PrimaryButton
+                          label="Acceptera"
+                          btnWidth={{ width: 130, marginTop: 25 }}
+                          onPress={() => {
+                            acceptBooking(booking.id);
+                          }}
+                        />
+                        <PrimaryButton
+                          label="Neka"
+                          btnWidth={{
+                            width: 130,
+                            marginTop: 20,
+                            backgroundColor: "#a5a5a5",
+                          }}
+                          onPress={() => {
+                            declineBooking(booking.id);
+                          }}
+                        />
+                      </View>
+                    </View>
+                  </>
+                ))}
+              </>
+            )}
+          </View>
+          <View style={styles.adsContainer}>
+            <View
+              style={{
+                alignItems: "center",
+                justifyContent: "center",
+                flexDirection: "row",
+              }}
+            >
+              <Pressable onPress={() => setOpenMenu2(!openMenu2)}>
+                <Text style={styles.title}>Uthyrda produkter</Text>
+              </Pressable>
+              <View
+                style={{
+                  backgroundColor: "#6A994E",
+                  width: 25,
+                  height: 25,
+                  borderRadius: "100%",
+                  justifyContent: "center",
+                  alignSelf: "center",
+                  marginBottom: -20,
+                }}
+              >
+                <Text
+                  style={{
+                    color: "white",
+                    fontSize: 18,
+                    alignSelf: "center",
+                  }}
+                >
+                  {acceptedBookings.length}
+                </Text>
+              </View>
+            </View>
+            {openMenu2 && (
+              <>
+                {acceptedBookings.map((acceptedBooking) => (
+                  <View key={acceptedBooking.id} style={styles.adsCard}>
+                    <Text style={styles.cardText}>
+                      <Text
+                        style={{
+                          fontFamily: "MontserratSemiBold",
+                          fontSize: 15,
+                        }}
+                      ></Text>
+                      Uthyrd produkt
                     </Text>
-                    har skickat en förfrågan att hyra den här produkten
-                  </Text>
-                  <View style={styles.product}>
-                    <Image
-                      style={styles.image}
-                      source={{
-                        uri: booking.data.image,
-                      }}
-                    ></Image>
-                    <View>
-                      <Text style={styles.productTitle}>
-                        {booking.data.title}
-                      </Text>
-                      <Text style={styles.productText}>
-                        Totalpris:{" "}
-                        <Text style={{ fontFamily: "montserratSemiBold" }}>
-                          {booking.data.totalPrice}
-                        </Text>{" "}
-                        /kr
-                      </Text>
-                      <Text style={styles.productText}>
-                        Datum:{" "}
-                        <Text style={{ fontFamily: "montserratSemiBold" }}>
-                          {booking.data.startDate} - {booking.data.endDate}
+                    <View style={styles.product}>
+                      <Image
+                        style={styles.image}
+                        source={{ uri: acceptedBooking.data.image }}
+                      ></Image>
+                      <View>
+                        <Text style={styles.productTitle}>
+                          {acceptedBooking.data.title}
                         </Text>
-                      </Text>
-                      <Text style={styles.productText}>
-                        Antal dagar:{" "}
-                        <Text style={{ fontFamily: "montserratSemiBold" }}>
-                          {booking.data.totalDays}
+                        <Text style={styles.productText}>
+                          Totalpris:
+                          <Text style={{ fontFamily: "montserratSemiBold" }}>
+                            {" "}
+                            {acceptedBooking.data.totalPrice}
+                          </Text>{" "}
+                          /kr
                         </Text>
-                      </Text>
+                        <Text style={styles.productText}>
+                          Datum:
+                          <Text style={{ fontFamily: "montserratSemiBold" }}>
+                            {" "}
+                            {acceptedBooking.data.startDate} -{" "}
+                            {acceptedBooking.data.endDate}
+                          </Text>
+                        </Text>
+                        <Text style={styles.productText}>
+                          Antal dagar:{" "}
+                          <Text style={{ fontFamily: "montserratSemiBold" }}>
+                            {acceptedBooking.data.totalDays}
+                          </Text>
+                        </Text>
+                        <Text style={styles.productText}>
+                          Hyrare:{" "}
+                          <Text style={{ fontFamily: "montserratSemiBold" }}>
+                            {acceptedBooking.data.renter}
+                          </Text>
+                        </Text>
+                      </View>
                     </View>
                   </View>
-                  <View style={styles.buttonContainer}>
-                    <PrimaryButton
-                      label="Acceptera"
-                      btnWidth={{ width: 130, marginTop: 25 }}
-                      onPress={() => {
-                        acceptBooking(booking.id);
-                      }}
-                    />
-                    <PrimaryButton
-                      label="Neka"
-                      btnWidth={{
-                        width: 130,
-                        marginTop: 20,
-                        backgroundColor: "#a5a5a5",
-                      }}
-                      onPress={() => {
-                        declineBooking(booking.id);
-                      }}
-                    />
-                  </View>
-                </View>
+                ))}
               </>
-            ))}
+            )}
           </View>
           <View style={styles.adsContainer}>
-            <Text style={styles.title}>Uthyrda produkter</Text>
-            {acceptedBookings.map((acceptedBooking) => (
-              <View key={acceptedBooking.id} style={styles.adsCard}>
-                <Text style={styles.cardText}>
-                  <Text
-                    style={{
-                      fontFamily: "MontserratSemiBold",
-                      fontSize: 15,
-                    }}
-                  ></Text>
-                  Uthyrd produkt
+            <View
+              style={{
+                alignItems: "center",
+                justifyContent: "center",
+                flexDirection: "row",
+              }}
+            >
+              <Pressable onPress={() => setOpenMenu3(!openMenu3)}>
+                <Text style={styles.title}>Hyrda produkter</Text>
+              </Pressable>
+              <View
+                style={{
+                  backgroundColor: "#6A994E",
+                  width: 25,
+                  height: 25,
+                  borderRadius: "100%",
+                  justifyContent: "center",
+                  alignSelf: "center",
+                  marginBottom: -20,
+                }}
+              >
+                <Text
+                  style={{
+                    color: "white",
+                    fontSize: 18,
+                    alignSelf: "center",
+                  }}
+                >
+                  {myBookings.length}
                 </Text>
-                <View style={styles.product}>
-                  <Image
-                    style={styles.image}
-                    source={{ uri: acceptedBooking.data.image }}
-                  ></Image>
-                  <View>
-                    <Text style={styles.productTitle}>
-                      {acceptedBooking.data.title}
-                    </Text>
-                    <Text style={styles.productText}>
-                      Totalpris:
-                      <Text style={{ fontFamily: "montserratSemiBold" }}>
-                        {" "}
-                        {acceptedBooking.data.totalPrice}
-                      </Text>{" "}
-                      /kr
-                    </Text>
-                    <Text style={styles.productText}>
-                      Datum:
-                      <Text style={{ fontFamily: "montserratSemiBold" }}>
-                        {" "}
-                        {acceptedBooking.data.startDate} -{" "}
-                        {acceptedBooking.data.endDate}
-                      </Text>
-                    </Text>
-                    <Text style={styles.productText}>
-                      Antal dagar:{" "}
-                      <Text style={{ fontFamily: "montserratSemiBold" }}>
-                        {acceptedBooking.data.totalDays}
-                      </Text>
-                    </Text>
-                    <Text style={styles.productText}>
-                      Hyrare:{" "}
-                      <Text style={{ fontFamily: "montserratSemiBold" }}>
-                        {acceptedBooking.data.renter}
-                      </Text>
-                    </Text>
-                  </View>
-                </View>
               </View>
-            ))}
-          </View>
-          <View style={styles.adsContainer}>
-            <Text style={styles.title}>Hyrda produkter</Text>
-            {myBookings.map((myBooking) => (
-              <View key={myBooking.id} style={styles.adsCard}>
-                {myBooking.data.accepted ? (
-                  <Text
-                    style={{
-                      fontFamily: "MontserratSemiBold",
-                      fontSize: 15,
-                    }}
-                  >
-                    Hyrd produkt
-                  </Text>
-                ) : (
-                  <Text
-                    style={{
-                      fontFamily: "MontserratSemiBold",
-                      fontSize: 15,
-                    }}
-                  >
-                    Väntar på svar från uthyraren
-                  </Text>
-                )}
-                <View style={styles.product}>
-                  <Image
-                    style={styles.image}
-                    source={{ uri: myBooking.data.image }}
-                  ></Image>
-                  <View>
-                    <Text style={styles.productTitle}>
-                      {myBooking.data.title}
-                    </Text>
-                    <Text style={styles.productText}>
-                      Totalpris:{" "}
-                      <Text style={{ fontFamily: "montserratSemiBold" }}>
-                        {myBooking.data.totalPrice}
-                      </Text>{" "}
-                      /kr
-                    </Text>
-                    <Text style={styles.productText}>
-                      Datum:{" "}
-                      <Text style={{ fontFamily: "montserratSemiBold" }}>
-                        {myBooking.data.startDate} - {myBooking.data.endDate}
+            </View>
+            {openMenu3 && (
+              <>
+                {myBookings.map((myBooking) => (
+                  <View key={myBooking.id} style={styles.adsCard}>
+                    {myBooking.data.accepted ? (
+                      <Text
+                        style={{
+                          fontFamily: "MontserratSemiBold",
+                          fontSize: 15,
+                        }}
+                      >
+                        Hyrd produkt
                       </Text>
-                    </Text>
-                    <Text style={styles.productText}>
-                      Antal dagar:{" "}
-                      <Text style={{ fontFamily: "montserratSemiBold" }}>
-                        {myBooking.data.totalDays}
+                    ) : (
+                      <Text
+                        style={{
+                          fontFamily: "MontserratSemiBold",
+                          fontSize: 15,
+                        }}
+                      >
+                        Väntar på svar från uthyraren
                       </Text>
-                    </Text>
-                    <Text style={styles.productText}>
-                      Uthyrare:{" "}
-                      <Text style={{ fontFamily: "montserratSemiBold" }}>
-                        {myBooking.data.user}
-                      </Text>
-                    </Text>
-                  </View>
-                </View>
-                {/* <PrimaryButton
+                    )}
+                    <View style={styles.product}>
+                      <Image
+                        style={styles.image}
+                        source={{ uri: myBooking.data.image }}
+                      ></Image>
+                      <View>
+                        <Text style={styles.productTitle}>
+                          {myBooking.data.title}
+                        </Text>
+                        <Text style={styles.productText}>
+                          Totalpris:{" "}
+                          <Text style={{ fontFamily: "montserratSemiBold" }}>
+                            {myBooking.data.totalPrice}
+                          </Text>{" "}
+                          /kr
+                        </Text>
+                        <Text style={styles.productText}>
+                          Datum:{" "}
+                          <Text style={{ fontFamily: "montserratSemiBold" }}>
+                            {myBooking.data.startDate} -{" "}
+                            {myBooking.data.endDate}
+                          </Text>
+                        </Text>
+                        <Text style={styles.productText}>
+                          Antal dagar:{" "}
+                          <Text style={{ fontFamily: "montserratSemiBold" }}>
+                            {myBooking.data.totalDays}
+                          </Text>
+                        </Text>
+                        <Text style={styles.productText}>
+                          Uthyrare:{" "}
+                          <Text style={{ fontFamily: "montserratSemiBold" }}>
+                            {myBooking.data.user}
+                          </Text>
+                        </Text>
+                      </View>
+                    </View>
+                    {/* <PrimaryButton
                 label="Avbryt"
                 btnWidth={{
                   width: 130,
@@ -321,8 +435,10 @@ const Notifications = () => {
                 }}
                 onPress={() => {}}
               /> */}
-              </View>
-            ))}
+                  </View>
+                ))}
+              </>
+            )}
           </View>
         </View>
       </ScrollView>
@@ -343,6 +459,7 @@ const styles = StyleSheet.create({
     fontFamily: "MontserratMedium",
     fontSize: 20,
     marginTop: 20,
+    marginRight: 5,
   },
   adsCard: {
     backgroundColor: "white",
