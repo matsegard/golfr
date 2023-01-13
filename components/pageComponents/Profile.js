@@ -7,16 +7,18 @@ import { Input } from "native-base";
 import PrimaryButton from "../inputs/PrimaryButton";
 import { useNavigation } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
-import { signOut, getAuth } from "firebase/auth";
+import { signOut, getAuth, updateProfile } from "firebase/auth";
 import { Formik } from "formik";
 import { UsernameValidationSchema } from "../schemas/UsernameValidationSchema";
 
 function Profile() {
   const navigation = useNavigation();
-  const [editMode, setEditMode] = useState(false);
   const auth = getAuth();
   const route = useRoute();
+  const [username, setUsername] = useState(auth.currentUser.displayName);
+  const [editMode, setEditMode] = useState(false);
   const { user } = route.params;
+
   // funkar om man är inloggad blir error om man ej är
   if (auth == !true) {
     console.log("inte inloggad");
@@ -38,13 +40,12 @@ function Profile() {
   }
 
   function updateUser({ username }) {
-    console.log("updateUser function runs");
     setEditMode(!editMode);
     updateProfile(auth.currentUser, {
       displayName: username,
     })
       .then(() => {
-        console.log(auth.currentUser);
+        setUsername(auth.currentUser.displayName);
         Alert.alert("Profil uppdaterad");
       })
       .catch((error) => {
@@ -61,7 +62,6 @@ function Profile() {
           // password: "",
         }}
         onSubmit={(values, actions) => {
-          console.log("submit");
           updateUser(values);
           actions.setSubmitting(false);
         }}
@@ -111,7 +111,7 @@ function Profile() {
                     >
                       Username
                     </Text>
-                    <Text>{user.displayName}</Text>
+                    <Text>{username}</Text>
                     <View
                       style={{
                         width: 280,
