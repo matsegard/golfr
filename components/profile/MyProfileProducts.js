@@ -70,7 +70,7 @@ const MyProfileProducts = () => {
   return (
     <>
       <ScrollView showsVerticalScrollIndicator={false} height="auto">
-        <Box alignItems="center" marginBottom="100%">
+        <Box alignItems="center" marginBottom="100%" height={"100%"}>
           <Text
             marginTop="5"
             fontSize="xl"

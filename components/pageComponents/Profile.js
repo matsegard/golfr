@@ -48,11 +48,8 @@ function Profile() {
         source={require("../../assets/Ellipse.png")}
       />
       <View style={styles.bubbleText}>
-        <Pressable onPress={() => navigation.navigate("HelpPage")}  >
-          <FontAwesomeIcon
-            color="white" size={22}
-             icon={faQuestion} 
-          />
+        <Pressable onPress={() => navigation.navigate("HelpPage")}>
+          <FontAwesomeIcon color="white" size={22} icon={faQuestion} />
         </Pressable>
         <Text style={styles.logout} onPress={() => testSignOut()}>
           Logout
@@ -230,7 +227,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 224,
     position: "absolute",
-    top: -19,
+    top: -55,
   },
   bubbleText: {
     width: "88%",
