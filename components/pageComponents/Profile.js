@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Image, Text, Pressable } from "react-native";
+import { StyleSheet, View, Image, Text, Pressable, Alert } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faQuestion } from "@fortawesome/free-solid-svg-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -37,26 +37,15 @@ function Profile() {
       });
   }
 
-  async function updateUser({ username }) {
-    const updateRef = doc(db, "products", id);
-    updateDoc(updateRef, {
-      title: title,
-      category: category,
-      description: description,
-      price: price,
-      location: location,
-      clubs: clubs,
-      difficulty: difficulty,
-      gender: gender,
-      hand: hand,
-      shaft: shaft,
-      image: newImage.uri,
+  function updateUser({ username }) {
+    console.log("updateUser function runs");
+    setEditMode(!editMode);
+    updateProfile(auth.currentUser, {
+      displayName: username,
     })
-      .then((updateRef) => {
-        console.log("Uppdaterad");
-        Alert.alert("Annons uppdaterad");
-        navigation.navigate("MyProducts");
-        setUpdate(true);
+      .then(() => {
+        console.log(auth.currentUser);
+        Alert.alert("Profil uppdaterad");
       })
       .catch((error) => {
         console.log(error);
@@ -71,9 +60,10 @@ function Profile() {
           username: user.displayName,
           // password: "",
         }}
-        onSubmit={(values) => {
+        onSubmit={(values, actions) => {
+          console.log("submit");
           updateUser(values);
-          setEditMode(!editMode);
+          actions.setSubmitting(false);
         }}
       >
         {({
@@ -259,9 +249,7 @@ function Profile() {
                   bottom: 150,
                 }}
                 disabled={values.username === ""}
-                onPress={() => {
-                  setEditMode(false), () => handleSubmit;
-                }}
+                onPress={handleSubmit}
               />
             ) : (
               <PrimaryButton
