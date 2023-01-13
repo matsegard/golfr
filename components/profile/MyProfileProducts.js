@@ -10,7 +10,7 @@ import {
   Stack,
   Pressable,
 } from "native-base";
-import { Alert } from "react-native";
+import { Alert, View } from "react-native";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
@@ -28,6 +28,7 @@ import {
 import { db } from "../../firebase/firebaseConfig";
 import EditProductModal from "../modals/EditProductModal";
 import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect } from "@react-navigation/native";
 
 const MyProfileProducts = () => {
   const [myProducts, setMyProducts] = useState([]);
@@ -55,7 +56,6 @@ const MyProfileProducts = () => {
         productsFromDb.push({ data: doc.data(), id: doc.id });
       });
       setMyProducts(productsFromDb);
-      setUpdate(false);
       return;
     } else {
       Alert.alert("Du måste logga in för att se dina annonser");
@@ -63,22 +63,30 @@ const MyProfileProducts = () => {
     }
   }
 
-  useEffect(() => {
-    getData();
-  }, [update]);
+  useFocusEffect(
+    React.useCallback(() => {
+      getData();
+    }, [update])
+  );
 
   return (
     <>
-      <ScrollView showsVerticalScrollIndicator={false} height="auto">
-        <Box alignItems="center" marginBottom="100%" height={"100%"}>
+      <View style={{ flex: 1, alignItems: "center" }}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          height="100%"
+          marginBottom={20}
+        >
           <Text
             marginTop="5"
             fontSize="xl"
             marginBottom="5"
             fontFamily="MontserratBold"
+            alignSelf={"center"}
           >
             Mina annonser
           </Text>
+
           {myProducts.map((product, i) => (
             <Box
               key={i}
@@ -145,7 +153,6 @@ const MyProfileProducts = () => {
                       gender: product.data.gender,
                       user: product.data.user,
                       id: product.id,
-                      setUpdate,
                     });
                   }}
                 >
@@ -159,8 +166,8 @@ const MyProfileProducts = () => {
               </Box>
             </Box>
           ))}
-        </Box>
-      </ScrollView>
+        </ScrollView>
+      </View>
     </>
   );
 };

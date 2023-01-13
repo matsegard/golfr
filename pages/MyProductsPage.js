@@ -4,7 +4,7 @@ import Navbar from "../components/bars/Navbar";
 
 const MyProductsPage = () => {
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <MyProfileProducts />
       <Navbar />
     </View>

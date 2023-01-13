@@ -69,13 +69,12 @@ export default function EditProductModal() {
       gender: gender,
       hand: hand,
       shaft: shaft,
-      image: newImage.uri,
+      image: newImageUrl,
     })
       .then((updateRef) => {
         console.log("Uppdaterad");
         Alert.alert("Annons uppdaterad");
         navigation.navigate("MyProducts");
-        setUpdate(true);
       })
       .catch((error) => {
         console.log(error);
@@ -84,8 +83,9 @@ export default function EditProductModal() {
 
   useEffect(() => {
     addNewImageDatabase();
-  }, [image]);
+  }, [newImage]);
 
+  console.log(newImageUrl);
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
