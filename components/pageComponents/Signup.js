@@ -33,10 +33,7 @@ function Signup() {
       setSuccess(true)
       setTimeout(() => {
         navigation.navigate("Products");
-    }, "2000")
-    
-
-      // navigation.navigate("Products");
+    }, "2000")    
       
     }).catch((errors) =>{
       if (errors.code === "auth/email-already-in-use") {
