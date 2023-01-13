@@ -1,4 +1,4 @@
-import { Badge } from "native-base";
+import { Divider } from "native-base";
 import {
   StyleSheet,
   Text,
@@ -169,8 +169,20 @@ const Notifications = () => {
                 </Text>
               </View>
             </View>
+
             {openMenu1 && (
               <>
+                {bookings.length == 0 && (
+                  <Text
+                    style={{
+                      marginTop: 10,
+                      fontFamily: "MontserratMedium",
+                      fontSize: 12,
+                    }}
+                  >
+                    Du har inte fått några förfrågningar
+                  </Text>
+                )}
                 {bookings.map((booking) => (
                   <>
                     <View key={booking.id} style={styles.adsCard}>
@@ -278,6 +290,17 @@ const Notifications = () => {
             </View>
             {openMenu2 && (
               <>
+                {acceptedBookings.length == 0 && (
+                  <Text
+                    style={{
+                      marginTop: 10,
+                      fontFamily: "MontserratMedium",
+                      fontSize: 12,
+                    }}
+                  >
+                    Du har inga uthyrda produkter
+                  </Text>
+                )}
                 {acceptedBookings.map((acceptedBooking) => (
                   <View key={acceptedBooking.id} style={styles.adsCard}>
                     <Text style={styles.cardText}>
@@ -368,6 +391,17 @@ const Notifications = () => {
             </View>
             {openMenu3 && (
               <>
+                {myBookings.length == 0 && (
+                  <Text
+                    style={{
+                      marginTop: 10,
+                      fontFamily: "MontserratMedium",
+                      fontSize: 12,
+                    }}
+                  >
+                    Du har inte hyrt några produkter
+                  </Text>
+                )}
                 {myBookings.map((myBooking) => (
                   <View key={myBooking.id} style={styles.adsCard}>
                     {myBooking.data.accepted ? (
