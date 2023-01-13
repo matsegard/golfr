@@ -71,12 +71,14 @@ const MyProfileProducts = () => {
 
   return (
     <>
-      <View style={{ flex: 1, alignItems: "center" }}>
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          height="100%"
-          marginBottom={20}
-        >
+      <View
+        style={{
+          flex: 1,
+          alignItems: "center",
+          marginBottom: 75,
+        }}
+      >
+        <ScrollView showsVerticalScrollIndicator={false} height="100%">
           <Text
             marginTop="5"
             fontSize="xl"
@@ -86,7 +88,17 @@ const MyProfileProducts = () => {
           >
             Mina annonser
           </Text>
-
+          {myProducts.length === 0 && (
+            <Text
+              style={{
+                alignSelf: "center",
+                alignItem: "center",
+                fontFamily: "MontserratMedium",
+              }}
+            >
+              Du har inte lagt ut några annoner
+            </Text>
+          )}
           {myProducts.map((product, i) => (
             <Box
               key={i}
