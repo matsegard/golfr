@@ -9,7 +9,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
 import { signOut, getAuth } from "firebase/auth";
 import { Formik } from "formik";
-import { LoginSignupValidationSchema } from "../schemas/LoginSignupValidationSchema";
+import { UsernameValidationSchema } from "../schemas/UsernameValidationSchema";
 
 function Profile() {
   const navigation = useNavigation();
@@ -55,7 +55,7 @@ function Profile() {
   return (
     <View style={styles.container}>
       <Formik
-        validationSchema={LoginSignupValidationSchema}
+        validationSchema={UsernameValidationSchema}
         initialValues={{
           username: user.displayName,
           // password: "",
