@@ -10,6 +10,7 @@ import { useRoute } from "@react-navigation/native";
 import { signOut, getAuth, updateProfile } from "firebase/auth";
 import { Formik } from "formik";
 import { UsernameValidationSchema } from "../schemas/UsernameValidationSchema";
+import { LoginSignupValidationSchema } from "../schemas/LoginSignupValidationSchema";
 
 function Profile() {
   const navigation = useNavigation();
@@ -56,10 +57,12 @@ function Profile() {
   return (
     <View style={styles.container}>
       <Formik
-        validationSchema={UsernameValidationSchema}
+        validationSchema={
+          (UsernameValidationSchema, LoginSignupValidationSchema)
+        }
         initialValues={{
           username: user.displayName,
-          // password: "",
+          password: "",
         }}
         onSubmit={(values, actions) => {
           updateUser(values);
@@ -221,10 +224,20 @@ function Profile() {
                       Password
                     </Text>
                     <Input
+                      onChangeText={handleChange("password")}
+                      onBlur={handleBlur("password")}
+                      value={values.password}
                       variant="underlined"
                       placeholder="Underlined"
                       style={styles.editForm}
                     />
+                    {errors.password && (
+                      <Text
+                        style={{ fontSize: 12, color: "red", marginTop: 5 }}
+                      >
+                        {errors.password}
+                      </Text>
+                    )}
                   </View>
                 </View>
               )}
