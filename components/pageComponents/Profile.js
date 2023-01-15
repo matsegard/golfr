@@ -7,11 +7,10 @@ import { Input } from "native-base";
 import PrimaryButton from "../inputs/PrimaryButton";
 import { useNavigation } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
-import { signOut, getAuth, updateProfile } from "firebase/auth";
+import { signOut, getAuth, updateProfile, updatePassword } from "firebase/auth";
 import { Formik } from "formik";
 import { UsernameValidationSchema } from "../schemas/UsernameValidationSchema";
 import { PasswordValidationSchema } from "../schemas/PasswordValidationSchema";
-import { EmailValidationSchema } from "../schemas/EmailValidationSchema";
 
 function Profile() {
   const navigation = useNavigation();
@@ -41,6 +40,7 @@ function Profile() {
       });
   }
 
+  //updates username
   function updateUser({ username }) {
     setEditMode(!editMode);
     updateProfile(auth.currentUser, {
@@ -55,20 +55,32 @@ function Profile() {
       });
   }
 
+  //updates password
+  function updateUsersPassword({ password }) {
+    updatePassword(auth.currentUser, { password: password })
+      .then(() => {
+        console.log(auth.currentUser);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   return (
     <View style={styles.container}>
       <Formik
-        validationSchema={
-          (UsernameValidationSchema,
-          EmailValidationSchema,
-          PasswordValidationSchema)
-        }
+        validationSchema={(UsernameValidationSchema, PasswordValidationSchema)}
         initialValues={{
           username: user.displayName,
           password: "",
         }}
         onSubmit={(values, actions) => {
-          updateUser(values);
+          if (values.password != "") {
+            updateUsersPassword(values.password);
+          }
+          if (values.username) {
+            updateUser(values.username);
+          }
           actions.setSubmitting(false);
         }}
       >
@@ -147,26 +159,6 @@ function Profile() {
                       }}
                     ></View>
                   </View>
-                  <View style={styles.form}>
-                    <Text
-                      style={{
-                        fontFamily: "MontserratSemiBold",
-                        color: "#B6B6B6",
-                        marginBottom: 8,
-                      }}
-                    >
-                      Password
-                    </Text>
-                    <Text>{user.password}</Text>
-                    <View
-                      style={{
-                        width: 280,
-                        height: 1,
-                        backgroundColor: "#D9D9D9",
-                        marginTop: 18,
-                      }}
-                    ></View>
-                  </View>
                 </View>
               ) : (
                 <View style={styles.editFormContainer}>
@@ -231,7 +223,7 @@ function Profile() {
                       onBlur={handleBlur("password")}
                       value={values.password}
                       variant="underlined"
-                      placeholder="Underlined"
+                      placeholder="Lösenord"
                       style={styles.editForm}
                     />
                     {errors.password && (
