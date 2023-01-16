@@ -96,7 +96,7 @@ export default function CreateProduct() {
 
   const submitAlert = () => {
     Alert.alert("Annons skapad");
-    navigation.navigate("Products");
+    navigation.navigate("MyProducts");
   };
 
   return (
