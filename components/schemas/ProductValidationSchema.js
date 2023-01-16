@@ -4,20 +4,16 @@ export const ProductValidationSchema = yup.object().shape({
   title: yup
     .string()
     .required("Fyll i en titel")
-    .max(100, "Titel får inte vara mer än 100 tecken")
+    .max(25, "Titel får inte vara mer än 25 tecken")
     .min(3, "Titeln måste vara minst tre tecken"),
   category: yup
     .string()
     .required("Välj kategori")
     .oneOf(["Golfset", "Vagn/bag", "Golfklubba", "Golfbil", "Övrigt"])
     .label(["Golfset", "Vagn/bag", "Golfklubba", "Golfbil", "Övrigt"]),
-  // image: yup
-  //   .string()
-  //   .min(8, ({ min }) => `Password must be at least ${min} characters`)
-  //   .required("Password is required"),
   description: yup
     .string()
-    .max(200, "Beskrivningen får inte vara mer än 200 tecken")
+    .max(150, "Beskrivningen får inte vara mer än 150 tecken")
     .required("Fyll i en beskrivning"),
   price: yup
     .number()

@@ -38,6 +38,7 @@ export default function ProductDetails() {
     image,
     user,
     id,
+    category,
   } = route.params;
 
   const onScroll = ({ nativeEvent }) => {
@@ -93,90 +94,117 @@ export default function ProductDetails() {
       <View style={styles.infoContainer}>
         <View style={styles.topInfoContainer}>
           <Text style={styles.titleText}>{title}</Text>
-          <View style={styles.location}>
-            <FontAwesomeIcon style={styles.locationIcon} icon={faLocationDot} />
-            <Text>{location}</Text>
-          </View>
         </View>
-        <View
-          style={{
-            flexDirection: "row",
-          }}
-        >
-          <FontAwesomeIcon style={styles.icons} icon={faUser} />
-          <Text
-            style={{
-              marginLeft: 5,
-            }}
-          >
-            {user}
-          </Text>
-        </View>
-
-        <View style={styles.specsContainer}>
+        <View style={styles.test}>
           <View
             style={{
-              alignItems: "center",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              paddingBottom: 10,
             }}
           >
-            <View style={styles.iconsText}>
-              <FontAwesomeIcon style={styles.icons} icon={faBarsProgress} />
-            </View>
-            <Text>{difficulty}</Text>
-          </View>
-          <View
-            style={{
-              alignItems: "center",
-            }}
-          >
-            <View style={styles.iconsText}>
-              <FontAwesomeIcon style={styles.icons} icon={faWeightHanging} />
-            </View>
-            <Text>{shaft}</Text>
-          </View>
-          <View
-            style={{
-              alignItems: "center",
-            }}
-          >
-            <View style={styles.iconsText}>
-              <FontAwesomeIcon style={styles.icons} icon={faRightLeft} />
-            </View>
-            <Text>{hand}</Text>
-          </View>
-          <View
-            style={{
-              alignItems: "center",
-            }}
-          >
-            <View style={styles.iconsText}>
+            <View
+              style={{
+                flexDirection: "row",
+              }}
+            >
               <FontAwesomeIcon style={styles.icons} icon={faUser} />
+              <Text
+                style={{
+                  marginLeft: 5,
+                  marginBottom: 10,
+                }}
+              >
+                {user}
+              </Text>
             </View>
-            <Text>{gender}</Text>
+            <View
+              style={{
+                flexDirection: "row",
+              }}
+            >
+              <FontAwesomeIcon
+                style={styles.locationIcon}
+                icon={faLocationDot}
+              />
+              <Text>{location}</Text>
+            </View>
           </View>
-        </View>
-        <View style={styles.subHeadingContainer}>
-          <Text style={styles.subHeadingText}>Klubbor</Text>
-          <Text style={styles.bodyText}>{clubs}</Text>
-        </View>
-        <View style={styles.subHeadingContainer}>
-          <Text style={styles.subHeadingText}>Beskrivning</Text>
-          <Text style={styles.bodyText}>{description}</Text>
-        </View>
-        {openModal && (
-          <DatePickerModal
-            productId={id}
-            openModal={openModal}
-            setOpenModal={setOpenModal}
-            price={price}
-            user={user}
-          />
-        )}
-        <View style={styles.bottomContainer}>
-          <Text style={styles.bodyText}>{price}kr /dag</Text>
-          <Pressable style={styles.button} onPress={openDatePickerModal}>
-            <Text style={styles.buttonText}>Skicka hyrförfrågan</Text>
-          </Pressable>
+          {category === "Golfset" && (
+            <View style={styles.specsContainer}>
+              <View
+                style={{
+                  alignItems: "center",
+                }}
+              >
+                <View style={styles.iconsText}>
+                  <FontAwesomeIcon style={styles.icons} icon={faBarsProgress} />
+                </View>
+                <Text>{difficulty}</Text>
+              </View>
+              <View
+                style={{
+                  alignItems: "center",
+                }}
+              >
+                <View style={styles.iconsText}>
+                  <FontAwesomeIcon
+                    style={styles.icons}
+                    icon={faWeightHanging}
+                  />
+                </View>
+                <Text>{shaft}</Text>
+              </View>
+              <View
+                style={{
+                  alignItems: "center",
+                }}
+              >
+                <View style={styles.iconsText}>
+                  <FontAwesomeIcon style={styles.icons} icon={faRightLeft} />
+                </View>
+                <Text>{hand}</Text>
+              </View>
+              <View
+                style={{
+                  alignItems: "center",
+                }}
+              >
+                <View style={styles.iconsText}>
+                  <FontAwesomeIcon style={styles.icons} icon={faUser} />
+                </View>
+                <Text>{gender}</Text>
+              </View>
+            </View>
+          )}
+          {category === "Golfset" && (
+            <View style={styles.subHeadingContainer}>
+              <Text style={styles.subHeadingText}>Klubbor</Text>
+              <Text style={styles.bodyText}>{clubs}</Text>
+            </View>
+          )}
+          <View style={styles.subHeadingContainer}>
+            <Text style={styles.subHeadingText}>Beskrivning</Text>
+            <Text style={styles.bodyText}>{description}</Text>
+          </View>
+          {openModal && (
+            <DatePickerModal
+              productId={id}
+              openModal={openModal}
+              setOpenModal={setOpenModal}
+              price={price}
+              user={user}
+            />
+          )}
+          <View style={styles.bottomContainer}>
+            <Text style={{ fontFamily: "MontserratSemiBold" }}>
+              {price}kr
+              <Text style={{ fontFamily: "MontserratMedium" }}> /dag</Text>
+            </Text>
+            <Pressable style={styles.button} onPress={openDatePickerModal}>
+              <Text style={styles.buttonText}>Skicka hyrförfrågan</Text>
+            </Pressable>
+          </View>
         </View>
       </View>
     </View>
@@ -191,6 +219,7 @@ const styles = StyleSheet.create({
   titleText: {
     fontSize: 20,
     fontFamily: "MontserratSemiBold",
+    flexShrink: 1,
   },
   subHeadingText: {
     fontSize: 18,
@@ -253,14 +282,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     justifyContent: "space-around",
+    marginBottom: 4,
   },
   subHeadingContainer: {
     padding: "2%",
-    marginTop: 15,
+    marginTop: 1,
   },
   bottomContainer: {
     flexDirection: "row",
-    marginTop: "6%",
+    marginTop: "2%",
     justifyContent: "space-between",
     padding: "2%",
     alignItems: "center",
@@ -289,5 +319,11 @@ const styles = StyleSheet.create({
     margin: 6,
     opacity: 0.7,
     color: "#e0e0e0",
+  },
+  test: {
+    minHeight: "40%",
+    // backgroundColor: "blue",
+    flexDirection: "column",
+    justifyContent: "space-between",
   },
 });

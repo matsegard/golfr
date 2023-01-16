@@ -9,6 +9,7 @@ import {
   Center,
   Stack,
   HStack,
+  View,
 } from "native-base";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons/faLocationDot";
@@ -17,6 +18,7 @@ import { useNavigation } from "@react-navigation/native";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../firebase/firebaseConfig";
 import { useFocusEffect } from "@react-navigation/native";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 function ProductCard({ selectedCategory }) {
   const [products, setProducts] = useState([]);
@@ -67,6 +69,7 @@ function ProductCard({ selectedCategory }) {
                   image: item.data.image,
                   price: item.data.price,
                   description: item.data.description,
+                  category: item.data.category,
                   location: item.data.location,
                   clubs: item.data.clubs,
                   difficulty: item.data.difficulty,
@@ -142,10 +145,13 @@ function ProductCard({ selectedCategory }) {
                       mt="-1"
                       mr="5"
                     >
-                      {item.data.location}{" "}
+                      {item.data.location}
                       <FontAwesomeIcon color="#B6B6B6" icon={faLocationDot} />
                     </Text>
-                    <Text fontSize="xs">{item.data.user}</Text>
+                    <Text fontSize="xs">
+                      {item.data.user}{" "}
+                      <FontAwesomeIcon color="#B6B6B6" icon={faUser} />
+                    </Text>
                   </Stack>
                   <Text fontWeight="400">{item.data.description}</Text>
                 </Stack>
