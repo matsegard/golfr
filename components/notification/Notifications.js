@@ -47,7 +47,7 @@ const Notifications = () => {
         bookingsFromDb.push({ data: doc.data(), id: doc.id });
       });
       setBookings(bookingsFromDb);
-      // console.log(bookings);
+
       return;
     } else {
     }
