@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { Pressable } from "react-native";
-import { Input, VStack, HStack , Alert,View } from "native-base";
+import { Input, VStack, HStack, Alert, View } from "native-base";
 import PrimaryButton from "../inputs/PrimaryButton.js";
 import { useState } from "react";
 import { Formik } from "formik";
@@ -21,26 +21,37 @@ function Signup() {
   const [show, setShow] = useState(false);
   const navigation = useNavigation();
   const auth = getAuth();
-  const [emailExist, setEmailExist] = useState(false);
-  const [success, setSuccess] = useState(false)
+  // const [emailExist, setEmailExist] = useState(false);
+  // const [success, setSuccess] = useState(false);
+
+  // const CreateAccount = async ({ email, username, password }) => {
+  //   const { user } = await createUserWithEmailAndPassword(auth, email, password)
+  //     .then((userCredential) => {
+  //       const user = userCredential.user;
+  //     })
+  //     .catch((errors) => {
+  //       if (errors.code === "auth/email-already-in-use") {
+  //         // setEmailExist(true);
+  //       }
+  //     });
+
+  //   await updateProfile(auth.currentUser, {
+  //     displayName: username,
+  //   });
+
+  //   await reload(user);
+  //   setSuccess(true);
+  //   setTimeout(() => {
+  //     navigation.navigate("Products");
+  //   }, "2000");
+  // };
+
   const CreateAccount = async ({ email, username, password }) => {
     const { user } = await createUserWithEmailAndPassword(
       auth,
       email,
       password
-    ) 
-    .then(() => {
-      setSuccess(true)
-      setTimeout(() => {
-        navigation.navigate("Products");
-    }, "2000")    
-      
-    }).catch((errors) =>{
-      if (errors.code === "auth/email-already-in-use") {
-         setEmailExist(true)
-      }
-      })
-   
+    );
 
     await updateProfile(user, {
       displayName: username,
@@ -48,16 +59,13 @@ function Signup() {
 
     await reload(user);
   };
- 
 
- function alertDown(){
-  setEmailExist(false)
- }
- 
+  function alertDown() {
+    setEmailExist(false);
+  }
 
   return (
     <View style={styles.container}>
-      
       <Image
         style={[
           styles.greenBubble,
@@ -67,37 +75,48 @@ function Signup() {
         ]}
         source={require("../../assets/Ellipse.png")}
       />
-          
-           {success  && (
-             <Alert w="60%" borderBottomRadius="2xl" position="absolute" top="0" status="success"  >
-                    <VStack space={2} flexShrink={1} w="100%" alignItems="center"  >
-                      <HStack flexShrink={1} space={2} justifyContent="space-between">
-                        <HStack space={2} flexShrink={1}>
-                          <Alert.Icon mt="1" color="black" />
-                          <Text fontSize="md" color="coolGray.800">
-                            Registrering/Inloggning lyckad
-                          </Text>
-                        </HStack>
-                      </HStack>
-                    </VStack>
-                    </Alert> 
-             )}
-           {emailExist  && (
-             <Alert w="50%" borderBottomRadius="2xl" position="absolute" top="0" backgroundColor="danger.400"  >
-                    <VStack space={2} flexShrink={1} w="100%" alignItems="center"  >
-                      <HStack flexShrink={1} space={2} justifyContent="space-between">
-                        <HStack space={2} flexShrink={1}>
-                          <Alert.Icon mt="1" color="black" />
-                          <Text fontSize="md" color="coolGray.800">
-                            Email finns redan
-                          </Text>
-                        </HStack>
-                      </HStack>
-                    </VStack>
-                    </Alert> 
-             )}
-              
-          
+
+      {/* {success && (
+        <Alert
+          w="60%"
+          borderBottomRadius="2xl"
+          position="absolute"
+          top="0"
+          status="success"
+        >
+          <VStack space={2} flexShrink={1} w="100%" alignItems="center">
+            <HStack flexShrink={1} space={2} justifyContent="space-between">
+              <HStack space={2} flexShrink={1}>
+                <Alert.Icon mt="1" color="black" />
+                <Text fontSize="md" color="coolGray.800">
+                  Registrering/Inloggning lyckad
+                </Text>
+              </HStack>
+            </HStack>
+          </VStack>
+        </Alert>
+      )} */}
+      {/* {emailExist && (
+        <Alert
+          w="50%"
+          borderBottomRadius="2xl"
+          position="absolute"
+          top="0"
+          backgroundColor="danger.400"
+        >
+          <VStack space={2} flexShrink={1} w="100%" alignItems="center">
+            <HStack flexShrink={1} space={2} justifyContent="space-between">
+              <HStack space={2} flexShrink={1}>
+                <Alert.Icon mt="1" color="black" />
+                <Text fontSize="md" color="coolGray.800">
+                  Email finns redan
+                </Text>
+              </HStack>
+            </HStack>
+          </VStack>
+        </Alert>
+      )} */}
+
       <Text style={styles.loginText}>Registrera dig</Text>
       <View style={styles.forms}>
         <Formik
@@ -109,7 +128,6 @@ function Signup() {
             password: "",
           }}
           onSubmit={(values) => CreateAccount(values)}
-         
         >
           {({
             handleChange,
@@ -122,7 +140,6 @@ function Signup() {
             <>
               <View style={styles.editFormContainer}>
                 <View style={styles.form}>
-                  
                   <Text
                     style={{
                       fontFamily: "MontserratSemiBold",
@@ -139,7 +156,7 @@ function Signup() {
                     onChangeText={handleChange("username")}
                     onBlur={handleBlur("username")}
                     value={values.username}
-                    onChange={alertDown}
+                    // onChange={alertDown}
                   />
                   {errors.username && (
                     <Text style={{ fontSize: 12, color: "red", marginTop: 5 }}>
@@ -164,13 +181,13 @@ function Signup() {
                     onChangeText={handleChange("email")}
                     onBlur={handleBlur("email")}
                     value={values.email}
-                    onChange={alertDown}
+                    // onChange={alertDown}
                   />
                   {errors.email && (
                     <Text style={{ fontSize: 12, color: "red", marginTop: 5 }}>
                       {errors.email}
                     </Text>
-                  )} 
+                  )}
                 </View>
                 <View style={styles.form}>
                   <Text
@@ -191,7 +208,7 @@ function Signup() {
                       onChangeText={handleChange("password")}
                       onBlur={handleBlur("password")}
                       value={values.password}
-                      onChange={alertDown}
+                      // onChange={alertDown}
                     />
                     {errors.password && (
                       <Text
@@ -214,8 +231,8 @@ function Signup() {
                             !isValid ? styles.iconinvalid : styles.iconvalid,
                           ]}
                         />
-                        ) : (
-                          <FontAwesomeIcon
+                      ) : (
+                        <FontAwesomeIcon
                           size={23}
                           icon={faEyeSlash}
                           mr="2"
@@ -224,7 +241,7 @@ function Signup() {
                             !isValid ? styles.iconinvalid : styles.iconvalid,
                           ]}
                         />
-                        )}
+                      )}
                     </Pressable>
                   </View>
                 </View>
@@ -240,8 +257,8 @@ function Signup() {
                 disabled={
                   !isValid ||
                   (values.username === "" &&
-                  values.email === "" &&
-                  values.password === "")
+                    values.email === "" &&
+                    values.password === "")
                 }
                 onPress={handleSubmit}
               />
@@ -255,7 +272,7 @@ function Signup() {
     </View>
   );
 }
- 
+
 const styles = StyleSheet.create({
   container: {
     height: "100%",
@@ -314,4 +331,3 @@ const styles = StyleSheet.create({
 });
 
 export default Signup;
-
