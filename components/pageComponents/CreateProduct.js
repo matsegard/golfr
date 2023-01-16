@@ -87,6 +87,7 @@ export default function CreateProduct() {
       startDate: null,
       endDate: null,
       accepted: false,
+      denied: false,
       renter: null,
       totalPrice: null,
       totalDays: null,
