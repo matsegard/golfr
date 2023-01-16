@@ -61,151 +61,143 @@ function Settings() {
           errors,
         }) => (
           <>
-            <View style={styles.forms}>
-              {!editMode ? (
-                <View>
-                  <View style={styles.form}>
-                    <Text
-                      style={{
-                        fontFamily: "MontserratSemiBold",
-                        color: "#B6B6B6",
-                        marginBottom: 8,
-                      }}
-                    >
-                      Username
-                    </Text>
-                    <Text>{username}</Text>
-                    <View
-                      style={{
-                        width: 280,
-                        height: 1,
-                        backgroundColor: "#D9D9D9",
-                        marginTop: 18,
-                      }}
-                    ></View>
-                  </View>
-                  <View style={styles.form}>
-                    <Text
-                      style={{
-                        fontFamily: "MontserratSemiBold",
-                        color: "#B6B6B6",
-                        marginBottom: 8,
-                      }}
-                    >
-                      Email
-                    </Text>
-                    <Text>{user.email}</Text>
-                    <View
-                      style={{
-                        width: 280,
-                        height: 1,
-                        backgroundColor: "#D9D9D9",
-                        marginTop: 18,
-                      }}
-                    ></View>
-                  </View>
-                </View>
-              ) : (
-                <View style={styles.editFormContainer}>
-                  <View style={styles.form}>
-                    <Text
-                      style={{
-                        fontFamily: "MontserratSemiBold",
-                        color: "#B6B6B6",
-                        marginBottom: 8,
-                      }}
-                    >
-                      Username
-                    </Text>
-                    <Input
-                      onChangeText={handleChange("username")}
-                      onBlur={handleBlur("username")}
-                      value={values.username}
-                      variant="underlined"
-                      placeholder={user.displayName}
-                      style={styles.editForm}
-                    />
-                    {errors.username && (
-                      <Text
-                        style={{ fontSize: 12, color: "red", marginTop: 5 }}
-                      >
-                        {errors.username}
-                      </Text>
-                    )}
-                  </View>
-                  <View style={styles.form}>
-                    <Text
-                      style={{
-                        fontFamily: "MontserratSemiBold",
-                        color: "#B6B6B6",
-                        marginBottom: 8,
-                      }}
-                    >
-                      Email
-                    </Text>
-                    <Text>{user.email}</Text>
-                    <View
-                      style={{
-                        width: 280,
-                        height: 1,
-                        backgroundColor: "#D9D9D9",
-                        marginTop: 18,
-                      }}
-                    ></View>
-                  </View>
-                  <View style={styles.form}>
-                    <Text
-                      style={{
-                        fontFamily: "MontserratSemiBold",
-                        color: "#B6B6B6",
-                        marginBottom: 8,
-                      }}
-                    >
-                      Password
-                    </Text>
-                    <Input
-                      onChangeText={handleChange("password")}
-                      onBlur={handleBlur("password")}
-                      value={values.password}
-                      variant="underlined"
-                      placeholder="Lösenord"
-                      style={styles.editForm}
-                    />
-                    {errors.password && (
-                      <Text
-                        style={{ fontSize: 12, color: "red", marginTop: 5 }}
-                      >
-                        {errors.password}
-                      </Text>
-                    )}
-                  </View>
-                </View>
-              )}
+            <View style={styles.email}>
+              <Text
+                style={{
+                  fontFamily: "MontserratBold",
+                  fontWeight: "bold",
+                  marginBottom: 10,
+                }}
+              >
+                Användarnamn
+              </Text>
+              <View style={{ flexDirection: "row" }}>
+                <Text>Ditt användarnamn är</Text>
+                <Text
+                  style={{
+                    fontFamily: "MontserratSemiBold",
+                    fontWeight: "bold",
+                    marginBottom: 10,
+                    marginLeft: 5,
+                  }}
+                >
+                  {user.displayName}
+                </Text>
+                <Pressable onPress={() => console.log("USERNAME")}>
+                  <Text
+                    style={{
+                      fontFamily: "MontserratSemiBold",
+                      fontWeight: 500,
+                      color: "#566fbf",
+                      textDecorationLine: "underline",
+                      marginLeft: 15,
+                    }}
+                  >
+                    Ändra
+                  </Text>
+                </Pressable>
+              </View>
+              <View
+                style={{
+                  width: Dimensions.get("window").width - 100,
+                  height: 1,
+                  backgroundColor: "#e8e8e8",
+                  marginTop: 35,
+                }}
+              ></View>
             </View>
-            {editMode ? (
-              <PrimaryButton
-                label="Spara"
-                btnWidth={{
-                  width: 150,
-                  position: "absolute",
-                  right: 40,
-                  bottom: 150,
+
+            <View style={styles.email}>
+              <Text
+                style={{
+                  fontFamily: "MontserratBold",
+                  fontWeight: "bold",
+                  marginBottom: 10,
                 }}
-                disabled={(values.username === "", values.password === "")}
-                onPress={handleSubmit}
-              />
-            ) : (
-              <PrimaryButton
-                label="Redigera profil"
-                btnWidth={{
-                  width: 150,
-                  position: "absolute",
-                  right: 50,
-                  bottom: 150,
+              >
+                Email adress
+              </Text>
+              <View style={{ flexDirection: "row" }}>
+                <Text>Din email adress är</Text>
+                <Text
+                  style={{
+                    fontFamily: "MontserratSemiBold",
+                    fontWeight: "bold",
+                    marginBottom: 10,
+                    marginLeft: 5,
+                  }}
+                >
+                  {user.email}
+                </Text>
+                <Pressable onPress={() => console.log("EMAIL")}>
+                  <Text
+                    style={{
+                      fontFamily: "MontserratSemiBold",
+                      fontWeight: 500,
+                      color: "#566fbf",
+                      textDecorationLine: "underline",
+                      marginLeft: 15,
+                    }}
+                  >
+                    Ändra
+                  </Text>
+                </Pressable>
+              </View>
+              <View
+                style={{
+                  width: Dimensions.get("window").width - 100,
+                  height: 1,
+                  backgroundColor: "#e8e8e8",
+                  marginTop: 35,
                 }}
-                onPress={() => setEditMode(!editMode)}
-              />
-            )}
+              ></View>
+            </View>
+
+            <View style={styles.email}>
+              <Text
+                style={{
+                  fontFamily: "MontserratBold",
+                  fontWeight: "bold",
+                  marginBottom: 10,
+                }}
+              >
+                Lösenord
+              </Text>
+              <View style={{ flexDirection: "row" }}>
+                <Text>Din email adress är</Text>
+                <Text
+                  style={{
+                    fontFamily: "MontserratSemiBold",
+                    fontWeight: "bold",
+                    marginBottom: 10,
+                    marginLeft: 5,
+                  }}
+                >
+                  {user.email}
+                </Text>
+                <Pressable onPress={() => console.log("LÖSEN")}>
+                  <Text
+                    style={{
+                      fontFamily: "MontserratSemiBold",
+                      fontWeight: 500,
+                      color: "#566fbf",
+                      textDecorationLine: "underline",
+                      marginLeft: 15,
+                    }}
+                  >
+                    Ändra
+                  </Text>
+                </Pressable>
+              </View>
+              <View
+                style={{
+                  width: Dimensions.get("window").width - 100,
+                  height: 1,
+                  backgroundColor: "#e8e8e8",
+                  marginTop: 35,
+                }}
+              ></View>
+            </View>
           </>
         )}
       </Formik>
@@ -255,13 +247,19 @@ const styles = StyleSheet.create({
     fontSize: "20",
     fontFamily: "MontserratSemiBold",
     marginTop: 50,
+    marginBottom: 50,
     alignSelf: "center",
     color: "black",
   },
   deleteAccount: {
     width: Dimensions.get("window").width - 100,
     marginLeft: 50,
-    flex: 5,
+    flex: 3,
+  },
+  email: {
+    width: Dimensions.get("window").width - 100,
+    marginLeft: 50,
+    flex: 1.5,
   },
   forms: {
     width: Dimensions.get("window").width - 100,
