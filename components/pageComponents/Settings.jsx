@@ -20,12 +20,14 @@ function Settings() {
   const auth = getAuth();
   const route = useRoute();
   const [username, setUsername] = useState(auth.currentUser.displayName);
-  const [editMode, setEditMode] = useState(false);
+
   const { user } = route.params;
+
+  const [editUsernameMode, setEditUsernameMode] = useState(false);
 
   //updates username
   function updateUser({ username }) {
-    setEditMode(!editMode);
+    setEditUsernameMode(!editUsernameMode);
     updateProfile(auth.currentUser, {
       displayName: username,
     })
@@ -42,10 +44,10 @@ function Settings() {
     <View style={styles.container}>
       <Text style={styles.headerText}>Användarinställningar</Text>
       <Formik
-        validationSchema={(UsernameValidationSchema, PasswordValidationSchema)}
+        validationSchema={UsernameValidationSchema}
         initialValues={{
           username: user.displayName,
-          password: "",
+          //   password: "",
         }}
         onSubmit={(values, actions) => {
           updateUser(values.username);
@@ -61,51 +63,101 @@ function Settings() {
           errors,
         }) => (
           <>
-            <View style={styles.email}>
-              <Text
-                style={{
-                  fontFamily: "MontserratBold",
-                  fontWeight: "bold",
-                  marginBottom: 10,
-                }}
-              >
-                Användarnamn
-              </Text>
-              <View style={{ flexDirection: "row" }}>
-                <Text>Ditt användarnamn är</Text>
+            {!editUsernameMode ? (
+              <View style={styles.email}>
                 <Text
                   style={{
-                    fontFamily: "MontserratSemiBold",
+                    fontFamily: "MontserratBold",
                     fontWeight: "bold",
                     marginBottom: 10,
-                    marginLeft: 5,
                   }}
                 >
-                  {user.displayName}
+                  Användarnamn
                 </Text>
-                <Pressable onPress={() => console.log("USERNAME")}>
+                <View style={{ flexDirection: "row" }}>
+                  <Text>Ditt användarnamn är</Text>
                   <Text
                     style={{
                       fontFamily: "MontserratSemiBold",
-                      fontWeight: 500,
-                      color: "#566fbf",
-                      textDecorationLine: "underline",
-                      marginLeft: 15,
+                      fontWeight: "bold",
+                      marginBottom: 10,
+                      marginLeft: 5,
                     }}
                   >
-                    Ändra
+                    {user.displayName}
                   </Text>
-                </Pressable>
+                  <Pressable
+                    onPress={() => setEditUsernameMode(!editUsernameMode)}
+                  >
+                    <Text
+                      style={{
+                        fontFamily: "MontserratSemiBold",
+                        fontWeight: 500,
+                        color: "#566fbf",
+                        textDecorationLine: "underline",
+                        marginLeft: 15,
+                      }}
+                    >
+                      Ändra
+                    </Text>
+                  </Pressable>
+                </View>
+                <View
+                  style={{
+                    width: Dimensions.get("window").width - 100,
+                    height: 1,
+                    backgroundColor: "#e8e8e8",
+                    marginTop: 35,
+                  }}
+                ></View>
               </View>
+            ) : (
               <View
                 style={{
                   width: Dimensions.get("window").width - 100,
-                  height: 1,
-                  backgroundColor: "#e8e8e8",
-                  marginTop: 35,
+                  marginLeft: 50,
+                  marginBottom: 35,
                 }}
-              ></View>
-            </View>
+              >
+                <Text
+                  style={{
+                    fontFamily: "MontserratBold",
+                    fontWeight: "bold",
+                    marginBottom: 10,
+                  }}
+                >
+                  Användarnamn
+                </Text>
+                <Input
+                  onChangeText={handleChange("username")}
+                  onBlur={handleBlur("username")}
+                  value={values.username}
+                  placeholder={user.displayName}
+                ></Input>
+                {errors.username && (
+                  <Text style={{ fontSize: 12, color: "red", marginTop: 5 }}>
+                    {errors.username}
+                  </Text>
+                )}
+                <PrimaryButton
+                  label="Spara användarnamn"
+                  btnWidth={{
+                    marginTop: 20,
+                    width: 190,
+                  }}
+                  disabled={values.username === ""}
+                  onPress={handleSubmit}
+                />
+                <View
+                  style={{
+                    width: Dimensions.get("window").width - 100,
+                    height: 1,
+                    backgroundColor: "#e8e8e8",
+                    marginTop: 35,
+                  }}
+                ></View>
+              </View>
+            )}
 
             <View style={styles.email}>
               <Text
