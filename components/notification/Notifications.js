@@ -217,7 +217,11 @@ const Notifications = () => {
                           </Text>
                           <Text style={styles.productText}>
                             Datum:{" "}
-                            <Text style={{ fontFamily: "montserratSemiBold" }}>
+                            <Text
+                              style={{
+                                fontFamily: "montserratSemiBold",
+                              }}
+                            >
                               {booking.data.startDate} - {booking.data.endDate}
                             </Text>
                           </Text>
@@ -514,8 +518,6 @@ const styles = StyleSheet.create({
   product: {
     flexDirection: "row",
     marginTop: 20,
-    // backgroundColor: "blue",
-
     maxHeight: 100,
   },
   productTitle: {
@@ -527,7 +529,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     width: 240,
     fontFamily: "MontserratRegular",
-    maxHeight: 100,
+    flexWrap: "wrap",
   },
   buttonContainer: {
     flexDirection: "row",
