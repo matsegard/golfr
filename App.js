@@ -14,6 +14,7 @@ import { useFonts } from "expo-font";
 import MyProductsPage from "./pages/MyProductsPage";
 import EditProductModal from "./components/modals/EditProductModal";
 import HelpPage from "./pages/HelpPage";
+import SettingsPage from "./pages/SettingsPage";
 // import * as SplashScreen from "expo-splash-screen";
 
 export default function App() {
@@ -148,6 +149,20 @@ export default function App() {
             component={HelpPage}
             options={{
               title: "Hjälp",
+              headerStyle: {
+                backgroundColor: "#6A8E4E",
+              },
+              headerTintColor: "#fff",
+              headerTitleStyle: {
+                fontWeight: "bold",
+              },
+            }}
+          />
+          <Stack.Screen
+            name="Settings"
+            component={SettingsPage}
+            options={{
+              title: "Inställningar",
               headerStyle: {
                 backgroundColor: "#6A8E4E",
               },
