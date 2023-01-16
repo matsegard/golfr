@@ -22,13 +22,22 @@ function Signup() {
   const navigation = useNavigation();
   const auth = getAuth();
   // const [emailExist, setEmailExist] = useState(false);
-  // const [success, setSuccess] = useState(false);
+  const [success, setSuccess] = useState(false);
 
-  // const CreateAccount = async ({ email, username, password }) => {
-  //   const { user } = await createUserWithEmailAndPassword(auth, email, password)
-  //     .then((userCredential) => {
-  //       const user = userCredential.user;
-  //     })
+  const CreateAccount = async ({ email, username, password }) => {
+    const { user } = await createUserWithEmailAndPassword(
+      auth, 
+      email, 
+      password,
+      username,
+      setSuccess(true),
+      setTimeout(() => {
+            navigation.navigate("Products");
+          }, "2000")
+
+      )
+    
+       
   //     .catch((errors) => {
   //       if (errors.code === "auth/email-already-in-use") {
   //         // setEmailExist(true);
@@ -46,12 +55,12 @@ function Signup() {
   //   }, "2000");
   // };
 
-  const CreateAccount = async ({ email, username, password }) => {
-    const { user } = await createUserWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
+  // const CreateAccount = async ({ email, username, password }) => {
+  //   const { user } = await createUserWithEmailAndPassword(
+  //     auth,
+  //     email,
+  //     password
+  //   );
 
     await updateProfile(user, {
       displayName: username,
@@ -60,9 +69,9 @@ function Signup() {
     await reload(user);
   };
 
-  function alertDown() {
-    setEmailExist(false);
-  }
+  // function alertDown() {
+  //   setEmailExist(false);
+  // }
 
   return (
     <View style={styles.container}>
@@ -76,7 +85,7 @@ function Signup() {
         source={require("../../assets/Ellipse.png")}
       />
 
-      {/* {success && (
+      {success && (
         <Alert
           w="60%"
           borderBottomRadius="2xl"
@@ -89,13 +98,13 @@ function Signup() {
               <HStack space={2} flexShrink={1}>
                 <Alert.Icon mt="1" color="black" />
                 <Text fontSize="md" color="coolGray.800">
-                  Registrering/Inloggning lyckad
+                  Gå och gör något annat nu Max 
                 </Text>
               </HStack>
             </HStack>
           </VStack>
         </Alert>
-      )} */}
+      )}
       {/* {emailExist && (
         <Alert
           w="50%"
