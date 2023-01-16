@@ -18,7 +18,7 @@ function Profile() {
   const auth = getAuth();
   const route = useRoute();
   const [username, setUsername] = useState(auth.currentUser.displayName);
-  const [editMode, setEditMode] = useState(false);
+  
   const { user } = route.params;
 
   // funkar om man är inloggad blir error om man ej är
@@ -38,21 +38,6 @@ function Profile() {
       })
       .catch((error) => {
         console.log("ERROR");
-      });
-  }
-
-  //updates username
-  function updateUser({ username }) {
-    setEditMode(!editMode);
-    updateProfile(auth.currentUser, {
-      displayName: username,
-    })
-      .then(() => {
-        setUsername(auth.currentUser.displayName);
-        Alert.alert("Profil uppdaterad");
-      })
-      .catch((error) => {
-        console.log(error);
       });
   }
 
@@ -107,7 +92,13 @@ function Profile() {
               {/* <Pressable onPress={() => navigation.navigate("HelpPage")}>
                 <FontAwesomeIcon color="white" size={22} icon={faQuestion} />
               </Pressable> */}
-              <Pressable onPress={() => navigation.navigate("Settings")}>
+              <Pressable
+                onPress={() =>
+                  navigation.navigate("Settings", {
+                    user: auth.currentUser,
+                  })
+                }
+              >
                 <FontAwesomeIcon color="white" size={24} icon={faGear} />
               </Pressable>
               <Text style={styles.logout} onPress={() => testSignOut()}>
@@ -121,160 +112,59 @@ function Profile() {
               </View>
             </Pressable>
             <View style={styles.forms}>
-              {!editMode ? (
-                <View>
-                  <View style={styles.form}>
-                    <Text
-                      style={{
-                        fontFamily: "MontserratSemiBold",
-                        color: "#B6B6B6",
-                        marginBottom: 8,
-                      }}
-                    >
-                      Username
-                    </Text>
-                    <Text>{username}</Text>
-                    <View
-                      style={{
-                        width: 280,
-                        height: 1,
-                        backgroundColor: "#D9D9D9",
-                        marginTop: 18,
-                      }}
-                    ></View>
-                  </View>
-                  <View style={styles.form}>
-                    <Text
-                      style={{
-                        fontFamily: "MontserratSemiBold",
-                        color: "#B6B6B6",
-                        marginBottom: 8,
-                      }}
-                    >
-                      Email
-                    </Text>
-                    <Text>{user.email}</Text>
-                    <View
-                      style={{
-                        width: 280,
-                        height: 1,
-                        backgroundColor: "#D9D9D9",
-                        marginTop: 18,
-                      }}
-                    ></View>
-                  </View>
+              <View>
+                <View style={styles.form}>
+                  <Text
+                    style={{
+                      fontFamily: "MontserratSemiBold",
+                      color: "#B6B6B6",
+                      marginBottom: 8,
+                    }}
+                  >
+                    Username
+                  </Text>
+                  <Text>{username}</Text>
+                  <View
+                    style={{
+                      width: 280,
+                      height: 1,
+                      backgroundColor: "#D9D9D9",
+                      marginTop: 18,
+                    }}
+                  ></View>
                 </View>
-              ) : (
-                <View style={styles.editFormContainer}>
-                  <View style={styles.form}>
-                    <Text
-                      style={{
-                        fontFamily: "MontserratSemiBold",
-                        color: "#B6B6B6",
-                        marginBottom: 8,
-                      }}
-                    >
-                      Username
-                    </Text>
-                    <Input
-                      onChangeText={handleChange("username")}
-                      onBlur={handleBlur("username")}
-                      value={values.username}
-                      variant="underlined"
-                      placeholder={user.displayName}
-                      style={styles.editForm}
-                    />
-                    {errors.username && (
-                      <Text
-                        style={{ fontSize: 12, color: "red", marginTop: 5 }}
-                      >
-                        {errors.username}
-                      </Text>
-                    )}
-                  </View>
-                  <View style={styles.form}>
-                    <Text
-                      style={{
-                        fontFamily: "MontserratSemiBold",
-                        color: "#B6B6B6",
-                        marginBottom: 8,
-                      }}
-                    >
-                      Email
-                    </Text>
-                    <Text>{user.email}</Text>
-                    <View
-                      style={{
-                        width: 280,
-                        height: 1,
-                        backgroundColor: "#D9D9D9",
-                        marginTop: 18,
-                      }}
-                    ></View>
-                  </View>
-                  <View style={styles.form}>
-                    <Text
-                      style={{
-                        fontFamily: "MontserratSemiBold",
-                        color: "#B6B6B6",
-                        marginBottom: 8,
-                      }}
-                    >
-                      Password
-                    </Text>
-                    <Input
-                      onChangeText={handleChange("password")}
-                      onBlur={handleBlur("password")}
-                      value={values.password}
-                      variant="underlined"
-                      placeholder="Lösenord"
-                      style={styles.editForm}
-                    />
-                    {errors.password && (
-                      <Text
-                        style={{ fontSize: 12, color: "red", marginTop: 5 }}
-                      >
-                        {errors.password}
-                      </Text>
-                    )}
-                  </View>
+                <View style={styles.form}>
+                  <Text
+                    style={{
+                      fontFamily: "MontserratSemiBold",
+                      color: "#B6B6B6",
+                      marginBottom: 8,
+                    }}
+                  >
+                    Email
+                  </Text>
+                  <Text>{user.email}</Text>
+                  <View
+                    style={{
+                      width: 280,
+                      height: 1,
+                      backgroundColor: "#D9D9D9",
+                      marginTop: 18,
+                    }}
+                  ></View>
                 </View>
-              )}
+              </View>
             </View>
             <PrimaryButton
               label="Mina annonser"
               btnWidth={{
                 width: 150,
                 position: "absolute",
-                right: "50%",
+                right: "15%",
                 bottom: 150,
               }}
               onPress={() => navigation.navigate("MyProducts")}
             />
-            {editMode ? (
-              <PrimaryButton
-                label="Spara"
-                btnWidth={{
-                  width: 150,
-                  position: "absolute",
-                  right: 40,
-                  bottom: 150,
-                }}
-                disabled={(values.username === "", values.password === "")}
-                onPress={handleSubmit}
-              />
-            ) : (
-              <PrimaryButton
-                label="Redigera profil"
-                btnWidth={{
-                  width: 150,
-                  position: "absolute",
-                  right: 50,
-                  bottom: 150,
-                }}
-                onPress={() => setEditMode(!editMode)}
-              />
-            )}
           </>
         )}
       </Formik>
@@ -330,7 +220,7 @@ const styles = StyleSheet.create({
   },
   forms: {
     position: "absolute",
-    top: 280,
+    top: 330,
   },
   form: {
     marginTop: 30,
