@@ -38,6 +38,7 @@ export default function ProductDetails() {
     image,
     user,
     id,
+    category,
   } = route.params;
 
   const onScroll = ({ nativeEvent }) => {
@@ -107,6 +108,7 @@ export default function ProductDetails() {
           <Text
             style={{
               marginLeft: 5,
+              marginBottom: 10,
             }}
           >
             {user}

@@ -67,6 +67,7 @@ function ProductCard({ selectedCategory }) {
                   image: item.data.image,
                   price: item.data.price,
                   description: item.data.description,
+                  category: item.data.category,
                   location: item.data.location,
                   clubs: item.data.clubs,
                   difficulty: item.data.difficulty,

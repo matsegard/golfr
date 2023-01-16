@@ -121,7 +121,7 @@ export default function DatePicker({ price, productId, user }) {
           <Button onPress={showDatepicker} title={"Slutdatum"} />
           {show && (
             <DateTimePicker
-              // minimumDate={}
+              minimumDate={new Date(startDate)}
               testID="dateTimePicker2"
               value={endDate}
               mode={mode}
