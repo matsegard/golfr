@@ -4,7 +4,7 @@ export const ProductValidationSchema = yup.object().shape({
   title: yup
     .string()
     .required("Fyll i en titel")
-    .max(20, "Titel får inte vara mer än 20 tecken")
+    .max(25, "Titel får inte vara mer än 25 tecken")
     .min(3, "Titeln måste vara minst tre tecken"),
   category: yup
     .string()
@@ -13,7 +13,7 @@ export const ProductValidationSchema = yup.object().shape({
     .label(["Golfset", "Vagn/bag", "Golfklubba", "Golfbil", "Övrigt"]),
   description: yup
     .string()
-    .max(200, "Beskrivningen får inte vara mer än 200 tecken")
+    .max(150, "Beskrivningen får inte vara mer än 150 tecken")
     .required("Fyll i en beskrivning"),
   price: yup
     .number()
