@@ -22,6 +22,7 @@ import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
 import * as ImagePicker from "expo-image-picker";
+import Navbar from "../bars/Navbar";
 
 export default function EditProductModal() {
   const [newImage, setNewImage] = useState(image);

@@ -67,6 +67,7 @@ export default function DatePicker({ price, productId, user, setOpenModal }) {
       renter: auth.currentUser.displayName,
       renterEmail: auth.currentUser.email,
       totalDays: totalDays,
+      denied: false,
     })
       .then((bookingRef) => {
         console.log("Hyrförfrågan skickad");
