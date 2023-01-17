@@ -1,17 +1,13 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Image, Text, Pressable, Alert } from "react-native";
+import { StyleSheet, View, Image, Text, Pressable} from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 // import { faQuestion } from "@fortawesome/free-solid-svg-icons";
 import { faGear } from "@fortawesome/free-solid-svg-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { Input } from "native-base";
 import PrimaryButton from "../inputs/PrimaryButton";
 import { useNavigation } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
-import { signOut, getAuth, updateProfile, updatePassword } from "firebase/auth";
-import { Formik } from "formik";
-import { UsernameValidationSchema } from "../schemas/UsernameValidationSchema";
-import { PasswordValidationSchema } from "../schemas/PasswordValidationSchema";
+import { signOut, getAuth } from "firebase/auth";
 
 function Profile() {
   const navigation = useNavigation();

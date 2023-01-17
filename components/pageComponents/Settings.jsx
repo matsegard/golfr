@@ -7,7 +7,6 @@ import {
   Pressable,
   Alert,
   Dimensions,
-  RefreshControl,
 } from "react-native";
 import { Input } from "native-base";
 import PrimaryButton from "../inputs/PrimaryButton";
@@ -16,10 +15,12 @@ import { useRoute } from "@react-navigation/native";
 import { Formik } from "formik";
 import { UsernameValidationSchema } from "../schemas/UsernameValidationSchema";
 import { PasswordValidationSchema } from "../schemas/PasswordValidationSchema";
+import { useNavigation } from "@react-navigation/native";
 
 function Settings() {
   const auth = getAuth();
   const route = useRoute();
+  const navigation = useNavigation();
   const [username, setUsername] = useState(auth.currentUser.displayName);
   const [editUsernameMode, setEditUsernameMode] = useState(false);
   const { user } = route.params;
@@ -32,6 +33,7 @@ function Settings() {
     })
       .then(() => {
         setUsername(user.displayName);
+        navigation.navigate("Products"); //temporary solution to username not updating on profile
         Alert.alert("Profil uppdaterad");
       })
       .catch((error) => {
