@@ -7,6 +7,7 @@ import {
   Pressable,
   Alert,
   Dimensions,
+  RefreshControl,
 } from "react-native";
 import { Input } from "native-base";
 import PrimaryButton from "../inputs/PrimaryButton";
@@ -30,6 +31,7 @@ function Settings() {
       displayName: username,
     })
       .then(() => {
+        setUsername(user.displayName);
         Alert.alert("Profil uppdaterad");
       })
       .catch((error) => {
