@@ -30,7 +30,7 @@ function Profile() {
       .then(() => {
         console.log("SIGNED OUT");
         console.log(auth.currentUser);
-        navigation.navigate("Products");
+        navigation.navigate("Login");
       })
       .catch((error) => {
         console.log("ERROR");
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 224,
     position: "absolute",
-    top: -19,
+    top: -55,
   },
   bubbleText: {
     width: "88%",

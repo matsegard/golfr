@@ -9,13 +9,16 @@ import {
   Center,
   Stack,
   HStack,
+  View,
 } from "native-base";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons/faLocationDot";
 import { Pressable, StyleSheet, ActivityIndicator } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../firebase/firebaseConfig";
+import { useFocusEffect } from "@react-navigation/native";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 function ProductCard({ selectedCategory }) {
   const [products, setProducts] = useState([]);
@@ -25,10 +28,11 @@ function ProductCard({ selectedCategory }) {
 
   async function getData() {
     const productsData = [];
-    const querySnapshot = await getDocs(collection(db, "products"));
+    const q = query(collection(db, "products"), where("accepted", "==", false));
+    const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
       // doc.data() is never undefined for query doc snapshots
-      productsData.push(doc.data());
+      productsData.push({ data: doc.data(), id: doc.id });
     });
     setProducts(productsData);
     setLoading(false);
@@ -39,12 +43,18 @@ function ProductCard({ selectedCategory }) {
     if (!selectedCategory) {
       return products;
     }
-    return products.filter((item) => item.category === selectedCategory);
+    return products.filter((item) => item.data.category === selectedCategory);
   }
 
-  useEffect(() => {
-    getData();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      getData();
+    }, [])
+  );
+
+  // useEffect(() => {
+  //   getData();
+  // }, []);
 
   return (
     <ScrollView showsVerticalScrollIndicator={false} height="auto">
@@ -55,17 +65,19 @@ function ProductCard({ selectedCategory }) {
               key={i}
               onPress={() => {
                 navigation.navigate("ProductDetails", {
-                  title: item.title,
-                  image: item.image,
-                  price: item.price,
-                  description: item.description,
-                  location: item.location,
-                  clubs: item.clubs,
-                  difficulty: item.difficulty,
-                  shaft: item.shaft,
-                  hand: item.hand,
-                  gender: item.gender,
-                  user: item.user,
+                  title: item.data.title,
+                  image: item.data.image,
+                  price: item.data.price,
+                  description: item.data.description,
+                  category: item.data.category,
+                  location: item.data.location,
+                  clubs: item.data.clubs,
+                  difficulty: item.data.difficulty,
+                  shaft: item.data.shaft,
+                  hand: item.data.hand,
+                  gender: item.data.gender,
+                  user: item.data.user,
+                  id: item.id,
                 });
               }}
             >
@@ -92,9 +104,9 @@ function ProductCard({ selectedCategory }) {
                   <AspectRatio w="100%" ratio={16 / 9}>
                     <Image
                       source={{
-                        uri: item.image,
+                        uri: item.data.image,
                       }}
-                      alt={item.title}
+                      alt={item.data.title}
                     />
                   </AspectRatio>
                   <Center
@@ -112,13 +124,13 @@ function ProductCard({ selectedCategory }) {
                     px="3"
                     py="1.5"
                   >
-                    {item.price} kr/dag
+                    {item.data.price} kr/dag
                   </Center>
                 </Box>
                 <Stack p="4" space={3}>
                   <Stack space={2}>
                     <Heading size="md" ml="-1">
-                      {item.title}
+                      {item.data.title}
                     </Heading>
                     <Text
                       fontSize="xs"
@@ -133,12 +145,15 @@ function ProductCard({ selectedCategory }) {
                       mt="-1"
                       mr="5"
                     >
-                      {item.location}{" "}
+                      {item.data.location}
                       <FontAwesomeIcon color="#B6B6B6" icon={faLocationDot} />
                     </Text>
-                    <Text fontSize="xs">{item.user}</Text>
+                    <Text fontSize="xs">
+                      {item.data.user}{" "}
+                      <FontAwesomeIcon color="#B6B6B6" icon={faUser} />
+                    </Text>
                   </Stack>
-                  <Text fontWeight="400">{item.description}</Text>
+                  <Text fontWeight="400">{item.data.description}</Text>
                 </Stack>
               </Box>
             </Pressable>
