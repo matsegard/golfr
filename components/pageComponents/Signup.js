@@ -30,34 +30,35 @@ function Signup() {
       email, 
       password,
       username,
-      // setSuccess(true),
-      //  setTimeout(() => {
-      //   navigation.navigate("Products");
-      // }, "2000")
+      setTimeout(() => {
+        setSuccess(true)
+      }, "1000"),
+       setTimeout(() => {
+        navigation.navigate("Products");
+      }, "2000")
     
 
       )
-      if (auth === true) {
-        console.log("inte inloggad");
-        setEmailExist(true);
-      } else {
-        setSuccess(true);
-            setTimeout(() => {
-        navigation.navigate("Products");
-      }, "2000")
+      .catch((errors) => {
+        if (errors.code === "auth/email-already-in-use") {
+       setSuccess(false)  
+       setEmailExist(true);
+       
+        }
       }
-      //  .catch((errors) => {
-      //   if (errors.code === "auth/email-already-in-use") {
-      //  return setEmailExist(true);
-      //   }
-      // }
-      // );
+      );
+   
 
   //   await updateProfile(auth.currentUser, {
   //     displayName: username,
   //   });
 
-  //
+  //   await reload(user);
+  //   setSuccess(true);
+  //   setTimeout(() => {
+  //     navigation.navigate("Products");
+  //   }, "2000");
+  // };
 
   // const CreateAccount = async ({ email, username, password }) => {
   //   const { user } = await createUserWithEmailAndPassword(
@@ -65,6 +66,7 @@ function Signup() {
   //     email,
   //     password
   //   );
+
 
     await updateProfile(user, {
       displayName: username,
