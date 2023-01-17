@@ -30,14 +30,6 @@ function Signup() {
       email, 
       password,
       username,
-      setTimeout(() => {
-        setSuccess(true)
-      }, "1000"),
-       setTimeout(() => {
-        navigation.navigate("Products");
-      }, "2000")
-    
-
       )
       .catch((errors) => {
         if (errors.code === "auth/email-already-in-use") {
@@ -46,27 +38,13 @@ function Signup() {
        
         }
       }
-      );
-   
-
-  //   await updateProfile(auth.currentUser, {
-  //     displayName: username,
-  //   });
-
-  //   await reload(user);
-  //   setSuccess(true);
-  //   setTimeout(() => {
-  //     navigation.navigate("Products");
-  //   }, "2000");
-  // };
-
-  // const CreateAccount = async ({ email, username, password }) => {
-  //   const { user } = await createUserWithEmailAndPassword(
-  //     auth,
-  //     email,
-  //     password
-  //   );
-
+      )
+       if(auth !== false){
+          setSuccess(true) 
+         setTimeout(() => {
+          navigation.navigate("Products");
+        }, "2000")
+      }
 
     await updateProfile(user, {
       displayName: username,
@@ -75,9 +53,9 @@ function Signup() {
     await reload(user);
   };
 
-  // function alertDown() {
-  //   setEmailExist(false);
-  // }
+  function alertDown() {
+    setEmailExist(false);
+  }
 
   return (
     <View style={styles.container}>
@@ -104,7 +82,7 @@ function Signup() {
               <HStack space={2} flexShrink={1}>
                 <Alert.Icon mt="1" color="black" />
                 <Text fontSize="md" color="coolGray.800">
-                  Gå och gör något annat nu Max 
+                  Registrering/ inloggning lyckad 
                 </Text>
               </HStack>
             </HStack>
@@ -171,7 +149,7 @@ function Signup() {
                     onChangeText={handleChange("username")}
                     onBlur={handleBlur("username")}
                     value={values.username}
-                    // onChange={alertDown}
+                    onChange={alertDown}
                   />
                   {errors.username && (
                     <Text style={{ fontSize: 12, color: "red", marginTop: 5 }}>
@@ -196,7 +174,7 @@ function Signup() {
                     onChangeText={handleChange("email")}
                     onBlur={handleBlur("email")}
                     value={values.email}
-                    // onChange={alertDown}
+                    onChange={alertDown}
                   />
                   {errors.email && (
                     <Text style={{ fontSize: 12, color: "red", marginTop: 5 }}>
@@ -223,7 +201,7 @@ function Signup() {
                       onChangeText={handleChange("password")}
                       onBlur={handleBlur("password")}
                       value={values.password}
-                      // onChange={alertDown}
+                      onChange={alertDown}
                     />
                     {errors.password && (
                       <Text
