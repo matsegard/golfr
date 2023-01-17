@@ -22,37 +22,30 @@ function Signup() {
   const [show, setShow] = useState(false);
   const navigation = useNavigation();
   const auth = getAuth();
-  // const [emailExist, setEmailExist] = useState(false);
-  // const [success, setSuccess] = useState(false);
-
-  // const CreateAccount = async ({ email, username, password }) => {
-  //   const { user } = await createUserWithEmailAndPassword(auth, email, password)
-  //     .then((userCredential) => {
-  //       const user = userCredential.user;
-  //     })
-  //     .catch((errors) => {
-  //       if (errors.code === "auth/email-already-in-use") {
-  //         // setEmailExist(true);
-  //       }
-  //     });
-
-  //   await updateProfile(auth.currentUser, {
-  //     displayName: username,
-  //   });
-
-  //   await reload(user);
-  //   setSuccess(true);
-  //   setTimeout(() => {
-  //     navigation.navigate("Products");
-  //   }, "2000");
-  // };
+  const [emailExist, setEmailExist] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   const CreateAccount = async ({ email, username, password }) => {
     const { user } = await createUserWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
+      auth, 
+      email, 
+      password,
+      username,
+      )
+      .catch((errors) => {
+        if (errors.code === "auth/email-already-in-use") {
+       setSuccess(false)  
+       setEmailExist(true);
+       
+        }
+      }
+      )
+       if(auth !== false){
+          setSuccess(true) 
+         setTimeout(() => {
+          navigation.navigate("Products");
+        }, "2000")
+      }
 
     await updateProfile(user, {
       displayName: username,
@@ -78,7 +71,7 @@ function Signup() {
         source={require("../../assets/Ellipse.png")}
       />
 
-      {/* {success && (
+      {success && (
         <Alert
           w="60%"
           borderBottomRadius="2xl"
@@ -91,14 +84,14 @@ function Signup() {
               <HStack space={2} flexShrink={1}>
                 <Alert.Icon mt="1" color="black" />
                 <Text fontSize="md" color="coolGray.800">
-                  Registrering/Inloggning lyckad
+                  Registrering/ inloggning lyckad 
                 </Text>
               </HStack>
             </HStack>
           </VStack>
         </Alert>
-      )} */}
-      {/* {emailExist && (
+      )}
+      {emailExist && (
         <Alert
           w="50%"
           borderBottomRadius="2xl"
@@ -117,7 +110,7 @@ function Signup() {
             </HStack>
           </VStack>
         </Alert>
-      )} */}
+      )}
 
       <Text style={styles.loginText}>Registrera dig</Text>
       <View style={styles.forms}>
@@ -162,7 +155,7 @@ function Signup() {
                     onChangeText={handleChange("username")}
                     onBlur={handleBlur("username")}
                     value={values.username}
-                    // onChange={alertDown}
+                    onChange={alertDown}
                   />
                   {errors.username && (
                     <Text style={{ fontSize: 12, color: "red", marginTop: 5 }}>
@@ -187,7 +180,7 @@ function Signup() {
                     onChangeText={handleChange("email")}
                     onBlur={handleBlur("email")}
                     value={values.email}
-                    // onChange={alertDown}
+                    onChange={alertDown}
                   />
                   {errors.email && (
                     <Text style={{ fontSize: 12, color: "red", marginTop: 5 }}>
@@ -214,7 +207,7 @@ function Signup() {
                       onChangeText={handleChange("password")}
                       onBlur={handleBlur("password")}
                       value={values.password}
-                      // onChange={alertDown}
+                      onChange={alertDown}
                     />
                     {errors.password && (
                       <Text
