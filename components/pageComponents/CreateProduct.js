@@ -83,12 +83,14 @@ export default function CreateProduct() {
       hand: hand,
       shaft: shaft,
       user: user.displayName,
+      userEmail: user.email,
       pendingBooking: false,
       startDate: null,
       endDate: null,
       accepted: false,
       denied: false,
       renter: null,
+      renterEmail: null,
       totalPrice: null,
       totalDays: null,
     });
@@ -336,7 +338,6 @@ export default function CreateProduct() {
                 )}
 
                 <Text style={styles.formLabel}>Bild</Text>
-                {/* <ImageUpload setImage={setImage} image={image} /> */}
                 <View
                   style={{
                     flex: 1,

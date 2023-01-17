@@ -43,7 +43,6 @@ export default function EditProductModal() {
     image,
     user,
     id,
-    setUpdate,
   } = route.params;
 
   async function updateProduct({
@@ -70,7 +69,7 @@ export default function EditProductModal() {
       gender: gender,
       hand: hand,
       shaft: shaft,
-      image: newImageUrl,
+      image: newImageUrl || image,
     })
       .then((updateRef) => {
         console.log("Uppdaterad");
@@ -112,7 +111,9 @@ export default function EditProductModal() {
       setNewImageUrl(downloadURL);
     });
   };
-
+  console.log("gammal bild", image);
+  console.log("ny bild", newImage);
+  console.log("ny bild url", newImageUrl);
   return (
     <ScrollView vertical>
       <KeyboardAvoidingView
@@ -121,8 +122,6 @@ export default function EditProductModal() {
         <View style={styles.container}>
           <View style={styles.form}>
             <Formik
-              validateOnChange={false}
-              validateOnBlur={false}
               validationSchema={ProductValidationSchema}
               initialValues={{
                 title: title,
@@ -144,7 +143,6 @@ export default function EditProductModal() {
                   values: {
                     title: "",
                     category: "",
-                    image: "",
                     description: "",
                     price: "",
                     location: "",
@@ -429,7 +427,7 @@ export default function EditProductModal() {
                       label="Spara"
                       btnWidth={{ width: 200, marginTop: 25 }}
                       onPress={handleSubmit}
-                      disabled={!isValid || newImageUrl == null}
+                      disabled={!isValid}
                     />
                   </View>
                 </>

@@ -28,7 +28,11 @@ function ProductCard({ selectedCategory }) {
 
   async function getData() {
     const productsData = [];
-    const q = query(collection(db, "products"), where("accepted", "==", false));
+    const q = query(
+      collection(db, "products"),
+      where("accepted", "==", false),
+      where("pendingBooking", "==", false)
+    );
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
       // doc.data() is never undefined for query doc snapshots
@@ -51,10 +55,6 @@ function ProductCard({ selectedCategory }) {
       getData();
     }, [])
   );
-
-  // useEffect(() => {
-  //   getData();
-  // }, []);
 
   return (
     <ScrollView showsVerticalScrollIndicator={false} height="auto">
