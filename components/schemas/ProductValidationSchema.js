@@ -23,6 +23,7 @@ export const ProductValidationSchema = yup.object().shape({
   location: yup
     .string()
     .required("Ange plats")
+    .max(30, "Platsen får inte vara mer än 30 tecken")
     .min(3, "Plasten måste vara minst 2 tecken"),
   clubs: yup
     .string()

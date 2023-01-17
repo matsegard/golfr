@@ -116,10 +116,10 @@ export default function EditProductModal() {
   console.log("ny bild", newImage);
   console.log("ny bild url", newImageUrl);
   return (
-    <ScrollView vertical>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-      >
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
+      <ScrollView vertical showsVerticalScrollIndicator={false} height="100%">
         <View style={styles.container}>
           <View style={styles.form}>
             <Formik
@@ -436,8 +436,8 @@ export default function EditProductModal() {
             </Formik>
           </View>
         </View>
-      </KeyboardAvoidingView>
-    </ScrollView>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 

@@ -136,9 +136,7 @@ const MyProfileProducts = () => {
                     {product.data.title}
                   </Heading>
                 </Stack>
-                <Text numberOfLines={2} fontWeight="400">
-                  {product.data.description}
-                </Text>
+                <Text fontWeight="400">{product.data.description}</Text>
               </Stack>
               <Box flexDirection="row" justifyContent="flex-end">
                 <Pressable onPress={() => deleteProduct(product)}>
