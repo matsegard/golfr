@@ -21,7 +21,7 @@ function Signup() {
   const [show, setShow] = useState(false);
   const navigation = useNavigation();
   const auth = getAuth();
-  // const [emailExist, setEmailExist] = useState(false);
+  const [emailExist, setEmailExist] = useState(false);
   const [success, setSuccess] = useState(false);
 
   const CreateAccount = async ({ email, username, password }) => {
@@ -30,30 +30,34 @@ function Signup() {
       email, 
       password,
       username,
-      setSuccess(true),
-      setTimeout(() => {
-            navigation.navigate("Products");
-          }, "2000")
+      // setSuccess(true),
+      //  setTimeout(() => {
+      //   navigation.navigate("Products");
+      // }, "2000")
+    
 
       )
-    
-       
-  //     .catch((errors) => {
-  //       if (errors.code === "auth/email-already-in-use") {
-  //         // setEmailExist(true);
-  //       }
-  //     });
+      if (auth === true) {
+        console.log("inte inloggad");
+        setEmailExist(true);
+      } else {
+        setSuccess(true);
+            setTimeout(() => {
+        navigation.navigate("Products");
+      }, "2000")
+      }
+      //  .catch((errors) => {
+      //   if (errors.code === "auth/email-already-in-use") {
+      //  return setEmailExist(true);
+      //   }
+      // }
+      // );
 
   //   await updateProfile(auth.currentUser, {
   //     displayName: username,
   //   });
 
-  //   await reload(user);
-  //   setSuccess(true);
-  //   setTimeout(() => {
-  //     navigation.navigate("Products");
-  //   }, "2000");
-  // };
+  //
 
   // const CreateAccount = async ({ email, username, password }) => {
   //   const { user } = await createUserWithEmailAndPassword(
@@ -105,7 +109,7 @@ function Signup() {
           </VStack>
         </Alert>
       )}
-      {/* {emailExist && (
+      {emailExist && (
         <Alert
           w="50%"
           borderBottomRadius="2xl"
@@ -124,7 +128,7 @@ function Signup() {
             </HStack>
           </VStack>
         </Alert>
-      )} */}
+      )}
 
       <Text style={styles.loginText}>Registrera dig</Text>
       <View style={styles.forms}>
