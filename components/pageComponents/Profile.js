@@ -18,7 +18,7 @@ function Profile() {
   const auth = getAuth();
   const route = useRoute();
   const [username, setUsername] = useState(auth.currentUser.displayName);
-  
+
   const { user } = route.params;
 
   // funkar om man är inloggad blir error om man ej är
@@ -42,15 +42,15 @@ function Profile() {
   }
 
   //updates password
-  function updateUsersPassword({ password }) {
-    updatePassword(auth.currentUser, { password: password })
-      .then(() => {
-        console.log(auth.currentUser);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
+  // function updateUsersPassword({ password }) {
+  //   updatePassword(auth.currentUser, { password: password })
+  //     .then(() => {
+  //       console.log(auth.currentUser);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }
 
   return (
     <View style={styles.container}>

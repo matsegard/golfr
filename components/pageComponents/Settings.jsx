@@ -20,23 +20,20 @@ function Settings() {
   const auth = getAuth();
   const route = useRoute();
   const [username, setUsername] = useState(auth.currentUser.displayName);
-
-  const { user } = route.params;
-
   const [editUsernameMode, setEditUsernameMode] = useState(false);
+  const { user } = route.params;
 
   //updates username
   function updateUser({ username }) {
     setEditUsernameMode(!editUsernameMode);
-    updateProfile(auth.currentUser, {
+    updateProfile(user, {
       displayName: username,
     })
       .then(() => {
-        setUsername(auth.currentUser.displayName);
         Alert.alert("Profil uppdaterad");
       })
       .catch((error) => {
-        console.log(error);
+        Alert.alert(error);
       });
   }
 
@@ -50,7 +47,7 @@ function Settings() {
           //   password: "",
         }}
         onSubmit={(values, actions) => {
-          updateUser(values.username);
+          updateUser(values);
           actions.setSubmitting(false);
         }}
       >
