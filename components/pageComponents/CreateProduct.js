@@ -343,6 +343,7 @@ export default function CreateProduct() {
                     flex: 1,
                     alignItems: "center",
                     justifyContent: "center",
+                    marginTop: 15,
                   }}
                 >
                   <FontAwesomeIcon size={30} color="#828282" icon={faCamera} />

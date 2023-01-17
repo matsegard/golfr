@@ -176,7 +176,7 @@ const Notifications = () => {
                 {bookings.length == 0 && (
                   <Text
                     style={{
-                      marginTop: 10,
+                      marginTop: 20,
                       fontFamily: "MontserratMedium",
                       fontSize: 12,
                     }}
@@ -298,7 +298,7 @@ const Notifications = () => {
                 {acceptedBookings.length == 0 && (
                   <Text
                     style={{
-                      marginTop: 10,
+                      marginTop: 20,
                       fontFamily: "MontserratMedium",
                       fontSize: 12,
                     }}
@@ -405,7 +405,7 @@ const Notifications = () => {
                 {myBookings.length == 0 && (
                   <Text
                     style={{
-                      marginTop: 10,
+                      marginTop: 20,
                       fontFamily: "MontserratMedium",
                       fontSize: 12,
                     }}
