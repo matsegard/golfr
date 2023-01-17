@@ -54,120 +54,92 @@ function Profile() {
 
   return (
     <View style={styles.container}>
-      <Formik
-        validationSchema={(UsernameValidationSchema, PasswordValidationSchema)}
-        initialValues={{
-          username: user.displayName,
-          password: "",
-        }}
-        onSubmit={(values, actions) => {
-          if (values.password != "") {
-            updateUsersPassword(values.password);
-          }
-          if (values.username) {
-            updateUser(values.username);
-          }
-          actions.setSubmitting(false);
-        }}
-      >
-        {({
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          values,
-          isValid,
-          errors,
-        }) => (
-          <>
-            <Image
-              style={[
-                styles.greenBubble,
-                {
-                  transform: [{ rotate: "180deg" }],
-                },
-              ]}
-              source={require("../../assets/Ellipse.png")}
-            />
-            <View style={styles.bubbleText}>
-              {/* <Pressable onPress={() => navigation.navigate("HelpPage")}>
+      <Image
+        style={[
+          styles.greenBubble,
+          {
+            transform: [{ rotate: "180deg" }],
+          },
+        ]}
+        source={require("../../assets/Ellipse.png")}
+      />
+      <View style={styles.bubbleText}>
+        {/* <Pressable onPress={() => navigation.navigate("HelpPage")}>
                 <FontAwesomeIcon color="white" size={22} icon={faQuestion} />
               </Pressable> */}
-              <Pressable
-                onPress={() =>
-                  navigation.navigate("Settings", {
-                    user: auth.currentUser,
-                  })
-                }
-              >
-                <FontAwesomeIcon color="white" size={24} icon={faGear} />
-              </Pressable>
-              <Text style={styles.logout} onPress={() => testSignOut()}>
-                Logout
-              </Text>
-            </View>
-            <View style={styles.profilePic}></View>
-            <Pressable style={styles.addProfilePic}>
-              <View>
-                <FontAwesomeIcon color="white" size={15} icon={faPlus} />
-              </View>
-            </Pressable>
-            <View style={styles.forms}>
-              <View>
-                <View style={styles.form}>
-                  <Text
-                    style={{
-                      fontFamily: "MontserratSemiBold",
-                      color: "#B6B6B6",
-                      marginBottom: 8,
-                    }}
-                  >
-                    Username
-                  </Text>
-                  <Text>{username}</Text>
-                  <View
-                    style={{
-                      width: 280,
-                      height: 1,
-                      backgroundColor: "#D9D9D9",
-                      marginTop: 18,
-                    }}
-                  ></View>
-                </View>
-                <View style={styles.form}>
-                  <Text
-                    style={{
-                      fontFamily: "MontserratSemiBold",
-                      color: "#B6B6B6",
-                      marginBottom: 8,
-                    }}
-                  >
-                    Email
-                  </Text>
-                  <Text>{user.email}</Text>
-                  <View
-                    style={{
-                      width: 280,
-                      height: 1,
-                      backgroundColor: "#D9D9D9",
-                      marginTop: 18,
-                    }}
-                  ></View>
-                </View>
-              </View>
-            </View>
-            <PrimaryButton
-              label="Mina annonser"
-              btnWidth={{
-                width: 150,
-                position: "absolute",
-                right: "15%",
-                bottom: 150,
+        <Pressable
+          onPress={() =>
+            navigation.navigate("Settings", {
+              user: auth.currentUser,
+            })
+          }
+        >
+          <FontAwesomeIcon color="white" size={24} icon={faGear} />
+        </Pressable>
+        <Text style={styles.logout} onPress={() => testSignOut()}>
+          Logout
+        </Text>
+      </View>
+      <View style={styles.profilePic}></View>
+      <Pressable style={styles.addProfilePic}>
+        <View>
+          <FontAwesomeIcon color="white" size={15} icon={faPlus} />
+        </View>
+      </Pressable>
+      <View style={styles.forms}>
+        <View>
+          <View style={styles.form}>
+            <Text
+              style={{
+                fontFamily: "MontserratSemiBold",
+                color: "#B6B6B6",
+                marginBottom: 8,
               }}
-              onPress={() => navigation.navigate("MyProducts")}
-            />
-          </>
-        )}
-      </Formik>
+            >
+              Username
+            </Text>
+            <Text>{user.displayName}</Text>
+            <View
+              style={{
+                width: 280,
+                height: 1,
+                backgroundColor: "#D9D9D9",
+                marginTop: 18,
+              }}
+            ></View>
+          </View>
+          <View style={styles.form}>
+            <Text
+              style={{
+                fontFamily: "MontserratSemiBold",
+                color: "#B6B6B6",
+                marginBottom: 8,
+              }}
+            >
+              Email
+            </Text>
+            <Text>{user.email}</Text>
+            <View
+              style={{
+                width: 280,
+                height: 1,
+                backgroundColor: "#D9D9D9",
+                marginTop: 18,
+              }}
+            ></View>
+          </View>
+        </View>
+      </View>
+      <PrimaryButton
+        label="Mina annonser"
+        btnWidth={{
+          width: 150,
+          position: "absolute",
+          right: "15%",
+          bottom: 150,
+        }}
+        onPress={() => navigation.navigate("MyProducts")}
+      />
     </View>
   );
 }
