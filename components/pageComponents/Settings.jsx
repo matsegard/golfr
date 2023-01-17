@@ -2,27 +2,36 @@ import React, { useState } from "react";
 import {
   StyleSheet,
   View,
-  Image,
   Text,
   Pressable,
   Alert,
   Dimensions,
 } from "react-native";
-import { Input } from "native-base";
+import { Modal, Button, Input } from "native-base";
 import PrimaryButton from "../inputs/PrimaryButton";
-import { getAuth, updateProfile, updatePassword } from "firebase/auth";
+import {
+  getAuth,
+  updateProfile,
+  deleteUser,
+  EmailAuthProvider,
+  reauthenticateWithCredential,
+} from "firebase/auth";
 import { useRoute } from "@react-navigation/native";
 import { Formik } from "formik";
 import { UsernameValidationSchema } from "../schemas/UsernameValidationSchema";
-import { PasswordValidationSchema } from "../schemas/PasswordValidationSchema";
+// import { PasswordValidationSchema } from "../schemas/PasswordValidationSchema";
 import { useNavigation } from "@react-navigation/native";
 
 function Settings() {
   const auth = getAuth();
   const route = useRoute();
   const navigation = useNavigation();
+  const initialRef = React.useRef(null);
+  const finalRef = React.useRef(null);
   const [username, setUsername] = useState(auth.currentUser.displayName);
   const [editUsernameMode, setEditUsernameMode] = useState(false);
+  const [capturePassword, setCapturePassword] = useState(false);
+
   const { user } = route.params;
 
   //updates username
@@ -41,8 +50,88 @@ function Settings() {
       });
   }
 
+  function deleteAccount() {
+    setCapturePassword(true);
+  }
+
+  async function deleteCurrentUser({ password }) {
+    const credential = EmailAuthProvider.credential(user.email, password);
+    await reauthenticateWithCredential(user, credential);
+
+    deleteUser(user)
+      .then(() => {
+        Alert.alert("User was deleted");
+        navigation.navigate("Products");
+      })
+      .catch((error) => {
+        Alert.alert(error);
+      });
+  }
+
   return (
     <View style={styles.container}>
+      {capturePassword && (
+        <Formik
+          validateOnBlur={false}
+          initialValues={{
+            password: "",
+          }}
+          onSubmit={(values) => {
+            deleteCurrentUser(values);
+          }}
+        >
+          {({ handleChange, handleBlur, handleSubmit, values }) => (
+            <>
+              <Modal
+                bottom="20"
+                isOpen={capturePassword}
+                onClose={() => setCapturePassword(false)}
+                initialFocusRef={initialRef}
+                finalFocusRef={finalRef}
+              >
+                <Modal.Content>
+                  <Modal.CloseButton />
+                  <Modal.Header>
+                    Autentisera ditt lösenord för att fortsätta:
+                  </Modal.Header>
+                  <Modal.Body>
+                    <Input
+                      ref={initialRef}
+                      variant="unstyled"
+                      type="password"
+                      placeholder="Lösenord"
+                      onChangeText={handleChange("password")}
+                      onBlur={handleBlur("password")}
+                      value={values.password}
+                    />
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button.Group space={2}>
+                      <Button
+                        variant="ghost"
+                        colorScheme="blueGray"
+                        onPress={() => {
+                          setCapturePassword(false);
+                        }}
+                      >
+                        Avsluta
+                      </Button>
+                      <PrimaryButton
+                        label="Radera konto"
+                        btnWidth={{
+                          width: 120,
+                          backgroundColor: "#d63a3a",
+                        }}
+                        onPress={handleSubmit}
+                      />
+                    </Button.Group>
+                  </Modal.Footer>
+                </Modal.Content>
+              </Modal>
+            </>
+          )}
+        </Formik>
+      )}
       <Text style={styles.headerText}>Användarinställningar</Text>
       <Formik
         validationSchema={UsernameValidationSchema}
@@ -267,7 +356,7 @@ function Settings() {
         <Text style={{ fontFamily: "MontserratRegular", marginBottom: 10 }}>
           Vill du radera ditt konto? Yada yada om du raderar konto blabla
         </Text>
-        <Pressable onPress={() => console.log("PRESS")}>
+        <Pressable onPress={deleteAccount}>
           <Text
             style={{
               fontFamily: "MontserratSemiBold",
