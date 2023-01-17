@@ -441,7 +441,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 224,
     position: "absolute",
-    top: -55,
+    top: -60,
   },
   headerText: {
     fontSize: "25",
@@ -466,7 +466,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   form: {
-    width: "70%",
+    width: "80%",
     flex: 0.9,
     marginBottom: 80,
   },

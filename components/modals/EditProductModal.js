@@ -473,7 +473,7 @@ const styles = StyleSheet.create({
     borderBottomColor: "#B6B6B6",
   },
   form: {
-    width: "70%",
+    width: "80%",
     flex: 0.9,
     marginBottom: 80,
     marginTop: 30,
