@@ -184,9 +184,9 @@ const Notifications = () => {
                     Du har inte fått några förfrågningar
                   </Text>
                 )}
-                {bookings.map((booking) => (
+                {bookings.map((booking, i) => (
                   <>
-                    <View key={booking.id} style={styles.adsCard}>
+                    <View key={i} style={styles.adsCard}>
                       <Text style={styles.cardText}>
                         <Text
                           style={{
