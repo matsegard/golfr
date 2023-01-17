@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Image, Text, Pressable} from "react-native";
+import { StyleSheet, View, Image, Text, Pressable } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 // import { faQuestion } from "@fortawesome/free-solid-svg-icons";
 import { faGear } from "@fortawesome/free-solid-svg-icons";
@@ -8,20 +8,15 @@ import PrimaryButton from "../inputs/PrimaryButton";
 import { useNavigation } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
 import { signOut, getAuth } from "firebase/auth";
-import {
-  Input,
-  Alert,
-  VStack,
-  HStack,
-} from "native-base";
+import { Input, Alert, VStack, HStack } from "native-base";
 
 function Profile() {
   const navigation = useNavigation();
   const auth = getAuth();
   const route = useRoute();
   // const [username, setUsername] = useState(auth.currentUser.displayName);
- const [success,setSuccess] = useState(false)
- const [logOutFail,setLogOutFail] = useState(false)
+  const [success, setSuccess] = useState(false);
+  const [logOutFail, setLogOutFail] = useState(false);
   const { user } = route.params;
 
   // funkar om man är inloggad blir error om man ej är
@@ -35,14 +30,13 @@ function Profile() {
   function testSignOut() {
     signOut(auth)
       .then(() => {
-        setSuccess(true)
-          setTimeout(() => {
-            navigation.navigate("Login");
-          }, "2000")
-       
+        setSuccess(true);
+        setTimeout(() => {
+          navigation.navigate("Login");
+        }, "500");
       })
       .catch((error) => {
-        setLogOutFail(true)
+        setLogOutFail(true);
       });
   }
 
@@ -85,45 +79,45 @@ function Profile() {
           Logout
         </Text>
         {success && (
-        <Alert
-          w="50%"
-          borderBottomRadius="2xl"
-          position="absolute"
-          top="0"
-          status="success"
-        >
-          <VStack space={2} flexShrink={1} w="100%" alignItems="center">
-            <HStack flexShrink={1} space={2} justifyContent="space-between">
-              <HStack space={2} flexShrink={1}>
-                <Alert.Icon mt="1" color="black" />
-                <Text fontSize="md" color="coolGray.800">
-                  Utloggning lyckad
-                </Text>
+          <Alert
+            w="50%"
+            borderBottomRadius="2xl"
+            position="absolute"
+            top="0"
+            status="success"
+          >
+            <VStack space={2} flexShrink={1} w="100%" alignItems="center">
+              <HStack flexShrink={1} space={2} justifyContent="space-between">
+                <HStack space={2} flexShrink={1}>
+                  <Alert.Icon mt="1" color="black" />
+                  <Text fontSize="md" color="coolGray.800">
+                    Utloggning lyckad
+                  </Text>
+                </HStack>
               </HStack>
-            </HStack>
-          </VStack>
-        </Alert>
-      )}
+            </VStack>
+          </Alert>
+        )}
         {logOutFail && (
-        <Alert
-          w="50%"
-          borderBottomRadius="2xl"
-          position="absolute"
-          top="0"
-          backgroundColor="danger.400"
-        >
-          <VStack space={2} flexShrink={1} w="100%" alignItems="center">
-            <HStack flexShrink={1} space={2} justifyContent="space-between">
-              <HStack space={2} flexShrink={1}>
-                <Alert.Icon mt="1" color="black" />
-                <Text fontSize="md" color="coolGray.800">
-                  Utloggning misslyckad
-                </Text>
+          <Alert
+            w="50%"
+            borderBottomRadius="2xl"
+            position="absolute"
+            top="0"
+            backgroundColor="danger.400"
+          >
+            <VStack space={2} flexShrink={1} w="100%" alignItems="center">
+              <HStack flexShrink={1} space={2} justifyContent="space-between">
+                <HStack space={2} flexShrink={1}>
+                  <Alert.Icon mt="1" color="black" />
+                  <Text fontSize="md" color="coolGray.800">
+                    Utloggning misslyckad
+                  </Text>
+                </HStack>
               </HStack>
-            </HStack>
-          </VStack>
-        </Alert>
-      )}
+            </VStack>
+          </Alert>
+        )}
       </View>
       <View style={styles.profilePic}></View>
       <Pressable style={styles.addProfilePic}>

@@ -7,12 +7,7 @@ import { PasswordValidationSchema } from "../schemas/PasswordValidationSchema";
 import { EmailValidationSchema } from "../schemas/EmailValidationSchema";
 import { Formik } from "formik";
 import { Pressable } from "react-native";
-import {
-  Input,
-  Alert,
-  VStack,
-  HStack,
-} from "native-base";
+import { Input, Alert, VStack, HStack } from "native-base";
 import PrimaryButton from "../inputs/PrimaryButton.js";
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
@@ -24,19 +19,19 @@ function Login() {
   const navigation = useNavigation();
   const auth = getAuth();
   const [errorCode, setErrorCode] = useState(false);
- const [success, setSuccess] = useState(false)
+  const [success, setSuccess] = useState(false);
   const [errorPassword, setErrorPassword] = useState(false);
 
   function signIn({ email, password }) {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        setSuccess(true)
+        setSuccess(true);
         setTimeout(() => {
           navigation.navigate("Products", {
             user: auth.currentUser,
-          })}, "2000")
-       
+          });
+        }, "500");
       })
       .catch((errors) => {
         if (errors.code === "auth/user-not-found") {
@@ -87,7 +82,7 @@ function Login() {
           <VStack space={2} flexShrink={1} w="100%" alignItems="center">
             <HStack flexShrink={1} space={2} justifyContent="space-between">
               <HStack space={2} flexShrink={1}>
-                <Alert.Icon mt="1" color="black" />
+                <Alert.Icon mt="0" color="black" />
                 <Text fontSize="md" color="coolGray.800">
                   Inloggning lyckad
                 </Text>
@@ -107,16 +102,16 @@ function Login() {
           <VStack space={2} flexShrink={1} w="100%" alignItems="center">
             <HStack flexShrink={1} space={2} justifyContent="space-between">
               <HStack space={2} flexShrink={1}>
-                <Alert.Icon mt="1" color="black" />
+                <Alert.Icon mt="0" color="black" />
                 <Text fontSize="md" color="coolGray.800">
-                  Email fel
+                  Fel email
                 </Text>
               </HStack>
             </HStack>
           </VStack>
         </Alert>
       )}
- 
+
       {errorPassword && (
         <Alert
           w="50%"
@@ -128,9 +123,9 @@ function Login() {
           <VStack space={2} flexShrink={1} w="100%" alignItems="center">
             <HStack flexShrink={1} space={2} justifyContent="space-between">
               <HStack space={2} flexShrink={1}>
-                <Alert.Icon mt="1" color="black" />
+                <Alert.Icon mt="0" color="black" />
                 <Text fontSize="md" color="coolGray.800">
-                  Lösenord fel
+                  Fel lösenord
                 </Text>
               </HStack>
             </HStack>
@@ -259,7 +254,7 @@ function Login() {
                 <Text style={styles.forgotPassword}>Glömt ditt lösenord?</Text>
               </Pressable>
               <PrimaryButton
-                label="logga in"
+                label="Logga in"
                 btnWidth={{
                   width: 182,
                   right: 50,
@@ -292,7 +287,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 224,
     position: "absolute",
-    top: -19,
+    top: -70,
   },
   signup: {
     color: "#B6B6B6",
@@ -300,16 +295,16 @@ const styles = StyleSheet.create({
     letterSpacing: ".3%",
     textDecorationLine: "underline",
     position: "absolute",
-    top: 640,
+    top: 580,
   },
   loginText: {
     fontSize: 20,
     fontFamily: "MontserratBold",
-    bottom: 150,
+    bottom: 180,
   },
   forms: {
     position: "absolute",
-    top: 290,
+    top: 220,
   },
   form: {
     marginTop: 30,
