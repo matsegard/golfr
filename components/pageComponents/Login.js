@@ -24,28 +24,26 @@ function Login() {
   const navigation = useNavigation();
   const auth = getAuth();
   const [errorCode, setErrorCode] = useState(false);
-  const [errorEmail, setErrorEmail] = useState(false);
+ const [success, setSuccess] = useState(false)
   const [errorPassword, setErrorPassword] = useState(false);
 
   function signIn({ email, password }) {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        navigation.navigate("Products", {
-          user: auth.currentUser,
-        });
+        setSuccess(true)
+        setTimeout(() => {
+          navigation.navigate("Products", {
+            user: auth.currentUser,
+          })}, "2000")
+       
       })
       .catch((errors) => {
         if (errors.code === "auth/user-not-found") {
           setErrorCode(true);
           console.log(" adressen existerar inte");
         }
-        if (errors.email === "auth/invalid-email") {
-          setErrorEmail(true);
-
-          console.log(" email existerar inte");
-        }
-        if (errors.password === "auth/wrong-password") {
+        if (errors.code === "auth/wrong-password") {
           setErrorPassword(true);
           console.log("Lösenordet existerar inte");
         }
@@ -54,6 +52,7 @@ function Login() {
 
   function errorMessage() {
     setErrorCode(false);
+    setErrorPassword(false);
   }
 
   // // TO BE REMOVED
@@ -77,6 +76,26 @@ function Login() {
         ]}
         source={require("../../assets/Ellipse.png")}
       />
+      {success && (
+        <Alert
+          w="50%"
+          borderBottomRadius="2xl"
+          position="absolute"
+          top="0"
+          status="success"
+        >
+          <VStack space={2} flexShrink={1} w="100%" alignItems="center">
+            <HStack flexShrink={1} space={2} justifyContent="space-between">
+              <HStack space={2} flexShrink={1}>
+                <Alert.Icon mt="1" color="black" />
+                <Text fontSize="md" color="coolGray.800">
+                  Inloggning lyckad
+                </Text>
+              </HStack>
+            </HStack>
+          </VStack>
+        </Alert>
+      )}
       {errorCode && (
         <Alert
           w="50%"
@@ -90,7 +109,28 @@ function Login() {
               <HStack space={2} flexShrink={1}>
                 <Alert.Icon mt="1" color="black" />
                 <Text fontSize="md" color="coolGray.800">
-                  Email eller lösenord fel
+                  Email fel
+                </Text>
+              </HStack>
+            </HStack>
+          </VStack>
+        </Alert>
+      )}
+ 
+      {errorPassword && (
+        <Alert
+          w="50%"
+          borderBottomRadius="2xl"
+          position="absolute"
+          top="0"
+          backgroundColor="danger.400"
+        >
+          <VStack space={2} flexShrink={1} w="100%" alignItems="center">
+            <HStack flexShrink={1} space={2} justifyContent="space-between">
+              <HStack space={2} flexShrink={1}>
+                <Alert.Icon mt="1" color="black" />
+                <Text fontSize="md" color="coolGray.800">
+                  Lösenord fel
                 </Text>
               </HStack>
             </HStack>
