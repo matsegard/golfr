@@ -15,9 +15,11 @@ import {
   deleteUser,
   EmailAuthProvider,
   reauthenticateWithCredential,
+  updateEmail,
 } from "firebase/auth";
 import { useRoute } from "@react-navigation/native";
 import { Formik } from "formik";
+import { EmailValidationSchema } from "../schemas/EmailValidationSchema";
 import { UsernameValidationSchema } from "../schemas/UsernameValidationSchema";
 // import { PasswordValidationSchema } from "../schemas/PasswordValidationSchema";
 import { useNavigation } from "@react-navigation/native";
@@ -29,13 +31,16 @@ function Settings() {
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
   const [username, setUsername] = useState(auth.currentUser.displayName);
+  const [email, setEmail] = useState(auth.currentUser.email);
   const [editUsernameMode, setEditUsernameMode] = useState(false);
+  const [editEmailMode, setEditEmailMode] = useState(false);
   const [capturePassword, setCapturePassword] = useState(false);
+  const [capturePasswordForEmail, setCapturePasswordForEmail] = useState(false);
 
   const { user } = route.params;
 
   //updates username
-  function updateUser({ username }) {
+  function updateUsername({ username }) {
     setEditUsernameMode(!editUsernameMode);
     updateProfile(user, {
       displayName: username,
@@ -50,8 +55,27 @@ function Settings() {
       });
   }
 
+  function updateEmailAuth() {
+    setCapturePasswordForEmail(true);
+  }
+
   function deleteAccount() {
     setCapturePassword(true);
+  }
+
+  async function updateUsersEmail({ password, email }) {
+    const credential = EmailAuthProvider.credential(user.email, password);
+    await reauthenticateWithCredential(user, credential);
+
+    updateEmail(user, email)
+      .then(() => {
+        setEmail(email);
+        navigation.navigate("Products"); //temporary solution to username not updating on profile
+        Alert.alert("Profil uppdaterad");
+      })
+      .catch((error) => {
+        Alert.alert(error);
+      });
   }
 
   async function deleteCurrentUser({ password }) {
@@ -75,6 +99,7 @@ function Settings() {
           validateOnBlur={false}
           initialValues={{
             password: "",
+            email: "",
           }}
           onSubmit={(values) => {
             deleteCurrentUser(values);
@@ -132,15 +157,81 @@ function Settings() {
           )}
         </Formik>
       )}
+
+      {capturePasswordForEmail && (
+        <Formik
+          validateOnBlur={false}
+          initialValues={{
+            password: "",
+            email: "",
+          }}
+          onSubmit={(values) => {
+            updateUsersEmail(values);
+          }}
+        >
+          {({ handleChange, handleBlur, handleSubmit, values }) => (
+            <>
+              <Modal
+                bottom="20"
+                isOpen={capturePasswordForEmail}
+                onClose={() => setCapturePasswordForEmail(false)}
+                initialFocusRef={initialRef}
+                finalFocusRef={finalRef}
+              >
+                <Modal.Content>
+                  <Modal.CloseButton />
+                  <Modal.Header>
+                    Autentisera ditt lösenord för att fortsätta:
+                  </Modal.Header>
+                  <Modal.Body>
+                    <Input
+                      ref={initialRef}
+                      variant="unstyled"
+                      type="password"
+                      placeholder="Lösenord"
+                      onChangeText={handleChange("password")}
+                      onBlur={handleBlur("password")}
+                      value={values.password}
+                    />
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button.Group space={2}>
+                      <Button
+                        variant="ghost"
+                        colorScheme="blueGray"
+                        onPress={() => {
+                          setCapturePasswordForEmail(false);
+                        }}
+                      >
+                        Avsluta
+                      </Button>
+                      <PrimaryButton
+                        label="Updatera email"
+                        btnWidth={{
+                          width: 140,
+                        }}
+                        onPress={handleSubmit}
+                      />
+                    </Button.Group>
+                  </Modal.Footer>
+                </Modal.Content>
+              </Modal>
+            </>
+          )}
+        </Formik>
+      )}
+
       <Text style={styles.headerText}>Användarinställningar</Text>
       <Formik
-        validationSchema={UsernameValidationSchema}
+        validationSchema={(UsernameValidationSchema, EmailValidationSchema)}
         initialValues={{
           username: user.displayName,
+          email: user.email,
           //   password: "",
         }}
         onSubmit={(values, actions) => {
-          updateUser(values);
+          updateUsername(values);
+          updateUsersEmail(values);
           actions.setSubmitting(false);
         }}
       >
@@ -249,51 +340,106 @@ function Settings() {
               </View>
             )}
 
-            <View style={styles.email}>
-              <Text
-                style={{
-                  fontFamily: "MontserratBold",
-                  fontWeight: "bold",
-                  marginBottom: 10,
-                }}
-              >
-                Email adress
-              </Text>
-              <View style={{ flexDirection: "row" }}>
-                <Text>Din email adress är</Text>
+            {!editEmailMode ? (
+              <View style={styles.email}>
                 <Text
                   style={{
-                    fontFamily: "MontserratSemiBold",
+                    fontFamily: "MontserratBold",
                     fontWeight: "bold",
                     marginBottom: 10,
-                    marginLeft: 5,
                   }}
                 >
-                  {user.email}
+                  Email
                 </Text>
-                <Pressable onPress={() => console.log("EMAIL")}>
+                <View style={{ flexDirection: "row" }}>
+                  <Text>Din email är</Text>
                   <Text
                     style={{
                       fontFamily: "MontserratSemiBold",
-                      fontWeight: 500,
-                      color: "#566fbf",
-                      textDecorationLine: "underline",
-                      marginLeft: 15,
+                      fontWeight: "bold",
+                      marginBottom: 10,
+                      marginLeft: 5,
                     }}
                   >
-                    Ändra
+                    {user.email}
                   </Text>
-                </Pressable>
+                  <Pressable onPress={() => setEditEmailMode(!editEmailMode)}>
+                    <Text
+                      style={{
+                        fontFamily: "MontserratSemiBold",
+                        fontWeight: 500,
+                        color: "#566fbf",
+                        textDecorationLine: "underline",
+                        marginLeft: 15,
+                      }}
+                    >
+                      Ändra
+                    </Text>
+                  </Pressable>
+                </View>
+                <View
+                  style={{
+                    width: Dimensions.get("window").width - 100,
+                    height: 1,
+                    backgroundColor: "#e8e8e8",
+                    marginTop: 35,
+                  }}
+                ></View>
               </View>
+            ) : (
               <View
                 style={{
                   width: Dimensions.get("window").width - 100,
-                  height: 1,
-                  backgroundColor: "#e8e8e8",
-                  marginTop: 35,
+                  marginLeft: 50,
+                  marginBottom: 35,
                 }}
-              ></View>
-            </View>
+              >
+                <Text
+                  style={{
+                    fontFamily: "MontserratBold",
+                    fontWeight: "bold",
+                    marginBottom: 10,
+                  }}
+                >
+                  Email
+                </Text>
+                <Input
+                  onChangeText={handleChange("email")}
+                  onBlur={handleBlur("email")}
+                  value={values.email}
+                  placeholder={user.email}
+                ></Input>
+                {errors.email && (
+                  <Text
+                    style={{
+                      position: "absolute",
+                      fontSize: 12,
+                      color: "red",
+                      top: 62,
+                    }}
+                  >
+                    {errors.email}
+                  </Text>
+                )}
+                <PrimaryButton
+                  label="Spara email"
+                  btnWidth={{
+                    marginTop: 20,
+                    width: 190,
+                  }}
+                  disabled={!isValid}
+                  onPress={updateEmailAuth}
+                />
+                <View
+                  style={{
+                    width: Dimensions.get("window").width - 100,
+                    height: 1,
+                    backgroundColor: "#e8e8e8",
+                    marginTop: 35,
+                  }}
+                ></View>
+              </View>
+            )}
 
             <View style={styles.email}>
               <Text
@@ -306,7 +452,7 @@ function Settings() {
                 Lösenord
               </Text>
               <View style={{ flexDirection: "row" }}>
-                <Text>Din email adress är</Text>
+                <Text>Ditt lösenord är</Text>
                 <Text
                   style={{
                     fontFamily: "MontserratSemiBold",
@@ -315,7 +461,7 @@ function Settings() {
                     marginLeft: 5,
                   }}
                 >
-                  {user.email}
+                  lösenkommerejsynas
                 </Text>
                 <Pressable onPress={() => console.log("LÖSEN")}>
                   <Text
