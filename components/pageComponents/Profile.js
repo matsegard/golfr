@@ -76,7 +76,7 @@ function Profile() {
           <FontAwesomeIcon color="white" size={24} icon={faGear} />
         </Pressable>
         <Text style={styles.logout} onPress={() => testSignOut()}>
-          Logout
+          Logga ut
         </Text>
         {success && (
           <Alert

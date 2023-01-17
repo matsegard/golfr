@@ -130,13 +130,18 @@ const MyProfileProducts = () => {
                   />
                 </AspectRatio>
               </Box>
-              <Stack p="4" space={3}>
-                <Stack space={2}>
+              <Stack p="4" space={2}>
+                <Stack space={3}>
                   <Heading size="md" ml="-1">
                     {product.data.title}
                   </Heading>
                 </Stack>
                 <Text fontWeight="400">{product.data.description}</Text>
+                <Text fontWeight="600">
+                  {product.data.price}kr
+                  <Text fontWeight="400"> /dag</Text>
+                </Text>
+                <Text fontWeight="400">{product.data.location}</Text>
               </Stack>
               <Box flexDirection="row" justifyContent="flex-end">
                 <Pressable onPress={() => deleteProduct(product)}>
