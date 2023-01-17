@@ -201,7 +201,6 @@ export default function CreateProduct() {
                     <TextInput
                       style={styles.input}
                       placeholder="5 - 6 - 7 - 8 - 9 - PW - Driver - Putter.."
-                      keyboardType="numeric"
                       value={values.clubs}
                       onChangeText={handleChange("clubs")}
                       onBlur={handleBlur("clubs")}
