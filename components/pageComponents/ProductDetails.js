@@ -10,6 +10,7 @@ import {
   ScrollView,
   Dimensions,
 } from "react-native";
+import { Divider } from "native-base";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
@@ -110,10 +111,19 @@ export default function ProductDetails() {
                   alignItems: "center",
                 }}
               >
-                <Text></Text>
                 <View style={styles.iconsText}>
                   <FontAwesomeIcon style={styles.icons} icon={faBarsProgress} />
                 </View>
+                <Text style={{ fontWeight: "700" }}>Nivå</Text>
+                <Divider
+                  my="1"
+                  _light={{
+                    bg: "muted.800",
+                  }}
+                  _dark={{
+                    bg: "muted.50",
+                  }}
+                />
                 <Text>{difficulty}</Text>
               </View>
               <View
@@ -127,8 +137,19 @@ export default function ProductDetails() {
                     icon={faWeightHanging}
                   />
                 </View>
+                <Text style={{ fontWeight: "700" }}>Styvhet</Text>
+                <Divider
+                  my="1"
+                  _light={{
+                    bg: "muted.800",
+                  }}
+                  _dark={{
+                    bg: "muted.50",
+                  }}
+                />
                 <Text>{shaft}</Text>
               </View>
+
               <View
                 style={{
                   alignItems: "center",
@@ -137,6 +158,16 @@ export default function ProductDetails() {
                 <View style={styles.iconsText}>
                   <FontAwesomeIcon style={styles.icons} icon={faRightLeft} />
                 </View>
+                <Text style={{ fontWeight: "700" }}>Hand</Text>
+                <Divider
+                  my="1"
+                  _light={{
+                    bg: "muted.800",
+                  }}
+                  _dark={{
+                    bg: "muted.50",
+                  }}
+                />
                 <Text>{hand}</Text>
               </View>
               <View
@@ -147,6 +178,16 @@ export default function ProductDetails() {
                 <View style={styles.iconsText}>
                   <FontAwesomeIcon style={styles.icons} icon={faUser} />
                 </View>
+                <Text style={{ fontWeight: "700" }}>Kön</Text>
+                <Divider
+                  my="1"
+                  _light={{
+                    bg: "muted.800",
+                  }}
+                  _dark={{
+                    bg: "muted.50",
+                  }}
+                />
                 <Text>{gender}</Text>
               </View>
             </View>
@@ -256,7 +297,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     justifyContent: "space-around",
-    marginBottom: 4,
+    marginBottom: 15,
+    marginTop: 10,
   },
   subHeadingContainer: {
     padding: "2%",
@@ -296,8 +338,7 @@ const styles = StyleSheet.create({
   },
   test: {
     minHeight: "40%",
-    // backgroundColor: "blue",
     flexDirection: "column",
-    justifyContent: "space-between",
+    justifyContent: "space-around",
   },
 });
