@@ -461,13 +461,7 @@ const Notifications = () => {
                           </Text>{" "}
                           /kr
                         </Text>
-                        <Text style={styles.productText}>
-                          Datum:{" "}
-                          <Text style={{ fontFamily: "montserratSemiBold" }}>
-                            {myBooking.data.startDate} -{" "}
-                            {myBooking.data.endDate}
-                          </Text>
-                        </Text>
+                    
                         <Text style={styles.productText}>
                           Antal dagar:{" "}
                           <Text style={{ fontFamily: "montserratSemiBold" }}>
@@ -486,6 +480,15 @@ const Notifications = () => {
                             {myBooking.data.userEmail}
                           </Text>
                         </Text>
+                    <View style={styles.productTextDown}  >
+                          <Text style={styles.productText}>
+                                  Datum:{" "}
+                                  <Text style={{ fontFamily: "montserratSemiBold" }}>
+                                    {myBooking.data.startDate} -{" "}
+                                    {myBooking.data.endDate}
+                                  </Text>
+                                </Text>
+                    </View>
                       </View>
                     </View>
 
@@ -498,7 +501,7 @@ const Notifications = () => {
                 }}
                 onPress={() => {}}
               /> */}
-                  </View>
+                  </View> // kortet 
                 ))}
               </>
             )}
@@ -512,6 +515,9 @@ const Notifications = () => {
 const styles = StyleSheet.create({
   container: {
     height: "100%",
+  },
+  productTextDown: {
+   marginRight:300,
   },
 
   adsContainer: {

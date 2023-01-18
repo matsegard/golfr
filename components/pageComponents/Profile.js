@@ -167,18 +167,18 @@ function Profile() {
               }}
             ></View>
           </View>
-        </View>
-      </View>
       <PrimaryButton
         label="Mina annonser"
         btnWidth={{
           width: 150,
           position: "absolute",
-          right: "15%",
-          bottom: 150,
+          justifyContent:"center",
+          bottom: 180,
         }}
         onPress={() => navigation.navigate("MyProducts")}
       />
+        </View>
+      </View>
     </View>
   );
 }
