@@ -15,13 +15,12 @@ import {
   deleteUser,
   EmailAuthProvider,
   reauthenticateWithCredential,
-  updateEmail,
+  updatePassword,
 } from "firebase/auth";
 import { useRoute } from "@react-navigation/native";
 import { Formik } from "formik";
-import { EmailValidationSchema } from "../schemas/EmailValidationSchema";
 import { UsernameValidationSchema } from "../schemas/UsernameValidationSchema";
-// import { PasswordValidationSchema } from "../schemas/PasswordValidationSchema";
+import { PasswordValidationSchema } from "../schemas/PasswordValidationSchema";
 import { useNavigation } from "@react-navigation/native";
 
 function Settings() {
@@ -33,9 +32,10 @@ function Settings() {
   const [username, setUsername] = useState(auth.currentUser.displayName);
   const [email, setEmail] = useState(auth.currentUser.email);
   const [editUsernameMode, setEditUsernameMode] = useState(false);
-  const [editEmailMode, setEditEmailMode] = useState(false);
+  const [editPasswordMode, setEditPasswordMode] = useState(false);
   const [capturePassword, setCapturePassword] = useState(false);
-  const [capturePasswordForEmail, setCapturePasswordForEmail] = useState(false);
+  const [capturePasswordForPassword, setCapturePasswordForPassword] =
+    useState(false);
 
   const { user } = route.params;
 
@@ -55,23 +55,24 @@ function Settings() {
       });
   }
 
-  function updateEmailAuth() {
-    setCapturePasswordForEmail(true);
+  function updatePasswordAuth() {
+    setCapturePasswordForPassword(true);
   }
 
   function deleteAccount() {
     setCapturePassword(true);
   }
 
-  async function updateUsersEmail({ password, email }) {
+  async function updateUsersPassword({ password, newPassword }) {
+    setCapturePasswordForPassword(true);
     const credential = EmailAuthProvider.credential(user.email, password);
     await reauthenticateWithCredential(user, credential);
 
-    updateEmail(user, email)
+    updatePassword(user, newPassword)
       .then(() => {
-        setEmail(email);
         navigation.navigate("Products"); //temporary solution to username not updating on profile
         Alert.alert("Profil uppdaterad");
+        console.log(user.password);
       })
       .catch((error) => {
         Alert.alert(error);
@@ -99,7 +100,6 @@ function Settings() {
           validateOnBlur={false}
           initialValues={{
             password: "",
-            email: "",
           }}
           onSubmit={(values) => {
             deleteCurrentUser(values);
@@ -158,23 +158,22 @@ function Settings() {
         </Formik>
       )}
 
-      {capturePasswordForEmail && (
+      {capturePasswordForPassword && (
         <Formik
           validateOnBlur={false}
           initialValues={{
             password: "",
-            email: "",
           }}
           onSubmit={(values) => {
-            updateUsersEmail(values);
+            updateUsersPassword(values);
           }}
         >
           {({ handleChange, handleBlur, handleSubmit, values }) => (
             <>
               <Modal
                 bottom="20"
-                isOpen={capturePasswordForEmail}
-                onClose={() => setCapturePasswordForEmail(false)}
+                isOpen={capturePasswordForPassword}
+                onClose={() => setCapturePasswordForPassword(false)}
                 initialFocusRef={initialRef}
                 finalFocusRef={finalRef}
               >
@@ -200,13 +199,13 @@ function Settings() {
                         variant="ghost"
                         colorScheme="blueGray"
                         onPress={() => {
-                          setCapturePasswordForEmail(false);
+                          setCapturePasswordForPassword(false);
                         }}
                       >
                         Avsluta
                       </Button>
                       <PrimaryButton
-                        label="Updatera email"
+                        label="Updatera lösenord"
                         btnWidth={{
                           width: 140,
                         }}
@@ -223,15 +222,16 @@ function Settings() {
 
       <Text style={styles.headerText}>Användarinställningar</Text>
       <Formik
-        validationSchema={(UsernameValidationSchema, EmailValidationSchema)}
+        // validationSchema={(UsernameValidationSchema, PasswordValidationSchema)}
+        validationSchema={UsernameValidationSchema}
         initialValues={{
           username: user.displayName,
-          email: user.email,
+          // password: user.password,
           //   password: "",
         }}
         onSubmit={(values, actions) => {
           updateUsername(values);
-          updateUsersEmail(values);
+
           actions.setSubmitting(false);
         }}
       >
@@ -339,8 +339,29 @@ function Settings() {
                 ></View>
               </View>
             )}
-
-            {!editEmailMode ? (
+          </>
+        )}
+      </Formik>
+      <Formik
+        validationSchema={PasswordValidationSchema}
+        initialValues={{
+          password: "",
+        }}
+        onSubmit={(values, actions) => {
+          updateUsersPassword(values);
+          actions.setSubmitting(false);
+        }}
+      >
+        {({
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          values,
+          isValid,
+          errors,
+        }) => (
+          <>
+            {!editPasswordMode ? (
               <View style={styles.email}>
                 <Text
                   style={{
@@ -349,10 +370,10 @@ function Settings() {
                     marginBottom: 10,
                   }}
                 >
-                  Email
+                  Lösenord
                 </Text>
                 <View style={{ flexDirection: "row" }}>
-                  <Text>Din email är</Text>
+                  <Text>Ditt lösenord</Text>
                   <Text
                     style={{
                       fontFamily: "MontserratSemiBold",
@@ -363,7 +384,9 @@ function Settings() {
                   >
                     {user.email}
                   </Text>
-                  <Pressable onPress={() => setEditEmailMode(!editEmailMode)}>
+                  <Pressable
+                    onPress={() => setEditPasswordMode(!editPasswordMode)}
+                  >
                     <Text
                       style={{
                         fontFamily: "MontserratSemiBold",
@@ -401,15 +424,15 @@ function Settings() {
                     marginBottom: 10,
                   }}
                 >
-                  Email
+                  Lösenord
                 </Text>
                 <Input
-                  onChangeText={handleChange("email")}
-                  onBlur={handleBlur("email")}
-                  value={values.email}
-                  placeholder={user.email}
-                ></Input>
-                {errors.email && (
+                  onChangeText={handleChange("password")}
+                  onBlur={handleBlur("password")}
+                  value={values.password}
+                  placeholder="Lösenord"
+                />
+                {errors.password && (
                   <Text
                     style={{
                       position: "absolute",
@@ -418,17 +441,17 @@ function Settings() {
                       top: 62,
                     }}
                   >
-                    {errors.email}
+                    {errors.password}
                   </Text>
                 )}
                 <PrimaryButton
-                  label="Spara email"
+                  label="Spara Lösenord"
                   btnWidth={{
                     marginTop: 20,
                     width: 190,
                   }}
-                  disabled={!isValid}
-                  onPress={updateEmailAuth}
+                  disabled={values.password === "" || !isValid}
+                  onPress={handleSubmit}
                 />
                 <View
                   style={{
@@ -440,52 +463,6 @@ function Settings() {
                 ></View>
               </View>
             )}
-
-            <View style={styles.email}>
-              <Text
-                style={{
-                  fontFamily: "MontserratBold",
-                  fontWeight: "bold",
-                  marginBottom: 10,
-                }}
-              >
-                Lösenord
-              </Text>
-              <View style={{ flexDirection: "row" }}>
-                <Text>Ditt lösenord är</Text>
-                <Text
-                  style={{
-                    fontFamily: "MontserratSemiBold",
-                    fontWeight: "bold",
-                    marginBottom: 10,
-                    marginLeft: 5,
-                  }}
-                >
-                  lösenkommerejsynas
-                </Text>
-                <Pressable onPress={() => console.log("LÖSEN")}>
-                  <Text
-                    style={{
-                      fontFamily: "MontserratSemiBold",
-                      fontWeight: 500,
-                      color: "#566fbf",
-                      textDecorationLine: "underline",
-                      marginLeft: 15,
-                    }}
-                  >
-                    Ändra
-                  </Text>
-                </Pressable>
-              </View>
-              <View
-                style={{
-                  width: Dimensions.get("window").width - 100,
-                  height: 1,
-                  backgroundColor: "#e8e8e8",
-                  marginTop: 35,
-                }}
-              ></View>
-            </View>
           </>
         )}
       </Formik>
@@ -535,7 +512,7 @@ const styles = StyleSheet.create({
     fontSize: "20",
     fontFamily: "MontserratSemiBold",
     marginTop: 50,
-    marginBottom: 50,
+    marginBottom: 90,
     alignSelf: "center",
     color: "black",
   },
