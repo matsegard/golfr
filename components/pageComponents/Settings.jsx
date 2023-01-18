@@ -55,27 +55,31 @@ function Settings() {
       });
   }
 
-  function updatePasswordAuth() {
-    setCapturePasswordForPassword(true);
-  }
+  // function updatePasswordAuth() {
+  //   setCapturePasswordForPassword(true);
+  // }
 
   function deleteAccount() {
     setCapturePassword(true);
   }
 
-  async function updateUsersPassword({ password, newPassword }) {
-    setCapturePasswordForPassword(true);
+  async function updateUsersPassword({ password }) {
     const credential = EmailAuthProvider.credential(user.email, password);
     await reauthenticateWithCredential(user, credential);
 
+    setCapturePasswordForPassword(false);
+    setEditPasswordMode(true);
+  }
+
+  function updateThePassword({ newPassword }) {
     updatePassword(user, newPassword)
       .then(() => {
         navigation.navigate("Products"); //temporary solution to username not updating on profile
         Alert.alert("Profil uppdaterad");
-        console.log(user.password);
+        console.log("PASSWORD CHANGE SUCCESS?");
       })
       .catch((error) => {
-        Alert.alert(error);
+        console.log("PASSWORD CHANGE FAIL", error);
       });
   }
 
@@ -207,7 +211,7 @@ function Settings() {
                       <PrimaryButton
                         label="Updatera lösenord"
                         btnWidth={{
-                          width: 140,
+                          width: 162,
                         }}
                         onPress={handleSubmit}
                       />
@@ -222,12 +226,9 @@ function Settings() {
 
       <Text style={styles.headerText}>Användarinställningar</Text>
       <Formik
-        // validationSchema={(UsernameValidationSchema, PasswordValidationSchema)}
         validationSchema={UsernameValidationSchema}
         initialValues={{
           username: user.displayName,
-          // password: user.password,
-          //   password: "",
         }}
         onSubmit={(values, actions) => {
           updateUsername(values);
@@ -343,12 +344,12 @@ function Settings() {
         )}
       </Formik>
       <Formik
-        validationSchema={PasswordValidationSchema}
+        // validationSchema={PasswordValidationSchema}
         initialValues={{
-          password: "",
+          newPassword: "",
         }}
         onSubmit={(values, actions) => {
-          updateUsersPassword(values);
+          updateThePassword(values);
           actions.setSubmitting(false);
         }}
       >
@@ -385,7 +386,9 @@ function Settings() {
                     {user.email}
                   </Text>
                   <Pressable
-                    onPress={() => setEditPasswordMode(!editPasswordMode)}
+                    onPress={() =>
+                      setCapturePasswordForPassword(!capturePasswordForPassword)
+                    }
                   >
                     <Text
                       style={{
@@ -427,9 +430,10 @@ function Settings() {
                   Lösenord
                 </Text>
                 <Input
-                  onChangeText={handleChange("password")}
-                  onBlur={handleBlur("password")}
-                  value={values.password}
+                  onChangeText={handleChange("newPassword")}
+                  onBlur={handleBlur("newPassword")}
+                  value={values.newPassword}
+                  autoCapitalize="none"
                   placeholder="Lösenord"
                 />
                 {errors.password && (
@@ -450,7 +454,7 @@ function Settings() {
                     marginTop: 20,
                     width: 190,
                   }}
-                  disabled={values.password === "" || !isValid}
+                  disabled={values.newPassword === "" || !isValid}
                   onPress={handleSubmit}
                 />
                 <View
