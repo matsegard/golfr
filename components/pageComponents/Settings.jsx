@@ -15,11 +15,12 @@ import {
   deleteUser,
   EmailAuthProvider,
   reauthenticateWithCredential,
+  updatePassword,
 } from "firebase/auth";
 import { useRoute } from "@react-navigation/native";
 import { Formik } from "formik";
 import { UsernameValidationSchema } from "../schemas/UsernameValidationSchema";
-// import { PasswordValidationSchema } from "../schemas/PasswordValidationSchema";
+import { PasswordValidationSchema } from "../schemas/PasswordValidationSchema";
 import { useNavigation } from "@react-navigation/native";
 
 function Settings() {
@@ -29,13 +30,17 @@ function Settings() {
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
   const [username, setUsername] = useState(auth.currentUser.displayName);
+  const [email, setEmail] = useState(auth.currentUser.email);
   const [editUsernameMode, setEditUsernameMode] = useState(false);
+  const [editPasswordMode, setEditPasswordMode] = useState(false);
   const [capturePassword, setCapturePassword] = useState(false);
+  const [capturePasswordForPassword, setCapturePasswordForPassword] =
+    useState(false);
 
   const { user } = route.params;
 
   //updates username
-  function updateUser({ username }) {
+  function updateUsername({ username }) {
     setEditUsernameMode(!editUsernameMode);
     updateProfile(user, {
       displayName: username,
@@ -50,8 +55,32 @@ function Settings() {
       });
   }
 
+  // function updatePasswordAuth() {
+  //   setCapturePasswordForPassword(true);
+  // }
+
   function deleteAccount() {
     setCapturePassword(true);
+  }
+
+  async function updateUsersPassword({ password }) {
+    const credential = EmailAuthProvider.credential(user.email, password);
+    await reauthenticateWithCredential(user, credential);
+
+    setCapturePasswordForPassword(false);
+    setEditPasswordMode(true);
+  }
+
+  function updateThePassword({ newPassword }) {
+    updatePassword(user, newPassword)
+      .then(() => {
+        navigation.navigate("Products"); //temporary solution to username not updating on profile
+        Alert.alert("Profil uppdaterad");
+        console.log("PASSWORD CHANGE SUCCESS?");
+      })
+      .catch((error) => {
+        console.log("PASSWORD CHANGE FAIL", error);
+      });
   }
 
   async function deleteCurrentUser({ password }) {
@@ -132,15 +161,78 @@ function Settings() {
           )}
         </Formik>
       )}
+
+      {capturePasswordForPassword && (
+        <Formik
+          validateOnBlur={false}
+          initialValues={{
+            password: "",
+          }}
+          onSubmit={(values) => {
+            updateUsersPassword(values);
+          }}
+        >
+          {({ handleChange, handleBlur, handleSubmit, values }) => (
+            <>
+              <Modal
+                bottom="20"
+                isOpen={capturePasswordForPassword}
+                onClose={() => setCapturePasswordForPassword(false)}
+                initialFocusRef={initialRef}
+                finalFocusRef={finalRef}
+              >
+                <Modal.Content>
+                  <Modal.CloseButton />
+                  <Modal.Header>
+                    Autentisera ditt lösenord för att fortsätta:
+                  </Modal.Header>
+                  <Modal.Body>
+                    <Input
+                      ref={initialRef}
+                      variant="unstyled"
+                      type="password"
+                      placeholder="Lösenord"
+                      onChangeText={handleChange("password")}
+                      onBlur={handleBlur("password")}
+                      value={values.password}
+                    />
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button.Group space={2}>
+                      <Button
+                        variant="ghost"
+                        colorScheme="blueGray"
+                        onPress={() => {
+                          setCapturePasswordForPassword(false);
+                        }}
+                      >
+                        Avsluta
+                      </Button>
+                      <PrimaryButton
+                        label="Updatera lösenord"
+                        btnWidth={{
+                          width: 162,
+                        }}
+                        onPress={handleSubmit}
+                      />
+                    </Button.Group>
+                  </Modal.Footer>
+                </Modal.Content>
+              </Modal>
+            </>
+          )}
+        </Formik>
+      )}
+
       <Text style={styles.headerText}>Användarinställningar</Text>
       <Formik
         validationSchema={UsernameValidationSchema}
         initialValues={{
           username: user.displayName,
-          //   password: "",
         }}
         onSubmit={(values, actions) => {
-          updateUser(values);
+          updateUsername(values);
+
           actions.setSubmitting(false);
         }}
       >
@@ -248,98 +340,133 @@ function Settings() {
                 ></View>
               </View>
             )}
-
-            <View style={styles.email}>
-              <Text
-                style={{
-                  fontFamily: "MontserratBold",
-                  fontWeight: "bold",
-                  marginBottom: 10,
-                }}
-              >
-                Email adress
-              </Text>
-              <View style={{ flexDirection: "row" }}>
-                <Text>Din email adress är</Text>
+          </>
+        )}
+      </Formik>
+      <Formik
+        // validationSchema={PasswordValidationSchema}
+        initialValues={{
+          newPassword: "",
+        }}
+        onSubmit={(values, actions) => {
+          updateThePassword(values);
+          actions.setSubmitting(false);
+        }}
+      >
+        {({
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          values,
+          isValid,
+          errors,
+        }) => (
+          <>
+            {!editPasswordMode ? (
+              <View style={styles.email}>
                 <Text
                   style={{
-                    fontFamily: "MontserratSemiBold",
+                    fontFamily: "MontserratBold",
                     fontWeight: "bold",
                     marginBottom: 10,
-                    marginLeft: 5,
                   }}
                 >
-                  {user.email}
+                  Ändra lösenord
                 </Text>
-                <Pressable onPress={() => console.log("EMAIL")}>
-                  <Text
+                <View style={{ flexDirection: "row" }}>
+                  <Text>Vill du ändra ditt lösenord?</Text>
+                  {/* <Text
                     style={{
                       fontFamily: "MontserratSemiBold",
-                      fontWeight: 500,
-                      color: "#566fbf",
-                      textDecorationLine: "underline",
-                      marginLeft: 15,
+                      fontWeight: "bold",
+                      marginBottom: 10,
+                      marginLeft: 5,
                     }}
                   >
-                    Ändra
-                  </Text>
-                </Pressable>
+                    {user.email}
+                  </Text> */}
+                  <Pressable
+                    onPress={() =>
+                      setCapturePasswordForPassword(!capturePasswordForPassword)
+                    }
+                  >
+                    <Text
+                      style={{
+                        fontFamily: "MontserratSemiBold",
+                        fontWeight: 500,
+                        color: "#566fbf",
+                        textDecorationLine: "underline",
+                        marginLeft: 15,
+                      }}
+                    >
+                      Ändra
+                    </Text>
+                  </Pressable>
+                </View>
+                <View
+                  style={{
+                    width: Dimensions.get("window").width - 100,
+                    height: 1,
+                    backgroundColor: "#e8e8e8",
+                    marginTop: 35,
+                  }}
+                ></View>
               </View>
+            ) : (
               <View
                 style={{
                   width: Dimensions.get("window").width - 100,
-                  height: 1,
-                  backgroundColor: "#e8e8e8",
-                  marginTop: 35,
-                }}
-              ></View>
-            </View>
-
-            <View style={styles.email}>
-              <Text
-                style={{
-                  fontFamily: "MontserratBold",
-                  fontWeight: "bold",
-                  marginBottom: 10,
+                  marginLeft: 50,
+                  marginBottom: 35,
                 }}
               >
-                Lösenord
-              </Text>
-              <View style={{ flexDirection: "row" }}>
-                <Text>Din email adress är</Text>
                 <Text
                   style={{
-                    fontFamily: "MontserratSemiBold",
+                    fontFamily: "MontserratBold",
                     fontWeight: "bold",
                     marginBottom: 10,
-                    marginLeft: 5,
                   }}
                 >
-                  {user.email}
+                  Lösenord
                 </Text>
-                <Pressable onPress={() => console.log("LÖSEN")}>
+                <Input
+                  onChangeText={handleChange("newPassword")}
+                  onBlur={handleBlur("newPassword")}
+                  value={values.newPassword}
+                  autoCapitalize="none"
+                  placeholder="Lösenord"
+                />
+                {errors.password && (
                   <Text
                     style={{
-                      fontFamily: "MontserratSemiBold",
-                      fontWeight: 500,
-                      color: "#566fbf",
-                      textDecorationLine: "underline",
-                      marginLeft: 15,
+                      position: "absolute",
+                      fontSize: 12,
+                      color: "red",
+                      top: 62,
                     }}
                   >
-                    Ändra
+                    {errors.password}
                   </Text>
-                </Pressable>
+                )}
+                <PrimaryButton
+                  label="Spara Lösenord"
+                  btnWidth={{
+                    marginTop: 20,
+                    width: 190,
+                  }}
+                  disabled={values.newPassword === "" || !isValid}
+                  onPress={handleSubmit}
+                />
+                <View
+                  style={{
+                    width: Dimensions.get("window").width - 100,
+                    height: 1,
+                    backgroundColor: "#e8e8e8",
+                    marginTop: 35,
+                  }}
+                ></View>
               </View>
-              <View
-                style={{
-                  width: Dimensions.get("window").width - 100,
-                  height: 1,
-                  backgroundColor: "#e8e8e8",
-                  marginTop: 35,
-                }}
-              ></View>
-            </View>
+            )}
           </>
         )}
       </Formik>
@@ -348,13 +475,13 @@ function Settings() {
           style={{
             fontFamily: "MontserratBold",
             fontWeight: "bold",
-            marginBottom: 10,
+            marginBottom: 15,
           }}
         >
           Radera konto
         </Text>
         <Text style={{ fontFamily: "MontserratRegular", marginBottom: 10 }}>
-          Vill du radera ditt konto? Yada yada om du raderar konto blabla
+          Vill du radera ditt konto?
         </Text>
         <Pressable onPress={deleteAccount}>
           <Text
@@ -362,6 +489,7 @@ function Settings() {
               fontFamily: "MontserratSemiBold",
               fontWeight: 500,
               color: "red",
+              marginTop: 10,
               textDecorationLine: "underline",
             }}
           >
@@ -389,7 +517,7 @@ const styles = StyleSheet.create({
     fontSize: "20",
     fontFamily: "MontserratSemiBold",
     marginTop: 50,
-    marginBottom: 50,
+    marginBottom: 90,
     alignSelf: "center",
     color: "black",
   },
