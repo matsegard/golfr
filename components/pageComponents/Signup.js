@@ -27,25 +27,22 @@ function Signup() {
 
   const CreateAccount = async ({ email, username, password }) => {
     const { user } = await createUserWithEmailAndPassword(
-      auth, 
-      email, 
+      auth,
+      email,
       password,
-      username,
-      )
-      .catch((errors) => {
-        if (errors.code === "auth/email-already-in-use") {
-       setSuccess(false)  
-       setEmailExist(true);
-       
-        }
+      username
+    ).catch((errors) => {
+      if (errors.code === "auth/email-already-in-use") {
+        setSuccess(false);
+        setEmailExist(true);
       }
-      )
-       if(auth !== false){
-          setSuccess(true) 
-         setTimeout(() => {
-          navigation.navigate("Products");
-        }, "2000")
-      }
+    });
+    if (auth !== false) {
+      setSuccess(true);
+      setTimeout(() => {
+        navigation.navigate("Products");
+      }, "2000");
+    }
 
     await updateProfile(user, {
       displayName: username,
@@ -57,7 +54,6 @@ function Signup() {
   function alertDown() {
     setEmailExist(false);
   }
-
 
   return (
     <View style={styles.container}>
@@ -84,7 +80,7 @@ function Signup() {
               <HStack space={2} flexShrink={1}>
                 <Alert.Icon mt="1" color="black" />
                 <Text fontSize="md" color="coolGray.800">
-                  Registrering/ inloggning lyckad 
+                  Registrering/ inloggning lyckad
                 </Text>
               </HStack>
             </HStack>
@@ -284,7 +280,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 224,
     position: "absolute",
-    top: -19,
+    top: -55,
   },
   login: {
     color: "#B6B6B6",
@@ -301,7 +297,7 @@ const styles = StyleSheet.create({
   },
   forms: {
     position: "absolute",
-    top: 290,
+    top: 230,
   },
   form: {
     marginTop: 30,

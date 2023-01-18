@@ -7,7 +7,7 @@ import { db } from "../../firebase/firebaseConfig";
 import { getAuth, currentUser } from "firebase/auth";
 import { useNavigation } from "@react-navigation/native";
 
-export default function DatePicker({ price, productId, user }) {
+export default function DatePicker({ price, productId, user, setOpenModal }) {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [mode, setMode] = useState("date");
@@ -19,6 +19,7 @@ export default function DatePicker({ price, productId, user }) {
     setShow(true);
     setMode(currentMode);
   };
+
   const showDatepicker = () => {
     showMode("date");
   };
@@ -37,8 +38,9 @@ export default function DatePicker({ price, productId, user }) {
     setShow(false);
   };
 
+  const oneDay = 24 * 60 * 60 * 1000;
+
   const daysBetween = (startDate, endDate) => {
-    const oneDay = 24 * 60 * 60 * 1000;
     const diffDays = Math.round(
       Math.abs((startDate.getTime() - endDate.getTime()) / oneDay)
     );
@@ -63,7 +65,9 @@ export default function DatePicker({ price, productId, user }) {
       endDate: endDateDb,
       totalPrice: totalPrice,
       renter: auth.currentUser.displayName,
+      renterEmail: auth.currentUser.email,
       totalDays: totalDays,
+      denied: false,
     })
       .then((bookingRef) => {
         console.log("Hyrförfrågan skickad");
@@ -74,6 +78,14 @@ export default function DatePicker({ price, productId, user }) {
         console.log(error);
       });
   }
+
+  const minimumRentDays = (startDate) => {
+    const addOneDay = startDate.getTime() + oneDay;
+
+    return addOneDay;
+  };
+
+  let minimumDate = minimumRentDays(startDate);
 
   return (
     <View
@@ -121,7 +133,7 @@ export default function DatePicker({ price, productId, user }) {
           <Button onPress={showDatepicker} title={"Slutdatum"} />
           {show && (
             <DateTimePicker
-              minimumDate={new Date(startDate)}
+              minimumDate={new Date(minimumDate)}
               testID="dateTimePicker2"
               value={endDate}
               mode={mode}

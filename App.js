@@ -44,12 +44,44 @@ export default function App() {
       <NativeBaseProvider>
         <Stack.Navigator initialRouteName="Products">
           {/* <Stack.Screen name="Home" component={HomePage} /> */}
-          <Stack.Screen name="Products" component={ProductPage} />
-          <Stack.Screen name="Notifications" component={NotificationPage} />
+          <Stack.Screen
+            name="Products"
+            component={ProductPage}
+            options={{
+              headerBackTitleVisible: false,
+              headerBackVisible: false,
+              title: "Annonser",
+              headerStyle: {
+                backgroundColor: "#6A8E4E",
+              },
+              headerTintColor: "#fff",
+              headerTitleStyle: {
+                fontWeight: "bold",
+              },
+            }}
+          />
+          <Stack.Screen
+            name="Notifications"
+            component={NotificationPage}
+            options={{
+              headerBackTitleVisible: false,
+              headerBackVisible: false,
+              title: "Notiser",
+              headerStyle: {
+                backgroundColor: "#6A8E4E",
+              },
+              headerTintColor: "#fff",
+              headerTitleStyle: {
+                fontWeight: "bold",
+              },
+            }}
+          />
           <Stack.Screen
             name="MyProducts"
             component={MyProductsPage}
             options={{
+              headerBackTitleVisible: false,
+              headerBackVisible: false,
               title: "Mina annonser",
               headerStyle: {
                 backgroundColor: "#6A8E4E",
@@ -65,6 +97,8 @@ export default function App() {
             component={CreateProductPage}
             options={{
               title: "Skapa annons",
+              headerBackTitleVisible: false,
+              headerBackVisible: false,
               headerStyle: {
                 backgroundColor: "#6A8E4E",
               },
@@ -79,6 +113,8 @@ export default function App() {
             component={ProfilePage}
             options={{
               title: "Profil",
+              headerBackTitleVisible: false,
+              headerBackVisible: false,
               headerStyle: {
                 backgroundColor: "#6A8E4E",
               },
@@ -93,6 +129,8 @@ export default function App() {
             component={LoginPage}
             options={{
               title: "Login",
+              headerBackTitleVisible: false,
+              headerBackVisible: false,
               headerStyle: {
                 backgroundColor: "#6A8E4E",
               },
@@ -107,6 +145,8 @@ export default function App() {
             component={SignupPage}
             options={{
               title: "Registrera",
+              headerBackTitleVisible: false,
+              headerBackVisible: false,
               headerStyle: {
                 backgroundColor: "#6A8E4E",
               },
@@ -120,6 +160,8 @@ export default function App() {
             name="Redigera"
             component={EditProductModal}
             options={{
+              // headerBackTitleVisible: false,
+              // headerBackVisible: false,
               title: "Redigera produkt",
               headerStyle: {
                 backgroundColor: "#6A8E4E",
@@ -134,6 +176,8 @@ export default function App() {
             name="ProductDetails"
             component={ProductDetails}
             options={{
+              // headerBackTitleVisible: false,
+              // headerBackVisible: false,
               title: "Produkt",
               headerStyle: {
                 backgroundColor: "#6A8E4E",

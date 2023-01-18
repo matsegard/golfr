@@ -52,16 +52,16 @@ export default function ProductDetails() {
     setOpenModal(!openModal);
   };
 
-  const images = [
-    image,
-    "https://images.unsplash.com/photo-1535131749006-b7f58c99034b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
-    "https://images.unsplash.com/flagged/photo-1576448438685-9f5e5b283d4f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
-  ];
+  // const images = [
+  //   image,
+  //   "https://images.unsplash.com/photo-1535131749006-b7f58c99034b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
+  //   "https://images.unsplash.com/flagged/photo-1576448438685-9f5e5b283d4f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+  // ];
 
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
-        <ScrollView
+        {/* <ScrollView
           scrollEventThrottle={400}
           onScroll={onScroll}
           pagingEnabeld
@@ -71,10 +71,10 @@ export default function ProductDetails() {
           snapToInterval={Dimensions.get("window").width}
           snapToAlignment={"center"}
         >
-          {images.map((image, index) => (
-            <Image key={index} style={styles.image} source={{ uri: image }} />
-          ))}
-        </ScrollView>
+          {images.map((image, index) => ( */}
+        <Image style={styles.image} source={{ uri: image }} />
+        {/* ))}
+        </ScrollView> */}
         <View
           style={{
             flexDirection: "row",
@@ -82,13 +82,13 @@ export default function ProductDetails() {
             bottom: 30,
           }}
         >
-          {images.map((i, k) => (
-            <FontAwesomeIcon
-              key={k}
-              style={k == activeImage ? styles.pagingActive : styles.paging}
-              icon={faCircle}
-            />
-          ))}
+          {/* {images.map((i, k) => ( */}
+          {/* <FontAwesomeIcon
+            key={k}
+            style={k == activeImage ? styles.pagingActive : styles.paging}
+            icon={faCircle}
+          /> */}
+          {/* ))} */}
         </View>
       </View>
       <View style={styles.infoContainer}>

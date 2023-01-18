@@ -24,6 +24,7 @@ import { useNavigation } from "@react-navigation/native";
 export default function CreateProduct() {
   const [image, setImage] = useState(null);
   const [imgUrl, setImgUrl] = useState(null);
+  const [imgError, setImgError] = useState(false);
   const navigation = useNavigation();
   const auth = getAuth();
   const user = auth.currentUser;
@@ -83,11 +84,14 @@ export default function CreateProduct() {
       hand: hand,
       shaft: shaft,
       user: user.displayName,
+      userEmail: user.email,
       pendingBooking: false,
       startDate: null,
       endDate: null,
       accepted: false,
+      denied: false,
       renter: null,
+      renterEmail: null,
       totalPrice: null,
       totalDays: null,
     });
@@ -334,12 +338,12 @@ export default function CreateProduct() {
                 )}
 
                 <Text style={styles.formLabel}>Bild</Text>
-                {/* <ImageUpload setImage={setImage} image={image} /> */}
                 <View
                   style={{
                     flex: 1,
                     alignItems: "center",
                     justifyContent: "center",
+                    marginTop: 15,
                   }}
                 >
                   <FontAwesomeIcon size={30} color="#828282" icon={faCamera} />
@@ -351,6 +355,11 @@ export default function CreateProduct() {
                     />
                   )}
                 </View>
+                {imgUrl === null && (
+                  <Text style={{ color: "red", fontSize: 13, marginTop: 14 }}>
+                    Välj bild
+                  </Text>
+                )}
                 <Text style={styles.formLabel}>Beskrivning</Text>
                 <TextInput
                   multiline
@@ -388,6 +397,7 @@ export default function CreateProduct() {
                 {errors.location && (
                   <Text style={styles.errorMessage}>{errors.location}</Text>
                 )}
+
                 <View
                   style={{ justifyContent: "center", alignItems: "center" }}
                 >
@@ -407,7 +417,8 @@ export default function CreateProduct() {
                         values.difficulty == "" &&
                         values.gender == "" &&
                         values.hand == "" &&
-                        values.shaft == "")
+                        values.shaft == "") ||
+                      imgUrl === null
                     }
                   />
                 </View>
@@ -431,7 +442,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 224,
     position: "absolute",
-    top: -55,
+    top: -60,
   },
   headerText: {
     fontSize: "25",
@@ -456,7 +467,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   form: {
-    width: "70%",
+    width: "80%",
     flex: 0.9,
     marginBottom: 80,
   },

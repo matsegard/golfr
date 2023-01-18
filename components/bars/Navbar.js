@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
     width: "100%",
     position: "absolute",
     bottom: 0,
-    height: "10%",
+    height: "12%",
     justifyContent: "space-evenly",
     // alignItems: "center",
     paddingTop: 10,

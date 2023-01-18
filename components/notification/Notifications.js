@@ -95,6 +95,7 @@ const Notifications = () => {
       updateDoc(acceptBookingRef, {
         pendingBooking: false,
         accepted: false,
+        denied: true,
       })
         .then((acceptBookingRef) => {
           console.log("Hyrförfrågan Nekad");
@@ -175,7 +176,7 @@ const Notifications = () => {
                 {bookings.length == 0 && (
                   <Text
                     style={{
-                      marginTop: 10,
+                      marginTop: 20,
                       fontFamily: "MontserratMedium",
                       fontSize: 12,
                     }}
@@ -183,9 +184,9 @@ const Notifications = () => {
                     Du har inte fått några förfrågningar
                   </Text>
                 )}
-                {bookings.map((booking) => (
+                {bookings.map((booking, i) => (
                   <>
-                    <View key={booking.id} style={styles.adsCard}>
+                    <View key={i} style={styles.adsCard}>
                       <Text style={styles.cardText}>
                         <Text
                           style={{
@@ -297,7 +298,7 @@ const Notifications = () => {
                 {acceptedBookings.length == 0 && (
                   <Text
                     style={{
-                      marginTop: 10,
+                      marginTop: 20,
                       fontFamily: "MontserratMedium",
                       fontSize: 12,
                     }}
@@ -353,6 +354,12 @@ const Notifications = () => {
                             {acceptedBooking.data.renter}
                           </Text>
                         </Text>
+                        <Text style={styles.productText}>
+                          Kontakta hyrare:{" "}
+                          <Text style={{ fontFamily: "montserratSemiBold" }}>
+                            {acceptedBooking.data.renterEmail}
+                          </Text>
+                        </Text>
                       </View>
                     </View>
                   </View>
@@ -398,7 +405,7 @@ const Notifications = () => {
                 {myBookings.length == 0 && (
                   <Text
                     style={{
-                      marginTop: 10,
+                      marginTop: 20,
                       fontFamily: "MontserratMedium",
                       fontSize: 12,
                     }}
@@ -408,7 +415,7 @@ const Notifications = () => {
                 )}
                 {myBookings.map((myBooking) => (
                   <View key={myBooking.id} style={styles.adsCard}>
-                    {myBooking.data.accepted ? (
+                    {myBooking.data.accepted && (
                       <Text
                         style={{
                           fontFamily: "MontserratSemiBold",
@@ -417,7 +424,8 @@ const Notifications = () => {
                       >
                         Hyrd produkt
                       </Text>
-                    ) : (
+                    )}
+                    {myBooking.data.pendingBooking && (
                       <Text
                         style={{
                           fontFamily: "MontserratSemiBold",
@@ -425,6 +433,16 @@ const Notifications = () => {
                         }}
                       >
                         Väntar på svar från uthyraren
+                      </Text>
+                    )}
+                    {myBooking.data.denied && (
+                      <Text
+                        style={{
+                          fontFamily: "MontserratSemiBold",
+                          fontSize: 15,
+                        }}
+                      >
+                        Hyrförfrågan nekad
                       </Text>
                     )}
                     <View style={styles.product}>
@@ -462,8 +480,15 @@ const Notifications = () => {
                             {myBooking.data.user}
                           </Text>
                         </Text>
+                        <Text style={styles.productText}>
+                          Kontakta uthyrare:{" "}
+                          <Text style={{ fontFamily: "montserratSemiBold" }}>
+                            {myBooking.data.userEmail}
+                          </Text>
+                        </Text>
                       </View>
                     </View>
+
                     {/* <PrimaryButton
                 label="Avbryt"
                 btnWidth={{
