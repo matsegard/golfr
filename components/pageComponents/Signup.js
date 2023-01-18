@@ -41,7 +41,7 @@ function Signup() {
       setSuccess(true);
       setTimeout(() => {
         navigation.navigate("Products");
-      }, "2000");
+      }, "500");
     }
 
     await updateProfile(user, {

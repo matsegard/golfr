@@ -110,6 +110,7 @@ export default function ProductDetails() {
                   alignItems: "center",
                 }}
               >
+                <Text></Text>
                 <View style={styles.iconsText}>
                   <FontAwesomeIcon style={styles.icons} icon={faBarsProgress} />
                 </View>
