@@ -51,32 +51,36 @@ export default function DatePicker({ price, productId, user, setOpenModal }) {
   let totalPrice = price * daysBetween(startDate, endDate);
 
   async function updateProduct() {
-    if (user === auth.currentUser.displayName) {
-      return Alert.alert("Du kan inte hyra din egna produkt");
-    }
-    const endDateDb = endDate.toLocaleDateString();
-    const startDateDb = startDate.toLocaleDateString();
+    if (auth.currentUser) {
+      if (user === auth.currentUser.displayName) {
+        return Alert.alert("Du kan inte hyra din egna produkt");
+      }
+      const endDateDb = endDate.toLocaleDateString();
+      const startDateDb = startDate.toLocaleDateString();
 
-    const bookingRef = doc(db, "products", productId);
-    updateDoc(bookingRef, {
-      pendingBooking: true,
-      accepted: false,
-      startDate: startDateDb,
-      endDate: endDateDb,
-      totalPrice: totalPrice,
-      renter: auth.currentUser.displayName,
-      renterEmail: auth.currentUser.email,
-      totalDays: totalDays,
-      denied: false,
-    })
-      .then((bookingRef) => {
-        console.log("Hyrförfrågan skickad");
-        Alert.alert("Hyrförfrågan skickad");
-        navigation.navigate("Products");
+      const bookingRef = doc(db, "products", productId);
+      updateDoc(bookingRef, {
+        pendingBooking: true,
+        accepted: false,
+        startDate: startDateDb,
+        endDate: endDateDb,
+        totalPrice: totalPrice,
+        renter: auth.currentUser.displayName,
+        renterEmail: auth.currentUser.email,
+        totalDays: totalDays,
+        denied: false,
       })
-      .catch((error) => {
-        console.log(error);
-      });
+        .then((bookingRef) => {
+          console.log("Hyrförfrågan skickad");
+          Alert.alert("Hyrförfrågan skickad");
+          navigation.navigate("Products");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      navigation.navigate("Products");
+    }
   }
 
   const minimumRentDays = (startDate) => {

@@ -10,6 +10,7 @@ import {
   ScrollView,
   Dimensions,
 } from "react-native";
+import { Divider } from "native-base";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
@@ -18,11 +19,13 @@ import { faWeightHanging } from "@fortawesome/free-solid-svg-icons";
 import { faBarsProgress } from "@fortawesome/free-solid-svg-icons";
 import { faCircle } from "@fortawesome/free-solid-svg-icons";
 import { useRoute } from "@react-navigation/native";
+import { getAuth, currentUser } from "firebase/auth";
+import { useNavigation } from "@react-navigation/native";
 
 export default function ProductDetails() {
-  const [activeImage, setActiveImage] = useState(0);
   const [openModal, setOpenModal] = useState(false);
-
+  const auth = getAuth();
+  const navigation = useNavigation();
   const route = useRoute();
   const {
     title,
@@ -41,55 +44,26 @@ export default function ProductDetails() {
     category,
   } = route.params;
 
-  const onScroll = ({ nativeEvent }) => {
-    const slide = Math.ceil(
-      nativeEvent.contentOffset.x / nativeEvent.layoutMeasurement.width
-    );
-    if (slide !== activeImage) setActiveImage(slide);
-  };
-
   const openDatePickerModal = () => {
-    setOpenModal(!openModal);
+    if (auth.currentUser) {
+      setOpenModal(!openModal);
+    } else {
+      Alert.alert("Du måste logga in för att skicka en hyrförfrågan");
+      navigation.navigate("Login");
+    }
   };
-
-  // const images = [
-  //   image,
-  //   "https://images.unsplash.com/photo-1535131749006-b7f58c99034b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
-  //   "https://images.unsplash.com/flagged/photo-1576448438685-9f5e5b283d4f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
-  // ];
 
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
-        {/* <ScrollView
-          scrollEventThrottle={400}
-          onScroll={onScroll}
-          pagingEnabeld
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          decelerationRate={0}
-          snapToInterval={Dimensions.get("window").width}
-          snapToAlignment={"center"}
-        >
-          {images.map((image, index) => ( */}
         <Image style={styles.image} source={{ uri: image }} />
-        {/* ))}
-        </ScrollView> */}
         <View
           style={{
             flexDirection: "row",
             position: "absolute",
             bottom: 30,
           }}
-        >
-          {/* {images.map((i, k) => ( */}
-          {/* <FontAwesomeIcon
-            key={k}
-            style={k == activeImage ? styles.pagingActive : styles.paging}
-            icon={faCircle}
-          /> */}
-          {/* ))} */}
-        </View>
+        ></View>
       </View>
       <View style={styles.infoContainer}>
         <View style={styles.topInfoContainer}>
@@ -140,6 +114,16 @@ export default function ProductDetails() {
                 <View style={styles.iconsText}>
                   <FontAwesomeIcon style={styles.icons} icon={faBarsProgress} />
                 </View>
+                <Text style={{ fontWeight: "700" }}>Nivå</Text>
+                <Divider
+                  my="1"
+                  _light={{
+                    bg: "muted.800",
+                  }}
+                  _dark={{
+                    bg: "muted.50",
+                  }}
+                />
                 <Text>{difficulty}</Text>
               </View>
               <View
@@ -153,8 +137,19 @@ export default function ProductDetails() {
                     icon={faWeightHanging}
                   />
                 </View>
+                <Text style={{ fontWeight: "700" }}>Styvhet</Text>
+                <Divider
+                  my="1"
+                  _light={{
+                    bg: "muted.800",
+                  }}
+                  _dark={{
+                    bg: "muted.50",
+                  }}
+                />
                 <Text>{shaft}</Text>
               </View>
+
               <View
                 style={{
                   alignItems: "center",
@@ -163,6 +158,16 @@ export default function ProductDetails() {
                 <View style={styles.iconsText}>
                   <FontAwesomeIcon style={styles.icons} icon={faRightLeft} />
                 </View>
+                <Text style={{ fontWeight: "700" }}>Hand</Text>
+                <Divider
+                  my="1"
+                  _light={{
+                    bg: "muted.800",
+                  }}
+                  _dark={{
+                    bg: "muted.50",
+                  }}
+                />
                 <Text>{hand}</Text>
               </View>
               <View
@@ -173,6 +178,16 @@ export default function ProductDetails() {
                 <View style={styles.iconsText}>
                   <FontAwesomeIcon style={styles.icons} icon={faUser} />
                 </View>
+                <Text style={{ fontWeight: "700" }}>Kön</Text>
+                <Divider
+                  my="1"
+                  _light={{
+                    bg: "muted.800",
+                  }}
+                  _dark={{
+                    bg: "muted.50",
+                  }}
+                />
                 <Text>{gender}</Text>
               </View>
             </View>
@@ -282,7 +297,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     justifyContent: "space-around",
-    marginBottom: 4,
+    marginBottom: 15,
+    marginTop: 10,
   },
   subHeadingContainer: {
     padding: "2%",
@@ -322,8 +338,7 @@ const styles = StyleSheet.create({
   },
   test: {
     minHeight: "40%",
-    // backgroundColor: "blue",
     flexDirection: "column",
-    justifyContent: "space-between",
+    justifyContent: "space-around",
   },
 });
