@@ -371,11 +371,11 @@ function Settings() {
                     marginBottom: 10,
                   }}
                 >
-                  Lösenord
+                  Ändra lösenord
                 </Text>
                 <View style={{ flexDirection: "row" }}>
-                  <Text>Ditt lösenord</Text>
-                  <Text
+                  <Text>Vill du ändra ditt lösenord?</Text>
+                  {/* <Text
                     style={{
                       fontFamily: "MontserratSemiBold",
                       fontWeight: "bold",
@@ -384,7 +384,7 @@ function Settings() {
                     }}
                   >
                     {user.email}
-                  </Text>
+                  </Text> */}
                   <Pressable
                     onPress={() =>
                       setCapturePasswordForPassword(!capturePasswordForPassword)
@@ -475,13 +475,13 @@ function Settings() {
           style={{
             fontFamily: "MontserratBold",
             fontWeight: "bold",
-            marginBottom: 10,
+            marginBottom: 15,
           }}
         >
           Radera konto
         </Text>
         <Text style={{ fontFamily: "MontserratRegular", marginBottom: 10 }}>
-          Vill du radera ditt konto? Yada yada om du raderar konto blabla
+          Vill du radera ditt konto?
         </Text>
         <Pressable onPress={deleteAccount}>
           <Text
@@ -489,6 +489,7 @@ function Settings() {
               fontFamily: "MontserratSemiBold",
               fontWeight: 500,
               color: "red",
+              marginTop: 10,
               textDecorationLine: "underline",
             }}
           >
