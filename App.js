@@ -80,6 +80,8 @@ export default function App() {
             name="MyProducts"
             component={MyProductsPage}
             options={{
+              headerBackTitleVisible: false,
+              headerBackVisible: false,
               title: "Mina annonser",
               headerStyle: {
                 backgroundColor: "#6A8E4E",
