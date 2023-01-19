@@ -45,7 +45,7 @@ const CategoryBar = ({ selectedCategory, setSelectedCategory }) => {
               paddingRight: 3,
               color:
                 selectedCategory === `${category.title}`
-                  ? "#A3C86F"
+                  ? "#94C949"
                   : "#9B9B9B",
             }}
             fontSize="xl"
@@ -53,7 +53,7 @@ const CategoryBar = ({ selectedCategory, setSelectedCategory }) => {
             {category.title}
           </Text>
           {selectedCategory === `${category.title}` && (
-            <FontAwesomeIcon icon={faXmark} size={12} color="#A3C86F" />
+            <FontAwesomeIcon icon={faXmark} size={12} color="#91C746" />
           )}
         </Pressable>
       ))}
