@@ -1,6 +1,8 @@
 import { View, Pressable, Text } from "native-base";
 import { StyleSheet } from "react-native";
 import React, { useMemo } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 const CategoryBar = ({ selectedCategory, setSelectedCategory }) => {
   const categories = useMemo(() => {
@@ -17,6 +19,16 @@ const CategoryBar = ({ selectedCategory, setSelectedCategory }) => {
     <View style={styles.container}>
       {categories.map((category) => (
         <Pressable
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+
+            padding: selectedCategory === `${category.title}` ? 3 : null,
+            backgroundColor:
+              selectedCategory === `${category.title}` ? "#F0F8E4" : null,
+            borderRadius:
+              selectedCategory === `${category.title}` ? "10px" : null,
+          }}
           key={category.id}
           onPress={() => setSelectedCategory(`${category.title}`)}
         >
@@ -24,7 +36,7 @@ const CategoryBar = ({ selectedCategory, setSelectedCategory }) => {
             style={{
               fontFamily: "MontserratSemiBold",
               fontSize: 13,
-              marginBottom: 15,
+              paddingRight: 3,
               color:
                 selectedCategory === `${category.title}`
                   ? "#A4CB6D"
@@ -34,6 +46,9 @@ const CategoryBar = ({ selectedCategory, setSelectedCategory }) => {
           >
             {category.title}
           </Text>
+          {selectedCategory === `${category.title}` && (
+            <FontAwesomeIcon icon={faXmark} size={10} color="#A4CB6D" />
+          )}
         </Pressable>
       ))}
     </View>
@@ -47,6 +62,7 @@ const styles = StyleSheet.create({
     width: "85%",
     margin: 5,
     marginTop: 15,
+    marginBottom: 20,
   },
   categoryText: {
     fontFamily: "MontserratSemiBold",
