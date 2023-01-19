@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import PrimaryButton from "../inputs/PrimaryButton";
+import { Linking } from "react-native";
 
 function HelpInfo() {
   const navigation = useNavigation();
@@ -294,7 +295,6 @@ function HelpInfo() {
                 style={{
                   flexDirection: "row",
                   justifyContent: "space-around",
-                  marginTop: 26,
                 }}
                 marginY="auto"
               >
@@ -329,7 +329,7 @@ function HelpInfo() {
           </Text>
           <PrimaryButton
             label="Kontakta oss"
-            onPress={() => navigation.navigate("Kontakt")}
+            onPress={() => Linking.openURL("mailto:golfrentinfo@gmail.com?")}
           />
         </View>
       </View>
