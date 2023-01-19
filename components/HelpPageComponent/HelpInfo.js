@@ -295,6 +295,7 @@ function HelpInfo() {
                 style={{
                   flexDirection: "row",
                   justifyContent: "space-around",
+                  marginTop: 26,
                 }}
                 marginY="auto"
               >
