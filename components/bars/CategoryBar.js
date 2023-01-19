@@ -1,6 +1,8 @@
 import { View, Pressable, Text } from "native-base";
 import { StyleSheet } from "react-native";
 import React, { useMemo } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 const CategoryBar = ({ selectedCategory, setSelectedCategory }) => {
   const categories = useMemo(() => {
@@ -13,27 +15,46 @@ const CategoryBar = ({ selectedCategory, setSelectedCategory }) => {
     ];
   }, []);
 
+  function selectCategory(item) {
+    if (item == selectedCategory) {
+      setSelectedCategory("");
+    } else setSelectedCategory(item);
+  }
+
   return (
     <View style={styles.container}>
       {categories.map((category) => (
         <Pressable
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            paddingLeft: selectedCategory === `${category.title}` ? 5 : null,
+            paddingRight: selectedCategory === `${category.title}` ? 5 : null,
+            backgroundColor:
+              selectedCategory === `${category.title}` ? "#F0F8E4" : null,
+            borderRadius:
+              selectedCategory === `${category.title}` ? "10px" : null,
+          }}
           key={category.id}
-          onPress={() => setSelectedCategory(`${category.title}`)}
+          onPress={() => selectCategory(`${category.title}`)}
         >
           <Text
             style={{
               fontFamily: "MontserratSemiBold",
               fontSize: 13,
-              marginBottom: 15,
+              paddingRight: 3,
               color:
                 selectedCategory === `${category.title}`
-                  ? "#A4CB6D"
+                  ? "#94C949"
                   : "#9B9B9B",
             }}
             fontSize="xl"
           >
             {category.title}
           </Text>
+          {selectedCategory === `${category.title}` && (
+            <FontAwesomeIcon icon={faXmark} size={12} color="#91C746" />
+          )}
         </Pressable>
       ))}
     </View>
@@ -47,6 +68,7 @@ const styles = StyleSheet.create({
     width: "85%",
     margin: 5,
     marginTop: 15,
+    marginBottom: 20,
   },
   categoryText: {
     fontFamily: "MontserratSemiBold",
