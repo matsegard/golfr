@@ -15,6 +15,12 @@ const CategoryBar = ({ selectedCategory, setSelectedCategory }) => {
     ];
   }, []);
 
+  function selectCategory(item) {
+    if (item == selectedCategory) {
+      setSelectedCategory("");
+    } else setSelectedCategory(item);
+  }
+
   return (
     <View style={styles.container}>
       {categories.map((category) => (
@@ -22,15 +28,15 @@ const CategoryBar = ({ selectedCategory, setSelectedCategory }) => {
           style={{
             flexDirection: "row",
             alignItems: "center",
-
-            padding: selectedCategory === `${category.title}` ? 3 : null,
+            paddingLeft: selectedCategory === `${category.title}` ? 5 : null,
+            paddingRight: selectedCategory === `${category.title}` ? 5 : null,
             backgroundColor:
               selectedCategory === `${category.title}` ? "#F0F8E4" : null,
             borderRadius:
               selectedCategory === `${category.title}` ? "10px" : null,
           }}
           key={category.id}
-          onPress={() => setSelectedCategory(`${category.title}`)}
+          onPress={() => selectCategory(`${category.title}`)}
         >
           <Text
             style={{
@@ -39,7 +45,7 @@ const CategoryBar = ({ selectedCategory, setSelectedCategory }) => {
               paddingRight: 3,
               color:
                 selectedCategory === `${category.title}`
-                  ? "#A4CB6D"
+                  ? "#A3C86F"
                   : "#9B9B9B",
             }}
             fontSize="xl"
@@ -47,7 +53,7 @@ const CategoryBar = ({ selectedCategory, setSelectedCategory }) => {
             {category.title}
           </Text>
           {selectedCategory === `${category.title}` && (
-            <FontAwesomeIcon icon={faXmark} size={10} color="#A4CB6D" />
+            <FontAwesomeIcon icon={faXmark} size={12} color="#A3C86F" />
           )}
         </Pressable>
       ))}
