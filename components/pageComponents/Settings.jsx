@@ -8,6 +8,7 @@ import {
   Dimensions,
 } from "react-native";
 import { Modal, Button, Input } from "native-base";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import PrimaryButton from "../inputs/PrimaryButton";
 import {
   getAuth,
@@ -21,6 +22,7 @@ import { useRoute } from "@react-navigation/native";
 import { Formik } from "formik";
 import { UsernameValidationSchema } from "../schemas/UsernameValidationSchema";
 import { PasswordValidationSchema } from "../schemas/PasswordValidationSchema";
+import { faQuestion } from "@fortawesome/free-solid-svg-icons";
 import { useNavigation } from "@react-navigation/native";
 
 function Settings() {
@@ -223,7 +225,14 @@ function Settings() {
           )}
         </Formik>
       )}
-
+      <Pressable onPress={() => navigation.navigate("HelpPage")}>
+        <FontAwesomeIcon
+          color="darkgrey"
+          size={22}
+          icon={faQuestion}
+          style={{ margin: 25 }}
+        />
+      </Pressable>
       <Text style={styles.headerText}>Användarinställningar</Text>
       <Formik
         validationSchema={UsernameValidationSchema}
@@ -516,7 +525,7 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: "20",
     fontFamily: "MontserratSemiBold",
-    marginTop: 50,
+    marginTop: 20,
     marginBottom: 90,
     alignSelf: "center",
     color: "black",

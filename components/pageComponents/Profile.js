@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Image, Text, Pressable } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-// import { faQuestion } from "@fortawesome/free-solid-svg-icons";
 import { faGear } from "@fortawesome/free-solid-svg-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import PrimaryButton from "../inputs/PrimaryButton";
@@ -63,9 +62,6 @@ function Profile() {
         source={require("../../assets/Ellipse.png")}
       />
       <View style={styles.bubbleText}>
-        {/* <Pressable onPress={() => navigation.navigate("HelpPage")}>
-                <FontAwesomeIcon color="white" size={22} icon={faQuestion} />
-              </Pressable> */}
         <Pressable
           onPress={() =>
             navigation.navigate("Settings", {
