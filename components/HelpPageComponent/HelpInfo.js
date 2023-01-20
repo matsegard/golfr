@@ -57,12 +57,12 @@ function HelpInfo() {
                   style={{
                     fontFamily: "MontserratBold",
                     fontWeight: "bold",
-                    fontSize: 20,
+                    fontSize: 19,
                     color: "#6E6E6E",
                     letterSpacing: "-1%",
                   }}
                 >
-                  FRÅGA
+                  Hur hyr jag en produkt?
                 </Text>
                 <FontAwesomeIcon
                   backgroundColor="black"
@@ -87,6 +87,7 @@ function HelpInfo() {
                 backgroundColor: "#EAEAEA",
                 height: 150,
                 width: "80%",
+                height: 262, // ÄNDRAR HÖJD PÅ SVARSDELEN
                 alignSelf: "center",
                 borderRadius: "10",
               }}
@@ -104,22 +105,28 @@ function HelpInfo() {
                   style={{
                     fontFamily: "MontserratBold",
                     fontWeight: "bold",
-                    fontSize: 20,
+                    fontSize: 19,
                     color: "#6E6E6E",
                     letterSpacing: "-1%",
                   }}
                 >
-                  FRÅGA
+                  Hur hyr jag en produkt?
                 </Text>
-
                 <FontAwesomeIcon icon={faChevronUp} color="#6E6E6E" size={22} />
               </View>
               <View
                 style={{
-                  bottom: 52,
+                  bottom: 0,
                 }}
               >
-                <Text textAlign="center">SVAR</Text>
+                <Text textAlign="center" padding="3">
+                  Inne på annonsen för produkt du önskar hyra finns en knapp där
+                  det står "Skicka hyrförfrågan". Trycker du på den öppnas ett
+                  fält där du väljer datum du önskar hyra produkten. Där får du
+                  även ett totalpris för vad det kommer kosta att hyra produkten
+                  mellan dessa datum. Efter att du skickat din förfrågan kan du
+                  se status för din förfrågan på dina notifikationer.
+                </Text>
               </View>
             </Pressable>
           </VStack>
@@ -155,12 +162,13 @@ function HelpInfo() {
                   style={{
                     fontFamily: "MontserratBold",
                     fontWeight: "bold",
-                    fontSize: 20,
+                    fontSize: 19,
                     color: "#6E6E6E",
                     letterSpacing: "-1%",
+                    width: 220,
                   }}
                 >
-                  FRÅGA
+                  Hur fungerar kontakten när jag ska hyra en produkt?
                 </Text>
                 <FontAwesomeIcon
                   backgroundColor="black"
@@ -183,7 +191,7 @@ function HelpInfo() {
             <Pressable
               style={{
                 backgroundColor: "#EAEAEA",
-                height: 150,
+                height: 225,
                 width: "80%",
                 alignSelf: "center",
                 borderRadius: "10",
@@ -202,22 +210,28 @@ function HelpInfo() {
                   style={{
                     fontFamily: "MontserratBold",
                     fontWeight: "bold",
-                    fontSize: 20,
+                    fontSize: 19,
                     color: "#6E6E6E",
                     letterSpacing: "-1%",
+                    width: 220,
                   }}
                 >
-                  FRÅGA
+                  Hur fungerar kontakten när jag ska hyra en produkt?
                 </Text>
 
                 <FontAwesomeIcon icon={faChevronUp} color="#6E6E6E" size={22} />
               </View>
               <View
                 style={{
-                  bottom: 52,
+                  bottom: 4,
                 }}
               >
-                <Text textAlign="center">SVAR</Text>
+                <Text textAlign="center" padding="3">
+                  När du har skickat en hyrförfrågan och den blir godkänd av
+                  uthyraren, får du tillgång till uthyrarens email. Samtidigt
+                  får uthyraren tillgång till din email. Det är då upp till er
+                  som användare att sköta kontakten mellan varandra.
+                </Text>
               </View>
             </Pressable>
           </VStack>
@@ -253,7 +267,7 @@ function HelpInfo() {
                   style={{
                     fontFamily: "MontserratBold",
                     fontWeight: "bold",
-                    fontSize: 20,
+                    fontSize: 19,
                     color: "#6E6E6E",
                     letterSpacing: "-1%",
                   }}
@@ -300,7 +314,7 @@ function HelpInfo() {
                   style={{
                     fontFamily: "MontserratBold",
                     fontWeight: "bold",
-                    fontSize: 20,
+                    fontSize: 19,
                     color: "#6E6E6E",
                     letterSpacing: "-1%",
                   }}
@@ -315,7 +329,9 @@ function HelpInfo() {
                   bottom: 52,
                 }}
               >
-                <Text textAlign="center">SVAR</Text>
+                <Text textAlign="center" padding="3">
+                  SVAR
+                </Text>
               </View>
             </Pressable>
           </VStack>
