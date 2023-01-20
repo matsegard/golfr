@@ -234,159 +234,158 @@ function Settings() {
           style={{ margin: 25 }}
         />
       </Pressable>
-      <View style={{ alignItems: "center" }}>
-        <Text style={styles.headerText}>Användarinställningar</Text>
-        <Formik
-          validationSchema={UsernameValidationSchema}
-          initialValues={{
-            username: user.displayName,
-          }}
-          onSubmit={(values, actions) => {
-            updateUsername(values);
+      <Text style={styles.headerText}>Användarinställningar</Text>
+      <Formik
+        validationSchema={UsernameValidationSchema}
+        initialValues={{
+          username: user.displayName,
+        }}
+        onSubmit={(values, actions) => {
+          updateUsername(values);
 
-            actions.setSubmitting(false);
-          }}
-        >
-          {({
-            handleChange,
-            handleBlur,
-            handleSubmit,
-            values,
-            isValid,
-            errors,
-          }) => (
-            <>
-              {!editUsernameMode ? (
-                <View style={styles.email}>
+          actions.setSubmitting(false);
+        }}
+      >
+        {({
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          values,
+          isValid,
+          errors,
+        }) => (
+          <>
+            {!editUsernameMode ? (
+              <View style={styles.email}>
+                <Text
+                  style={{
+                    fontFamily: "MontserratBold",
+                    fontWeight: "bold",
+                    marginBottom: 10,
+                  }}
+                >
+                  Användarnamn
+                </Text>
+                <View style={{ flexDirection: "row" }}>
+                  <Text>Ditt användarnamn är</Text>
                   <Text
                     style={{
-                      fontFamily: "MontserratBold",
+                      fontFamily: "MontserratSemiBold",
                       fontWeight: "bold",
                       marginBottom: 10,
+                      marginLeft: 5,
                     }}
                   >
-                    Användarnamn
+                    {user.displayName}
                   </Text>
-                  <View style={{ flexDirection: "row" }}>
-                    <Text>Ditt användarnamn är</Text>
+                  <Pressable
+                    onPress={() => setEditUsernameMode(!editUsernameMode)}
+                  >
                     <Text
                       style={{
                         fontFamily: "MontserratSemiBold",
-                        fontWeight: "bold",
-                        marginBottom: 10,
-                        marginLeft: 5,
+                        fontWeight: 500,
+                        color: "#566fbf",
+                        textDecorationLine: "underline",
+                        marginLeft: 15,
                       }}
                     >
-                      {user.displayName}
+                      Ändra
                     </Text>
-                    <Pressable
-                      onPress={() => setEditUsernameMode(!editUsernameMode)}
-                    >
-                      <Text
-                        style={{
-                          fontFamily: "MontserratSemiBold",
-                          fontWeight: 500,
-                          color: "#566fbf",
-                          textDecorationLine: "underline",
-                          marginLeft: 15,
-                        }}
-                      >
-                        Ändra
-                      </Text>
-                    </Pressable>
-                  </View>
-                  <View
-                    style={{
-                      width: Dimensions.get("window").width - 100,
-                      height: 1,
-                      backgroundColor: "#e8e8e8",
-                      marginTop: 35,
-                    }}
-                  ></View>
+                  </Pressable>
                 </View>
-              ) : (
                 <View
                   style={{
                     width: Dimensions.get("window").width - 100,
-                    marginLeft: 50,
-                    marginBottom: 35,
+                    height: 1,
+                    backgroundColor: "#e8e8e8",
+                    marginTop: 35,
+                  }}
+                ></View>
+              </View>
+            ) : (
+              <View
+                style={{
+                  width: Dimensions.get("window").width - 100,
+                  marginLeft: 50,
+                  marginBottom: 35,
+                }}
+              >
+                <Text
+                  style={{
+                    fontFamily: "MontserratBold",
+                    fontWeight: "bold",
+                    marginBottom: 10,
                   }}
                 >
-                  <Text
-                    style={{
-                      fontFamily: "MontserratBold",
-                      fontWeight: "bold",
-                      marginBottom: 10,
-                    }}
-                  >
-                    Användarnamn
+                  Användarnamn
+                </Text>
+                <Input
+                  onChangeText={handleChange("username")}
+                  onBlur={handleBlur("username")}
+                  value={values.username}
+                  placeholder={user.displayName}
+                ></Input>
+                {errors.username && (
+                  <Text style={{ fontSize: 12, color: "red", marginTop: 5 }}>
+                    {errors.username}
                   </Text>
-                  <Input
-                    onChangeText={handleChange("username")}
-                    onBlur={handleBlur("username")}
-                    value={values.username}
-                    placeholder={user.displayName}
-                  ></Input>
-                  {errors.username && (
-                    <Text style={{ fontSize: 12, color: "red", marginTop: 5 }}>
-                      {errors.username}
-                    </Text>
-                  )}
-                  <PrimaryButton
-                    label="Spara användarnamn"
-                    btnWidth={{
-                      marginTop: 20,
-                      width: 190,
-                    }}
-                    disabled={values.username === ""}
-                    onPress={handleSubmit}
-                  />
-                  <View
-                    style={{
-                      width: Dimensions.get("window").width - 100,
-                      height: 1,
-                      backgroundColor: "#e8e8e8",
-                      marginTop: 35,
-                    }}
-                  ></View>
-                </View>
-              )}
-            </>
-          )}
-        </Formik>
-        <Formik
-          // validationSchema={PasswordValidationSchema}
-          initialValues={{
-            newPassword: "",
-          }}
-          onSubmit={(values, actions) => {
-            updateThePassword(values);
-            actions.setSubmitting(false);
-          }}
-        >
-          {({
-            handleChange,
-            handleBlur,
-            handleSubmit,
-            values,
-            isValid,
-            errors,
-          }) => (
-            <>
-              {!editPasswordMode ? (
-                <View style={styles.email}>
-                  <Text
-                    style={{
-                      fontFamily: "MontserratBold",
-                      fontWeight: "bold",
-                      marginBottom: 10,
-                    }}
-                  >
-                    Ändra lösenord
-                  </Text>
-                  <View style={{ flexDirection: "row" }}>
-                    <Text>Vill du ändra ditt lösenord?</Text>
-                    {/* <Text
+                )}
+                <PrimaryButton
+                  label="Spara användarnamn"
+                  btnWidth={{
+                    marginTop: 20,
+                    width: 190,
+                  }}
+                  disabled={values.username === ""}
+                  onPress={handleSubmit}
+                />
+                <View
+                  style={{
+                    width: Dimensions.get("window").width - 100,
+                    height: 1,
+                    backgroundColor: "#e8e8e8",
+                    marginTop: 35,
+                  }}
+                ></View>
+              </View>
+            )}
+          </>
+        )}
+      </Formik>
+      <Formik
+        // validationSchema={PasswordValidationSchema}
+        initialValues={{
+          newPassword: "",
+        }}
+        onSubmit={(values, actions) => {
+          updateThePassword(values);
+          actions.setSubmitting(false);
+        }}
+      >
+        {({
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          values,
+          isValid,
+          errors,
+        }) => (
+          <>
+            {!editPasswordMode ? (
+              <View style={styles.email}>
+                <Text
+                  style={{
+                    fontFamily: "MontserratBold",
+                    fontWeight: "bold",
+                    marginBottom: 10,
+                  }}
+                >
+                  Ändra lösenord
+                </Text>
+                <View style={{ flexDirection: "row" }}>
+                  <Text>Vill du ändra ditt lösenord?</Text>
+                  {/* <Text
                     style={{
                       fontFamily: "MontserratSemiBold",
                       fontWeight: "bold",
@@ -396,120 +395,117 @@ function Settings() {
                   >
                     {user.email}
                   </Text> */}
-                    <Pressable
-                      onPress={() =>
-                        setCapturePasswordForPassword(
-                          !capturePasswordForPassword
-                        )
-                      }
+                  <Pressable
+                    onPress={() =>
+                      setCapturePasswordForPassword(!capturePasswordForPassword)
+                    }
+                  >
+                    <Text
+                      style={{
+                        fontFamily: "MontserratSemiBold",
+                        fontWeight: 500,
+                        color: "#566fbf",
+                        textDecorationLine: "underline",
+                        marginLeft: 15,
+                      }}
                     >
-                      <Text
-                        style={{
-                          fontFamily: "MontserratSemiBold",
-                          fontWeight: 500,
-                          color: "#566fbf",
-                          textDecorationLine: "underline",
-                          marginLeft: 15,
-                        }}
-                      >
-                        Ändra
-                      </Text>
-                    </Pressable>
-                  </View>
-                  <View
-                    style={{
-                      width: Dimensions.get("window").width - 100,
-                      height: 1,
-                      backgroundColor: "#e8e8e8",
-                      marginTop: 35,
-                    }}
-                  ></View>
+                      Ändra
+                    </Text>
+                  </Pressable>
                 </View>
-              ) : (
                 <View
                   style={{
                     width: Dimensions.get("window").width - 100,
-                    marginLeft: 50,
-                    marginBottom: 35,
+                    height: 1,
+                    backgroundColor: "#e8e8e8",
+                    marginTop: 35,
+                  }}
+                ></View>
+              </View>
+            ) : (
+              <View
+                style={{
+                  width: Dimensions.get("window").width - 100,
+                  marginLeft: 50,
+                  marginBottom: 35,
+                }}
+              >
+                <Text
+                  style={{
+                    fontFamily: "MontserratBold",
+                    fontWeight: "bold",
+                    marginBottom: 10,
                   }}
                 >
+                  Lösenord
+                </Text>
+                <Input
+                  onChangeText={handleChange("newPassword")}
+                  onBlur={handleBlur("newPassword")}
+                  value={values.newPassword}
+                  autoCapitalize="none"
+                  placeholder="Lösenord"
+                />
+                {errors.password && (
                   <Text
                     style={{
-                      fontFamily: "MontserratBold",
-                      fontWeight: "bold",
-                      marginBottom: 10,
+                      position: "absolute",
+                      fontSize: 12,
+                      color: "red",
+                      top: 62,
                     }}
                   >
-                    Lösenord
+                    {errors.password}
                   </Text>
-                  <Input
-                    onChangeText={handleChange("newPassword")}
-                    onBlur={handleBlur("newPassword")}
-                    value={values.newPassword}
-                    autoCapitalize="none"
-                    placeholder="Lösenord"
-                  />
-                  {errors.password && (
-                    <Text
-                      style={{
-                        position: "absolute",
-                        fontSize: 12,
-                        color: "red",
-                        top: 62,
-                      }}
-                    >
-                      {errors.password}
-                    </Text>
-                  )}
-                  <PrimaryButton
-                    label="Spara Lösenord"
-                    btnWidth={{
-                      marginTop: 20,
-                      width: 190,
-                    }}
-                    disabled={values.newPassword === "" || !isValid}
-                    onPress={handleSubmit}
-                  />
-                  <View
-                    style={{
-                      width: Dimensions.get("window").width - 100,
-                      height: 1,
-                      backgroundColor: "#e8e8e8",
-                      marginTop: 35,
-                    }}
-                  ></View>
-                </View>
-              )}
-            </>
-          )}
-        </Formik>
-        <View style={styles.deleteAccount}>
+                )}
+                <PrimaryButton
+                  label="Spara Lösenord"
+                  btnWidth={{
+                    marginTop: 20,
+                    width: 190,
+                  }}
+                  disabled={values.newPassword === "" || !isValid}
+                  onPress={handleSubmit}
+                />
+                <View
+                  style={{
+                    width: Dimensions.get("window").width - 100,
+                    height: 1,
+                    backgroundColor: "#e8e8e8",
+                    marginTop: 35,
+                  }}
+                ></View>
+              </View>
+            )}
+          </>
+        )}
+      </Formik>
+      <View style={styles.deleteAccount}>
+        <Text
+          style={{
+            fontFamily: "MontserratBold",
+            fontWeight: "bold",
+            marginBottom: 15,
+          }}
+        >
+          Radera konto
+        </Text>
+        <Text style={{ fontFamily: "MontserratRegular", marginBottom: 10 }}>
+          Vill du radera ditt konto?
+        </Text>
+        <Pressable onPress={deleteAccount}>
           <Text
             style={{
-              fontFamily: "MontserratBold",
-              fontWeight: "bold",
-              marginBottom: 15,
+              fontFamily: "MontserratSemiBold",
+              fontWeight: 500,
+              color: "red",
+              marginTop: 10,
+              textDecorationLine: "underline",
             }}
           >
-            Radera konto
+            Jag vill radera mitt konto
           </Text>
-          <Text style={{ fontFamily: "MontserratRegular", marginBottom: 10 }}>
-            Vill du radera ditt konto?
-          </Text>
-          <Pressable onPress={deleteAccount}>
-            <Text
-              style={{
-                fontFamily: "MontserratSemiBold",
-                fontWeight: 500,
-                color: "red",
-                marginTop: 10,
-                textDecorationLine: "underline",
-              }}
-            >
-              Jag vill radera mitt konto
-            </Text>
-          </Pressable>
-        </View>
+        </Pressable>
       </View>
     </View>
   );
