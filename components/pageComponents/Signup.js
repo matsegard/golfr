@@ -293,14 +293,15 @@ const styles = StyleSheet.create({
   loginText: {
     fontSize: 20,
     fontFamily: "MontserratBold",
-    bottom: 150,
+    bottom: 280,
+    color: "white",
   },
   forms: {
     position: "absolute",
     top: 230,
   },
   form: {
-    marginTop: 30,
+    marginTop: 16,
   },
   editFormContainer: {
     width: 280,

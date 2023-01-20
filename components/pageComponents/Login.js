@@ -258,7 +258,7 @@ function Login() {
                 btnWidth={{
                   width: 182,
                   right: 50,
-                  bottom: -100,
+                  bottom: -70,
                   position: "absolute",
                 }}
                 onPress={handleSubmit}
@@ -295,12 +295,14 @@ const styles = StyleSheet.create({
     letterSpacing: ".3%",
     textDecorationLine: "underline",
     position: "absolute",
-    top: 580,
+    top: 500,
+    
   },
   loginText: {
     fontSize: 20,
     fontFamily: "MontserratBold",
-    bottom: 180,
+    bottom: 280,
+    color: "white",
   },
   forms: {
     position: "absolute",
