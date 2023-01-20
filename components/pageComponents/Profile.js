@@ -6,9 +6,11 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import PrimaryButton from "../inputs/PrimaryButton";
 import { useNavigation } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
-import { signOut, getAuth } from "firebase/auth";
+import { signOut, getAuth, updateProfile } from "firebase/auth";
 import { Input, Alert, VStack, HStack } from "native-base";
-import { faCamera } from "@fortawesome/free-solid-svg-icons";
+import * as ImagePicker from "expo-image-picker";
+import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
+
 
 
 function Profile() {
@@ -82,27 +84,23 @@ function Profile() {
     await getDownloadURL(imageRef).then((downloadURL) => {
       setImgUrl(downloadURL);
     });
+    updatePfp()
   };
+
+  function updatePfp() {
+    updateProfile(user, {
+      photoURL: imgUrl
+   }).then(() => {
+     console.log('Profilbild uppdaterad')
+   }).catch((error) => {
+     console.log(error);
+   });
+  }
+
+
 
   return (
     <View style={styles.container}>
-          <View
-                 style={{
-                   flex: 1,
-                   alignItems: "center",
-                   justifyContent: "center",
-                   marginTop: 15,
-                 }}
-               >
-                 <FontAwesomeIcon size={30} color="#828282" icon={faCamera} />
-                 <Button title="Ladda upp en bild" onPress={pickImage} />
-                 {image && (
-                   <Image
-                     source={{ uri: image.uri }}
-                     style={{ width: 200, height: 200 }}
-                   />
-                 )}
-               </View>
       <Image
         style={[
           styles.greenBubble,
@@ -166,11 +164,21 @@ function Profile() {
           </Alert>
         )}
       </View>
-      <View style={styles.profilePic}></View>
-      <Pressable style={styles.addProfilePic}>
-        <View>
-          <FontAwesomeIcon color="white" size={15} icon={faPlus} />
-        </View>
+      <View style={styles.profilePic}
+      >
+        {image && (
+        <Image
+          source={{ uri: user.photoURL }}
+          style={{     
+            width: 150,
+            height: 150,
+            borderRadius: "75%", 
+          }}
+        />
+      )}
+      </View>
+      <Pressable style={styles.addProfilePic} onPress={pickImage} >       
+          <FontAwesomeIcon color="white" size={15} icon={faPlus}  />     
       </Pressable>
       <View style={styles.forms}>
         <View>
