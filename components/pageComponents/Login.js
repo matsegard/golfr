@@ -201,7 +201,7 @@ function Login() {
                       marginBottom: 8,
                     }}
                   >
-                    Password
+                    Lösenord
                   </Text>
                   <View style={styles.passwordCont}>
                     <Input
@@ -209,7 +209,7 @@ function Login() {
                       style={styles.editForm}
                       variant="underlined"
                       type={show ? "text" : "password"}
-                      placeholder="Password"
+                      placeholder="Lösenord"
                       onChangeText={handleChange("password")}
                       onBlur={handleBlur("password")}
                       value={values.password}

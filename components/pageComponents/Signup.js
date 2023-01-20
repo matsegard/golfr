@@ -142,11 +142,11 @@ function Signup() {
                       marginBottom: 8,
                     }}
                   >
-                    Username
+                    Användarnamn
                   </Text>
                   <Input
                     variant="underlined"
-                    placeholder="Username"
+                    placeholder="Användarnamn"
                     style={styles.editForm}
                     onChangeText={handleChange("username")}
                     onBlur={handleBlur("username")}
@@ -192,14 +192,14 @@ function Signup() {
                       marginBottom: 8,
                     }}
                   >
-                    Password
+                    Lösenord
                   </Text>
                   <View style={styles.passwordCont}>
                     <Input
                       style={styles.editForm}
                       variant="underlined"
                       type={show ? "text" : "password"}
-                      placeholder="Password"
+                      placeholder="Lösenord"
                       onChangeText={handleChange("password")}
                       onBlur={handleBlur("password")}
                       value={values.password}
