@@ -50,16 +50,6 @@ function Login() {
     setErrorPassword(false);
   }
 
-  // // TO BE REMOVED
-  // onAuthStateChanged(auth, (user) => {
-  //   if (user) {
-  //     const uid = user.uid;
-  //     console.log("logged in", auth.currentUser);
-  //   } else {
-  //     console.log("NOT logged in");
-  //   }
-  // });
-
   return (
     <View style={styles.container}>
       <Image
@@ -296,7 +286,6 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
     position: "absolute",
     top: 500,
-    
   },
   loginText: {
     fontSize: 20,
