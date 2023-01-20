@@ -108,7 +108,7 @@ function Signup() {
         </Alert>
       )}
 
-      {/* <Text style={styles.loginText}>Registrera dig</Text> */}
+      <Text style={styles.loginText}>Registrera dig</Text>
       <View style={styles.forms}>
         <Formik
           validateOnBlur={false}
@@ -290,11 +290,12 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 680,
   },
-  // loginText: {
-  //   fontSize: 20,
-  //   fontFamily: "MontserratBold",
-  //   bottom: 135,
-  // },
+  loginText: {
+    fontSize: 20,
+    fontFamily: "MontserratBold",
+    bottom: 280,
+    color: "white",
+  },
   forms: {
     position: "absolute",
     top: 230,

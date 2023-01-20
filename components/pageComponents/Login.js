@@ -301,7 +301,8 @@ const styles = StyleSheet.create({
   loginText: {
     fontSize: 20,
     fontFamily: "MontserratBold",
-    bottom: 180,
+    bottom: 280,
+    color: "white",
   },
   forms: {
     position: "absolute",

@@ -128,7 +128,7 @@ export default function App() {
             name="Login"
             component={LoginPage}
             options={{
-              title: "Login",
+              title: "",
               headerBackTitleVisible: false,
               headerBackVisible: false,
               headerStyle: {
@@ -144,7 +144,7 @@ export default function App() {
             name="Signup"
             component={SignupPage}
             options={{
-              title: "Registrera",
+              title: "",
               headerBackTitleVisible: false,
               headerBackVisible: false,
               headerStyle: {
