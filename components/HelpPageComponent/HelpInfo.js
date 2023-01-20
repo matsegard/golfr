@@ -1,5 +1,4 @@
 import { VStack, ScrollView, View, Text, Pressable } from "native-base";
-import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faChevronUp } from "@fortawesome/free-solid-svg-icons";
@@ -8,8 +7,6 @@ import PrimaryButton from "../inputs/PrimaryButton";
 import { Linking } from "react-native";
 
 function HelpInfo() {
-  const navigation = useNavigation();
-  const [changeArrow, setChangeArrow] = useState(false);
   const [openQuestion, setOpenQuestion] = useState(false);
   const [openQuestion2, setOpenQuestion2] = useState(false);
   const [openQuestion3, setOpenQuestion3] = useState(false);
