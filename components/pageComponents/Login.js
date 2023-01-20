@@ -2,9 +2,6 @@ import { StyleSheet, View, Image, Text } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { UsernameValidationSchema } from "../schemas/UsernameValidationSchema";
-import { PasswordValidationSchema } from "../schemas/PasswordValidationSchema";
-import { EmailValidationSchema } from "../schemas/EmailValidationSchema";
 import { Formik } from "formik";
 import { Pressable } from "react-native";
 import { Input, Alert, VStack, HStack } from "native-base";
@@ -12,6 +9,7 @@ import PrimaryButton from "../inputs/PrimaryButton.js";
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { LoginValidationSchema } from "../schemas/LoginValidationSchema";
 import React from "react";
 
 function Login() {
@@ -49,16 +47,6 @@ function Login() {
     setErrorCode(false);
     setErrorPassword(false);
   }
-
-  // // TO BE REMOVED
-  // onAuthStateChanged(auth, (user) => {
-  //   if (user) {
-  //     const uid = user.uid;
-  //     console.log("logged in", auth.currentUser);
-  //   } else {
-  //     console.log("NOT logged in");
-  //   }
-  // });
 
   return (
     <View style={styles.container}>
@@ -138,11 +126,7 @@ function Login() {
       <View style={styles.forms}>
         <Formik
           validateOnBlur={false}
-          validationSchema={
-            (UsernameValidationSchema,
-            EmailValidationSchema,
-            PasswordValidationSchema)
-          }
+          validationSchema={LoginValidationSchema}
           initialValues={{
             email: "",
             password: "",
@@ -255,6 +239,9 @@ function Login() {
               </Pressable>
               <PrimaryButton
                 label="Logga in"
+                disabled={
+                  !isValid || (values.email === "" && values.password === "")
+                }
                 btnWidth={{
                   width: 182,
                   right: 50,

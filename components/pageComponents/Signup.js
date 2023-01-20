@@ -8,9 +8,7 @@ import PrimaryButton from "../inputs/PrimaryButton.js";
 import { useState } from "react";
 import { Formik } from "formik";
 import { useNavigation } from "@react-navigation/native";
-import { UsernameValidationSchema } from "../schemas/UsernameValidationSchema";
-import { PasswordValidationSchema } from "../schemas/PasswordValidationSchema";
-import { EmailValidationSchema } from "../schemas/EmailValidationSchema";
+import { SignupValidationSchema } from "../schemas/SignupValidationSchema";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -112,11 +110,7 @@ function Signup() {
       <View style={styles.forms}>
         <Formik
           validateOnBlur={false}
-          validationSchema={
-            (UsernameValidationSchema,
-            EmailValidationSchema,
-            PasswordValidationSchema)
-          }
+          validationSchema={SignupValidationSchema}
           initialValues={{
             username: "",
             email: "",
