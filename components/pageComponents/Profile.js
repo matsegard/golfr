@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { StyleSheet, View, Image, Text, Pressable } from "react-native";
+import React, { useState, useEffect } from "react";
+import { StyleSheet, View, Image, Text, Pressable, Button } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faGear } from "@fortawesome/free-solid-svg-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -8,11 +8,16 @@ import { useNavigation } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
 import { signOut, getAuth } from "firebase/auth";
 import { Input, Alert, VStack, HStack } from "native-base";
+import { faCamera } from "@fortawesome/free-solid-svg-icons";
+
 
 function Profile() {
   const navigation = useNavigation();
   const auth = getAuth();
   const route = useRoute();
+  const [image, setImage] = useState(null);
+  const [imgUrl, setImgUrl] = useState(null);
+  const [imgError, setImgError] = useState(false);
   // const [username, setUsername] = useState(auth.currentUser.displayName);
   const [success, setSuccess] = useState(false);
   const [logOutFail, setLogOutFail] = useState(false);
@@ -49,9 +54,55 @@ function Profile() {
   //       console.log(error);
   //     });
   // }
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      aspect: [4, 3],
+      quality: 0.1,
+    });
+
+    if (!result.canceled) {
+      setImage(result.assets[0]);
+    }
+  };
+
+  useEffect(() => {
+    addImageDatabase();
+  }, [image]);
+
+  const addImageDatabase = async () => {
+    const storage = getStorage();
+    let filename = image.uri.substring(image.uri.lastIndexOf("/") + 1);
+    const storageRef = ref(storage, "images");
+    const imageRef = ref(storageRef, filename);
+    const response = await fetch(image.uri);
+    const blob = await response.blob();
+    await uploadBytes(imageRef, blob);
+    await getDownloadURL(imageRef).then((downloadURL) => {
+      setImgUrl(downloadURL);
+    });
+  };
 
   return (
     <View style={styles.container}>
+          <View
+                 style={{
+                   flex: 1,
+                   alignItems: "center",
+                   justifyContent: "center",
+                   marginTop: 15,
+                 }}
+               >
+                 <FontAwesomeIcon size={30} color="#828282" icon={faCamera} />
+                 <Button title="Ladda upp en bild" onPress={pickImage} />
+                 {image && (
+                   <Image
+                     source={{ uri: image.uri }}
+                     style={{ width: 200, height: 200 }}
+                   />
+                 )}
+               </View>
       <Image
         style={[
           styles.greenBubble,
