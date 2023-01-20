@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faHouse } from "@fortawesome/free-solid-svg-icons/faHouse";
 import { faBell } from "@fortawesome/free-solid-svg-icons/faBell";
 import { faSquarePlus } from "@fortawesome/free-solid-svg-icons/faSquarePlus";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons/faMagnifyingGlass";
+// import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons/faMagnifyingGlass";
 import { faUser } from "@fortawesome/free-solid-svg-icons/faUser";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
@@ -136,7 +136,7 @@ function Navbar() {
           icon={faSquarePlus}
         />
       </Pressable>
-      <Pressable
+      {/* <Pressable
         onPress={navigateToProducts}
         style={{
           backgroundColor: selected === 3 ? "#6A8E4E" : "transparent",
@@ -153,7 +153,7 @@ function Navbar() {
           color={selected === 3 ? "white" : "#828282"}
           icon={faMagnifyingGlass}
         />
-      </Pressable>
+      </Pressable> */}
       <Pressable
         onPress={navigateToProfile}
         style={{
