@@ -8,9 +8,7 @@ import PrimaryButton from "../inputs/PrimaryButton.js";
 import { useState } from "react";
 import { Formik } from "formik";
 import { useNavigation } from "@react-navigation/native";
-import { UsernameValidationSchema } from "../schemas/UsernameValidationSchema";
-import { PasswordValidationSchema } from "../schemas/PasswordValidationSchema";
-import { EmailValidationSchema } from "../schemas/EmailValidationSchema";
+import { SignupValidationSchema } from "../schemas/SignupValidationSchema";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -112,11 +110,7 @@ function Signup() {
       <View style={styles.forms}>
         <Formik
           validateOnBlur={false}
-          validationSchema={
-            (UsernameValidationSchema,
-            EmailValidationSchema,
-            PasswordValidationSchema)
-          }
+          validationSchema={SignupValidationSchema}
           initialValues={{
             username: "",
             email: "",
@@ -142,11 +136,11 @@ function Signup() {
                       marginBottom: 8,
                     }}
                   >
-                    Username
+                    Användarnamn
                   </Text>
                   <Input
                     variant="underlined"
-                    placeholder="Username"
+                    placeholder="Användarnamn"
                     style={styles.editForm}
                     onChangeText={handleChange("username")}
                     onBlur={handleBlur("username")}
@@ -192,14 +186,14 @@ function Signup() {
                       marginBottom: 8,
                     }}
                   >
-                    Password
+                    Lösenord
                   </Text>
                   <View style={styles.passwordCont}>
                     <Input
                       style={styles.editForm}
                       variant="underlined"
                       type={show ? "text" : "password"}
-                      placeholder="Password"
+                      placeholder="Lösenord"
                       onChangeText={handleChange("password")}
                       onBlur={handleBlur("password")}
                       value={values.password}
