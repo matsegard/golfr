@@ -7,7 +7,6 @@ import {
   Image,
   Alert,
   Pressable,
-  ScrollView,
   Dimensions,
 } from "react-native";
 import { Divider } from "native-base";
@@ -17,9 +16,8 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { faRightLeft } from "@fortawesome/free-solid-svg-icons";
 import { faWeightHanging } from "@fortawesome/free-solid-svg-icons";
 import { faBarsProgress } from "@fortawesome/free-solid-svg-icons";
-import { faCircle } from "@fortawesome/free-solid-svg-icons";
 import { useRoute } from "@react-navigation/native";
-import { getAuth, currentUser } from "firebase/auth";
+import { getAuth } from "firebase/auth";
 import { useNavigation } from "@react-navigation/native";
 
 export default function ProductDetails() {
@@ -80,6 +78,7 @@ export default function ProductDetails() {
             <View
               style={{
                 flexDirection: "row",
+                marginLeft: 10,
               }}
             >
               <FontAwesomeIcon style={styles.icons} icon={faUser} />
@@ -95,6 +94,7 @@ export default function ProductDetails() {
             <View
               style={{
                 flexDirection: "row",
+                marginRight: 10,
               }}
             >
               <FontAwesomeIcon
@@ -235,6 +235,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontFamily: "MontserratSemiBold",
     flexShrink: 1,
+    marginLeft: 10,
   },
   subHeadingText: {
     fontSize: 18,
@@ -244,7 +245,7 @@ const styles = StyleSheet.create({
   locationIcon: {
     color: "#6A994E",
     alignItems: "center",
-    marginRight: 5,
+    marginRight: 10,
   },
   infoContainer: {
     flex: 2,
@@ -263,7 +264,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   imageContainer: {
-    flex: 1.6,
+    flex: 1.5,
     marginBottom: -20,
     justifyContent: "center",
     alignItems: "center",
@@ -296,8 +297,9 @@ const styles = StyleSheet.create({
     height: "20%",
     alignItems: "center",
     flexDirection: "row",
+
     justifyContent: "space-around",
-    marginBottom: 15,
+    marginBottom: 22,
     marginTop: 10,
   },
   subHeadingContainer: {
@@ -306,7 +308,6 @@ const styles = StyleSheet.create({
   },
   bottomContainer: {
     flexDirection: "row",
-    marginTop: "2%",
     justifyContent: "space-between",
     padding: "2%",
     alignItems: "center",

@@ -1,16 +1,15 @@
-import { StyleSheet, Image, Text } from "react-native";
+import { StyleSheet, Image, Text, Dimensions } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { faQuestion } from "@fortawesome/free-solid-svg-icons";
 import { Pressable } from "react-native";
-import { Input, VStack, HStack, Alert, View } from "native-base";
+import { Input, VStack, HStack, Alert, View, Divider } from "native-base";
 import PrimaryButton from "../inputs/PrimaryButton.js";
 import { useState } from "react";
 import { Formik } from "formik";
 import { useNavigation } from "@react-navigation/native";
-import { UsernameValidationSchema } from "../schemas/UsernameValidationSchema";
-import { PasswordValidationSchema } from "../schemas/PasswordValidationSchema";
-import { EmailValidationSchema } from "../schemas/EmailValidationSchema";
+import { SignupValidationSchema } from "../schemas/SignupValidationSchema";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -66,7 +65,34 @@ function Signup() {
         ]}
         source={require("../../assets/Ellipse.png")}
       />
-
+      <View
+        style={{
+          width: Dimensions.get("window").width,
+          justifyContent: "space-between",
+          position: "absolute",
+          paddingLeft: 30,
+          top: 14,
+        }}
+      >
+        <Pressable
+          style={{ paddingLeft: 5 }}
+          onPress={() => navigation.navigate("HelpPage")}
+        >
+          <FontAwesomeIcon color="white" size={20} icon={faQuestion} />
+        </Pressable>
+        <Text style={{ fontWeight: "400", color: "white", paddingTop: "2%" }}>
+          Hjälp
+        </Text>
+        <Divider
+          style={{
+            maxWidth: "9.4%",
+          }}
+          my="1"
+          _light={{
+            bg: "white",
+          }}
+        />
+      </View>
       {success && (
         <Alert
           w="60%"
@@ -112,11 +138,7 @@ function Signup() {
       <View style={styles.forms}>
         <Formik
           validateOnBlur={false}
-          validationSchema={
-            (UsernameValidationSchema,
-            EmailValidationSchema,
-            PasswordValidationSchema)
-          }
+          validationSchema={SignupValidationSchema}
           initialValues={{
             username: "",
             email: "",
@@ -142,11 +164,11 @@ function Signup() {
                       marginBottom: 8,
                     }}
                   >
-                    Username
+                    Användarnamn
                   </Text>
                   <Input
                     variant="underlined"
-                    placeholder="Username"
+                    placeholder="Användarnamn"
                     style={styles.editForm}
                     onChangeText={handleChange("username")}
                     onBlur={handleBlur("username")}
@@ -192,14 +214,14 @@ function Signup() {
                       marginBottom: 8,
                     }}
                   >
-                    Password
+                    Lösenord
                   </Text>
                   <View style={styles.passwordCont}>
                     <Input
                       style={styles.editForm}
                       variant="underlined"
                       type={show ? "text" : "password"}
-                      placeholder="Password"
+                      placeholder="Lösenord"
                       onChangeText={handleChange("password")}
                       onBlur={handleBlur("password")}
                       value={values.password}
@@ -288,7 +310,8 @@ const styles = StyleSheet.create({
     letterSpacing: ".3%",
     textDecorationLine: "underline",
     position: "absolute",
-    top: 680,
+    top: 545,
+    marginTop: 20,
   },
   loginText: {
     fontSize: 20,
@@ -298,10 +321,11 @@ const styles = StyleSheet.create({
   },
   forms: {
     position: "absolute",
-    top: 230,
+    top: 200,
+    
   },
   form: {
-    marginTop: 16,
+    marginTop: 36,
   },
   editFormContainer: {
     width: 280,
