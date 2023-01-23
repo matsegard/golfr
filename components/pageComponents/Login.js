@@ -319,7 +319,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 500,
     marginTop: 20,
-
   },
   loginText: {
     fontSize: 20,
