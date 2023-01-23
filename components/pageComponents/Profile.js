@@ -11,8 +11,6 @@ import { Input, Alert, VStack, HStack } from "native-base";
 import * as ImagePicker from "expo-image-picker";
 import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
 
-
-
 function Profile() {
   const navigation = useNavigation();
   const auth = getAuth();
@@ -84,20 +82,19 @@ function Profile() {
     await getDownloadURL(imageRef).then((downloadURL) => {
       setImgUrl(downloadURL);
     });
-    updatePfp()
   };
 
   function updatePfp() {
     updateProfile(user, {
-      photoURL: imgUrl
-   }).then(() => {
-     console.log('Profilbild uppdaterad')
-   }).catch((error) => {
-     console.log(error);
-   });
+      photoURL: imgUrl,
+    })
+      .then(() => {
+        console.log("Profilbild uppdaterad");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
-
-
 
   return (
     <View style={styles.container}>
@@ -164,21 +161,34 @@ function Profile() {
           </Alert>
         )}
       </View>
-      <View style={styles.profilePic}
-      >
+      <Pressable onPress={updatePfp}>
+        <Text>Byt profilbild</Text>
+      </Pressable>
+
+      <View style={styles.profilePic}>
         {image && (
-        <Image
-          source={{ uri: image.uri }}
-          style={{     
-            width: 150,
-            height: 150,
-            borderRadius: "75%", 
-          }}
-        />
-      )}
+          <Image
+            source={{ uri: image.uri }}
+            style={{
+              width: 150,
+              height: 150,
+              borderRadius: "75%",
+            }}
+          />
+        )}
+        {!image && auth.currentUser.photoURL && (
+          <Image
+            source={{ uri: auth.currentUser.photoURL }}
+            style={{
+              width: 150,
+              height: 150,
+              borderRadius: "75%",
+            }}
+          />
+        )}
       </View>
-      <Pressable style={styles.addProfilePic} onPress={pickImage} >       
-          <FontAwesomeIcon color="white" size={15} icon={faPlus}  />     
+      <Pressable style={styles.addProfilePic} onPress={pickImage}>
+        <FontAwesomeIcon color="white" size={15} icon={faPlus} />
       </Pressable>
       <View style={styles.forms}>
         <View>
@@ -222,16 +232,16 @@ function Profile() {
               }}
             ></View>
           </View>
-      <PrimaryButton
-        label="Mina annonser"
-        btnWidth={{
-          width: 150,
-          position: "absolute",
-          justifyContent:"center",
-          bottom: 180,
-        }}
-        onPress={() => navigation.navigate("MyProducts")}
-      />
+          <PrimaryButton
+            label="Mina annonser"
+            btnWidth={{
+              width: 150,
+              position: "absolute",
+              justifyContent: "center",
+              bottom: 180,
+            }}
+            onPress={() => navigation.navigate("MyProducts")}
+          />
         </View>
       </View>
     </View>
