@@ -168,7 +168,7 @@ function Profile() {
       >
         {image && (
         <Image
-          source={{ uri: user.photoURL }}
+          source={{ uri: image.uri }}
           style={{     
             width: 150,
             height: 150,
