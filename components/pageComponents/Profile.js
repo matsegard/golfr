@@ -20,6 +20,7 @@ function Profile() {
   const [imgError, setImgError] = useState(false);
   // const [username, setUsername] = useState(auth.currentUser.displayName);
   const [success, setSuccess] = useState(false);
+  const [profilePicUpdated, setProfilePicUpdated] = useState(false);
   const [logOutFail, setLogOutFail] = useState(false);
   const { user } = route.params;
 
@@ -31,7 +32,7 @@ function Profile() {
   }
 
   // SIGN OUT FUNCTIONALITY
-  function testSignOut() {
+  function signOutAccount() {
     signOut(auth)
       .then(() => {
         setSuccess(true);
@@ -44,16 +45,6 @@ function Profile() {
       });
   }
 
-  //updates password
-  // function updateUsersPassword({ password }) {
-  //   updatePassword(auth.currentUser, { password: password })
-  //     .then(() => {
-  //       console.log(auth.currentUser);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // }
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -117,7 +108,7 @@ function Profile() {
         >
           <FontAwesomeIcon color="white" size={24} icon={faGear} />
         </Pressable>
-        <Text style={styles.logout} onPress={() => testSignOut()}>
+        <Text style={styles.logout} onPress={() => signOutAccount()}>
           Logga ut
         </Text>
         {success && (
@@ -161,10 +152,6 @@ function Profile() {
           </Alert>
         )}
       </View>
-      <Pressable onPress={updatePfp}>
-        <Text>Byt profilbild</Text>
-      </Pressable>
-
       <View style={styles.profilePic}>
         {image && (
           <Image
@@ -176,7 +163,8 @@ function Profile() {
             }}
           />
         )}
-        {!image && auth.currentUser.photoURL && (
+
+        {auth.currentUser && auth.currentUser.photoURL && !image && (
           <Image
             source={{ uri: auth.currentUser.photoURL }}
             style={{
@@ -190,59 +178,69 @@ function Profile() {
       <Pressable style={styles.addProfilePic} onPress={pickImage}>
         <FontAwesomeIcon color="white" size={15} icon={faPlus} />
       </Pressable>
+
       <View style={styles.forms}>
-        <View>
-          <View style={styles.form}>
-            <Text
-              style={{
-                fontFamily: "MontserratSemiBold",
-                color: "#B6B6B6",
-                marginBottom: 8,
-              }}
-            >
-              Username
-            </Text>
-            <Text>{user.displayName}</Text>
-            <View
-              style={{
-                width: 280,
-                height: 1,
-                backgroundColor: "#D9D9D9",
-                marginTop: 18,
-              }}
-            ></View>
-          </View>
-          <View style={styles.form}>
-            <Text
-              style={{
-                fontFamily: "MontserratSemiBold",
-                color: "#B6B6B6",
-                marginBottom: 8,
-              }}
-            >
-              Email
-            </Text>
-            <Text>{user.email}</Text>
-            <View
-              style={{
-                width: 280,
-                height: 1,
-                backgroundColor: "#D9D9D9",
-                marginTop: 18,
-              }}
-            ></View>
-          </View>
-          <PrimaryButton
-            label="Mina annonser"
-            btnWidth={{
-              width: 150,
-              position: "absolute",
-              justifyContent: "center",
-              bottom: 180,
+        {image && (
+          <Pressable
+            style={{
+              marginTop: 130,
+              marginBottom: 0,
+              alignSelf: "center",
             }}
-            onPress={() => navigation.navigate("MyProducts")}
-          />
+            onPress={updatePfp}
+          >
+            <Text style={{ color: "green" }}>Bekräfta ny profilbild</Text>
+          </Pressable>
+        )}
+        <View style={styles.form}>
+          <Text
+            style={{
+              fontFamily: "MontserratSemiBold",
+              color: "#B6B6B6",
+              marginBottom: 8,
+            }}
+          >
+            Username
+          </Text>
+          <Text>{user.displayName}</Text>
+          <View
+            style={{
+              width: 280,
+              height: 1,
+              backgroundColor: "#D9D9D9",
+              marginTop: 18,
+            }}
+          ></View>
         </View>
+        <View style={styles.form}>
+          <Text
+            style={{
+              fontFamily: "MontserratSemiBold",
+              color: "#B6B6B6",
+              marginBottom: 8,
+            }}
+          >
+            Email
+          </Text>
+          <Text>{user.email}</Text>
+          <View
+            style={{
+              width: 280,
+              height: 1,
+              backgroundColor: "#D9D9D9",
+              marginTop: 18,
+            }}
+          ></View>
+        </View>
+        <PrimaryButton
+          label="Mina annonser"
+          btnWidth={{
+            width: 150,
+            marginTop: 30,
+            justifyContent: "center",
+          }}
+          onPress={() => navigation.navigate("MyProducts")}
+        />
       </View>
     </View>
   );
@@ -281,7 +279,7 @@ const styles = StyleSheet.create({
     borderRadius: "75%",
     backgroundColor: "#B6B6B6",
     position: "absolute",
-    top: 110,
+    top: 90,
   },
   addProfilePic: {
     width: 30,
@@ -289,17 +287,14 @@ const styles = StyleSheet.create({
     borderRadius: "50%",
     backgroundColor: "#B0D182",
     position: "absolute",
-    top: 230,
+    top: 220,
     right: 150,
     justifyContent: "center",
     alignItems: "center",
   },
-  forms: {
-    position: "absolute",
-    top: 330,
-  },
+  forms: { marginTop: 40 },
   form: {
-    marginTop: 30,
+    marginTop: 20,
   },
   editFormContainer: {
     width: 280,
