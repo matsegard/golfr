@@ -1,17 +1,22 @@
-import { StyleSheet, View, Image, Text } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Image,
+  Text,
+  Dimensions,
+  Pressable,
+} from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { UsernameValidationSchema } from "../schemas/UsernameValidationSchema";
-import { PasswordValidationSchema } from "../schemas/PasswordValidationSchema";
-import { EmailValidationSchema } from "../schemas/EmailValidationSchema";
+import { faQuestion } from "@fortawesome/free-solid-svg-icons";
 import { Formik } from "formik";
-import { Pressable } from "react-native";
-import { Input, Alert, VStack, HStack } from "native-base";
+import { Input, Alert, VStack, HStack, Divider } from "native-base";
 import PrimaryButton from "../inputs/PrimaryButton.js";
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { LoginValidationSchema } from "../schemas/LoginValidationSchema";
 import React from "react";
 
 function Login() {
@@ -50,16 +55,6 @@ function Login() {
     setErrorPassword(false);
   }
 
-  // // TO BE REMOVED
-  // onAuthStateChanged(auth, (user) => {
-  //   if (user) {
-  //     const uid = user.uid;
-  //     console.log("logged in", auth.currentUser);
-  //   } else {
-  //     console.log("NOT logged in");
-  //   }
-  // });
-
   return (
     <View style={styles.container}>
       <Image
@@ -71,6 +66,34 @@ function Login() {
         ]}
         source={require("../../assets/Ellipse.png")}
       />
+      <View
+        style={{
+          width: Dimensions.get("window").width,
+          justifyContent: "space-between",
+          position: "absolute",
+          paddingLeft: 30,
+          top: 14,
+        }}
+      >
+        <Pressable
+          style={{ paddingLeft: 5 }}
+          onPress={() => navigation.navigate("HelpPage")}
+        >
+          <FontAwesomeIcon color="white" size={20} icon={faQuestion} />
+        </Pressable>
+        <Text style={{ fontWeight: "400", color: "white", paddingTop: "2%" }}>
+          Hjälp
+        </Text>
+        <Divider
+          style={{
+            maxWidth: "9.4%",
+          }}
+          my="1"
+          _light={{
+            bg: "white",
+          }}
+        />
+      </View>
       {success && (
         <Alert
           w="50%"
@@ -138,11 +161,7 @@ function Login() {
       <View style={styles.forms}>
         <Formik
           validateOnBlur={false}
-          validationSchema={
-            (UsernameValidationSchema,
-            EmailValidationSchema,
-            PasswordValidationSchema)
-          }
+          validationSchema={LoginValidationSchema}
           initialValues={{
             email: "",
             password: "",
@@ -201,7 +220,7 @@ function Login() {
                       marginBottom: 8,
                     }}
                   >
-                    Password
+                    Lösenord
                   </Text>
                   <View style={styles.passwordCont}>
                     <Input
@@ -209,7 +228,7 @@ function Login() {
                       style={styles.editForm}
                       variant="underlined"
                       type={show ? "text" : "password"}
-                      placeholder="Password"
+                      placeholder="Lösenord"
                       onChangeText={handleChange("password")}
                       onBlur={handleBlur("password")}
                       value={values.password}
@@ -255,6 +274,9 @@ function Login() {
               </Pressable>
               <PrimaryButton
                 label="Logga in"
+                disabled={
+                  !isValid || (values.email === "" && values.password === "")
+                }
                 btnWidth={{
                   width: 182,
                   right: 50,
@@ -295,6 +317,8 @@ const styles = StyleSheet.create({
     letterSpacing: ".3%",
     textDecorationLine: "underline",
     position: "absolute",
+    top: 500,
+    marginTop: 20,
     top: 502,
   },
   loginText: {
@@ -308,7 +332,7 @@ const styles = StyleSheet.create({
     top: 200,
   },
   form: {
-    marginTop: 30,
+    marginTop: 36,
   },
   editFormContainer: {
     width: 280,

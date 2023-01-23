@@ -29,6 +29,7 @@ import { db } from "../../firebase/firebaseConfig";
 import EditProductModal from "../modals/EditProductModal";
 import { useNavigation } from "@react-navigation/native";
 import { useFocusEffect } from "@react-navigation/native";
+import { faLocationDot } from "@fortawesome/free-solid-svg-icons/faLocationDot";
 
 const MyProfileProducts = () => {
   const [myProducts, setMyProducts] = useState([]);
@@ -137,11 +138,24 @@ const MyProfileProducts = () => {
                   </Heading>
                 </Stack>
                 <Text fontWeight="400">{product.data.description}</Text>
-                <Text fontWeight="600">
+                <Text fontWeight="600" style={{ marginTop: 10 }}>
                   {product.data.price}kr
                   <Text fontWeight="400"> /dag</Text>
                 </Text>
-                <Text fontWeight="400">{product.data.location}</Text>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    marginTop: 5,
+                  }}
+                >
+                  <FontAwesomeIcon color="#6A994E" icon={faLocationDot} />
+                  <Text
+                    style={{ fontFamily: "MontserratMedium" }}
+                    fontWeight="400"
+                  >
+                    {product.data.location}
+                  </Text>
+                </View>
               </Stack>
               <Box flexDirection="row" justifyContent="flex-end">
                 <Pressable onPress={() => deleteProduct(product)}>

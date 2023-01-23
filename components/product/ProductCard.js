@@ -20,11 +20,20 @@ import { db } from "../../firebase/firebaseConfig";
 import { useFocusEffect } from "@react-navigation/native";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 
-function ProductCard({ selectedCategory, setSelectedCategory }) {
+function ProductCard({ selectedCategory, searchString }) {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
-  const filteredList = useMemo(getFilteredList, [selectedCategory, products]);
+
+  const filteredList = useMemo(() => {
+    if (selectedCategory) {
+      return products.filter((item) => item.data.category === selectedCategory);
+    } else if (searchString) {
+      return products.filter((item) =>
+        String(item.data.title).includes(searchString)
+      );
+    } else if (!selectedCategory && !searchString) return products;
+  });
 
   async function getData() {
     const productsData = [];
@@ -43,14 +52,6 @@ function ProductCard({ selectedCategory, setSelectedCategory }) {
     return;
   }
 
-  function getFilteredList() {
-    if (!selectedCategory) {
-      return products;
-    }
-    
-    return products.filter((item) => item.data.category === selectedCategory);
-  }
-
   useFocusEffect(
     React.useCallback(() => {
       getData();
@@ -66,7 +67,7 @@ function ProductCard({ selectedCategory, setSelectedCategory }) {
               key={i}
               onPress={() => {
                 navigation.navigate("ProductDetails", {
-                  title: item.data.title,
+                  tilte: item.data.title,
                   image: item.data.image,
                   price: item.data.price,
                   description: item.data.description,
@@ -169,9 +170,7 @@ function ProductCard({ selectedCategory, setSelectedCategory }) {
           </HStack>
         )}
         {filteredList.length === 0 && (
-          <Text paddingTop={60}>
-            Det finns inga annonser i den här kategorin
-          </Text>
+          <Text paddingTop={60}>Tyvärr, inga matchande annonser...</Text>
         )}
       </Box>
     </ScrollView>
