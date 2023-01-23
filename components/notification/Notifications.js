@@ -26,7 +26,7 @@ const Notifications = () => {
   const [bookings, setBookings] = useState([]);
   const [acceptedBookings, setAcceptedBookings] = useState([]);
   const [myBookings, setMyBookings] = useState([]);
-  const [openMenu1, setOpenMenu1] = useState(false);
+  const [openMenu1, setOpenMenu1] = useState(true);
   const [openMenu2, setOpenMenu2] = useState(false);
   const [openMenu3, setOpenMenu3] = useState(false);
   const [update, setUpdate] = useState(false);
@@ -143,32 +143,107 @@ const Notifications = () => {
                 alignItems: "center",
                 justifyContent: "center",
                 flexDirection: "row",
+                marginTop: 25,
               }}
             >
               <Pressable onPress={() => setOpenMenu1(!openMenu1)}>
-                <Text style={styles.title}>Förfrågningar</Text>
-              </Pressable>
-              <View
-                style={{
-                  backgroundColor: "#6A994E",
-                  width: 25,
-                  height: 25,
-                  borderRadius: "100%",
-                  justifyContent: "center",
-                  alignSelf: "center",
-                  marginBottom: -20,
-                }}
-              >
-                <Text
-                  style={{
-                    color: "white",
-                    fontSize: 18,
-                    alignSelf: "center",
-                  }}
-                >
-                  {bookings.length}
+                <Text style={!openMenu1 ? styles.title : styles.titleActive}>
+                  Förfrågningar
                 </Text>
-              </View>
+              </Pressable>
+              {bookings.length != 0 ? (
+                <View style={!openMenu1 ? styles.number : styles.activeNumber}>
+                  <Text
+                    style={{
+                      color: "white",
+                      fontSize: 11,
+                      alignSelf: "center",
+                    }}
+                  >
+                    {bookings.length}
+                  </Text>
+                </View>
+              ) : (
+                <View
+                  style={!openMenu1 ? styles.numberEmpty : styles.activeNumber}
+                >
+                  <Text
+                    style={{
+                      color: "white",
+                      fontSize: 11,
+                      alignSelf: "center",
+                    }}
+                  >
+                    {bookings.length}
+                  </Text>
+                </View>
+              )}
+
+              <Pressable onPress={() => setOpenMenu2(!openMenu2)}>
+                <Text style={!openMenu2 ? styles.title : styles.titleActive}>
+                  Uthyrningar
+                </Text>
+              </Pressable>
+              {acceptedBookings.length != 0 ? (
+                <View style={!openMenu2 ? styles.number : styles.activeNumber}>
+                  <Text
+                    style={{
+                      color: "white",
+                      fontSize: 11,
+                      alignSelf: "center",
+                    }}
+                  >
+                    {acceptedBookings.length}
+                  </Text>
+                </View>
+              ) : (
+                <View
+                  style={!openMenu2 ? styles.numberEmpty : styles.activeNumber}
+                >
+                  <Text
+                    style={{
+                      color: "white",
+                      fontSize: 11,
+                      alignSelf: "center",
+                    }}
+                  >
+                    {acceptedBookings.length}
+                  </Text>
+                </View>
+              )}
+
+              <Pressable onPress={() => setOpenMenu3(!openMenu3)}>
+                <Text style={!openMenu3 ? styles.title : styles.titleActive}>
+                  Hyrda produkter
+                </Text>
+              </Pressable>
+              {myBookings.length != 0 ? (
+                <View style={!openMenu3 ? styles.number : styles.activeNumber}>
+                  <Text
+                    style={{
+                      color: "white",
+                      fontSize: 11,
+                      alignSelf: "center",
+                    }}
+                  >
+                    {myBookings.length}
+                  </Text>
+                </View>
+              ) : (
+                <View
+                  style={!openMenu3 ? styles.numberEmpty : styles.activeNumber}
+                >
+                  <Text
+                    style={{
+                      color: "white",
+                      fontSize: 11,
+                      alignSelf: "center",
+                    }}
+                  >
+                    {myBookings.length}
+                  </Text>
+                </View>
+              )}
             </View>
 
             {openMenu1 && (
@@ -176,7 +251,7 @@ const Notifications = () => {
                 {bookings.length == 0 && (
                   <Text
                     style={{
-                      marginTop: 20,
+                      marginTop: 30,
                       fontFamily: "MontserratMedium",
                       fontSize: 12,
                     }}
@@ -190,7 +265,7 @@ const Notifications = () => {
                       <Text
                         style={{
                           fontFamily: "MontserratSemiBold",
-                          fontSize: 15,
+                          fontSize: 16,
                         }}
                       >
                         {booking.data.renter}{" "}
@@ -282,38 +357,13 @@ const Notifications = () => {
                 justifyContent: "center",
                 flexDirection: "row",
               }}
-            >
-              <Pressable onPress={() => setOpenMenu2(!openMenu2)}>
-                <Text style={styles.title}>Uthyrda produkter</Text>
-              </Pressable>
-              <View
-                style={{
-                  backgroundColor: "#6A994E",
-                  width: 25,
-                  height: 25,
-                  borderRadius: "100%",
-                  justifyContent: "center",
-                  alignSelf: "center",
-                  marginBottom: -20,
-                }}
-              >
-                <Text
-                  style={{
-                    color: "white",
-                    fontSize: 18,
-                    alignSelf: "center",
-                  }}
-                >
-                  {acceptedBookings.length}
-                </Text>
-              </View>
-            </View>
+            ></View>
             {openMenu2 && (
               <>
                 {acceptedBookings.length == 0 && (
                   <Text
                     style={{
-                      marginTop: 20,
+                      marginTop: 30,
                       fontFamily: "MontserratMedium",
                       fontSize: 12,
                     }}
@@ -327,7 +377,7 @@ const Notifications = () => {
                       <Text
                         style={{
                           fontFamily: "MontserratSemiBold",
-                          fontSize: 17,
+                          fontSize: 16,
                         }}
                       >
                         Uthyrd produkt
@@ -414,38 +464,13 @@ const Notifications = () => {
                 justifyContent: "center",
                 flexDirection: "row",
               }}
-            >
-              <Pressable onPress={() => setOpenMenu3(!openMenu3)}>
-                <Text style={styles.title}>Hyrda produkter</Text>
-              </Pressable>
-              <View
-                style={{
-                  backgroundColor: "#6A994E",
-                  width: 25,
-                  height: 25,
-                  borderRadius: "100%",
-                  justifyContent: "center",
-                  alignSelf: "center",
-                  marginBottom: -20,
-                }}
-              >
-                <Text
-                  style={{
-                    color: "white",
-                    fontSize: 18,
-                    alignSelf: "center",
-                  }}
-                >
-                  {myBookings.length}
-                </Text>
-              </View>
-            </View>
+            ></View>
             {openMenu3 && (
               <>
                 {myBookings.length == 0 && (
                   <Text
                     style={{
-                      marginTop: 20,
+                      marginTop: 30,
                       fontFamily: "MontserratMedium",
                       fontSize: 12,
                     }}
@@ -459,7 +484,7 @@ const Notifications = () => {
                       <Text
                         style={{
                           fontFamily: "MontserratSemiBold",
-                          fontSize: 17,
+                          fontSize: 16,
                         }}
                       >
                         Hyrd produkt
@@ -469,7 +494,7 @@ const Notifications = () => {
                       <Text
                         style={{
                           fontFamily: "MontserratSemiBold",
-                          fontSize: 17,
+                          fontSize: 16,
                         }}
                       >
                         Väntar på svar från uthyraren
@@ -551,17 +576,7 @@ const Notifications = () => {
                         </Text>
                       </Text>
                     </View>
-
-                    {/* <PrimaryButton
-                label="Avbryt"
-                btnWidth={{
-                  width: 130,
-                  marginTop: 20,
-                  backgroundColor: "#a5a5a5",
-                }}
-                onPress={() => {}}
-              /> */}
-                  </View> // kortet
+                  </View>
                 ))}
               </>
             )}
@@ -582,10 +597,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   title: {
-    fontFamily: "MontserratMedium",
-    fontSize: 20,
+    fontFamily: "MontserratSemiBold",
+    fontSize: 11,
     marginTop: 20,
-    marginRight: 5,
+    marginRight: 3,
+    marginLeft: 8,
+    color: "#9B9B9B",
   },
   adsCard: {
     backgroundColor: "#F4F4F4",
@@ -631,6 +648,42 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginTop: 11,
     fontFamily: "MontserratRegular",
+  },
+  titleActive: {
+    fontFamily: "MontserratSemiBold",
+    fontSize: 11,
+    marginTop: 20,
+    marginRight: 3,
+    marginLeft: 10,
+    color: "#94C949",
+    textDecorationLine: "underline",
+  },
+  number: {
+    backgroundColor: "#6A994E",
+    width: 17,
+    height: 17,
+    borderRadius: "100%",
+    justifyContent: "center",
+    alignSelf: "center",
+    marginBottom: -20,
+  },
+  activeNumber: {
+    backgroundColor: "#94C949",
+    width: 17,
+    height: 17,
+    borderRadius: "100%",
+    justifyContent: "center",
+    alignSelf: "center",
+    marginBottom: -20,
+  },
+  numberEmpty: {
+    backgroundColor: "#9B9B9B",
+    width: 17,
+    height: 17,
+    borderRadius: "100%",
+    justifyContent: "center",
+    alignSelf: "center",
+    marginBottom: -20,
   },
 });
 
