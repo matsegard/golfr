@@ -17,7 +17,7 @@ export const ProductValidationSchema = yup.object().shape({
     .required("Fyll i en beskrivning"),
   price: yup
     .number()
-    .max(10000, "Priset får endast innehålla 5 siffror")
+    .max(100000, "Priset får endast innehålla 5 siffror")
     .typeError("Priset måste vara ett nummer")
     .required("Fyll i pris"),
   location: yup
