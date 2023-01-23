@@ -282,7 +282,8 @@ const styles = StyleSheet.create({
     letterSpacing: ".3%",
     textDecorationLine: "underline",
     position: "absolute",
-    top: 680,
+    top: 545,
+    marginTop: 20,
   },
   loginText: {
     fontSize: 20,
@@ -292,10 +293,11 @@ const styles = StyleSheet.create({
   },
   forms: {
     position: "absolute",
-    top: 230,
+    top: 200,
+    
   },
   form: {
-    marginTop: 16,
+    marginTop: 36,
   },
   editFormContainer: {
     width: 280,
