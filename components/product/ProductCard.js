@@ -24,7 +24,11 @@ function ProductCard({ selectedCategory, searchString }) {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
-  const filteredList = useMemo(getFilteredList, [selectedCategory, products]);
+  const filteredList = useMemo(() => {
+    if (selectedCategory) return getFilteredList, [selectedCategory, products];
+    if (searchString) return getSearchString, [searchString, products];
+    if (!selectedCategory) return products;
+  });
 
   async function getData() {
     const productsData = [];
@@ -44,11 +48,11 @@ function ProductCard({ selectedCategory, searchString }) {
   }
 
   function getFilteredList() {
-    if (!selectedCategory) {
-      return products;
-    }
-
     return products.filter((item) => item.data.category === selectedCategory);
+  }
+
+  function getSearchString() {
+    return products.filter((item) => String(item.title).includes(searchString));
   }
 
   useFocusEffect(
