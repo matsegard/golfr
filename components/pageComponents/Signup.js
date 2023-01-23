@@ -1,9 +1,10 @@
-import { StyleSheet, Image, Text } from "react-native";
+import { StyleSheet, Image, Text, Dimensions } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { faQuestion } from "@fortawesome/free-solid-svg-icons";
 import { Pressable } from "react-native";
-import { Input, VStack, HStack, Alert, View } from "native-base";
+import { Input, VStack, HStack, Alert, View, Divider } from "native-base";
 import PrimaryButton from "../inputs/PrimaryButton.js";
 import { useState } from "react";
 import { Formik } from "formik";
@@ -64,7 +65,34 @@ function Signup() {
         ]}
         source={require("../../assets/Ellipse.png")}
       />
-
+      <View
+        style={{
+          width: Dimensions.get("window").width,
+          justifyContent: "space-between",
+          position: "absolute",
+          paddingLeft: 30,
+          top: 14,
+        }}
+      >
+        <Pressable
+          style={{ paddingLeft: 5 }}
+          onPress={() => navigation.navigate("HelpPage")}
+        >
+          <FontAwesomeIcon color="white" size={20} icon={faQuestion} />
+        </Pressable>
+        <Text style={{ fontWeight: "400", color: "white", paddingTop: "2%" }}>
+          Hjälp
+        </Text>
+        <Divider
+          style={{
+            maxWidth: "9.4%",
+          }}
+          my="1"
+          _light={{
+            bg: "white",
+          }}
+        />
+      </View>
       {success && (
         <Alert
           w="60%"
