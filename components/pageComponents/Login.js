@@ -317,7 +317,6 @@ const styles = StyleSheet.create({
     letterSpacing: ".3%",
     textDecorationLine: "underline",
     position: "absolute",
-    top: 500,
     marginTop: 20,
     top: 502,
   },
