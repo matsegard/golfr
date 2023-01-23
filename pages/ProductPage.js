@@ -8,11 +8,12 @@ import Navbar from "../components/bars/Navbar";
 
 export default function ProductPage() {
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [searchString, setSearchString] = useState("");
 
   return (
     <View style={styles.container}>
       <View style={styles.product}>
-        <SearchBar />
+        <SearchBar setSearchString={setSearchString} />
       </View>
       <CategoryBar
         selectedCategory={selectedCategory}
@@ -25,7 +26,10 @@ export default function ProductPage() {
           fontSize: 30,
         }}
       >
-        <ProductCard selectedCategory={selectedCategory} />
+        <ProductCard
+          searchString={searchString}
+          selectedCategory={selectedCategory}
+        />
       </Text>
       <StatusBar style="auto" />
       <Navbar />

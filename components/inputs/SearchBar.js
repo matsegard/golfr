@@ -1,9 +1,14 @@
 import { Input, Icon } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
 
-const SearchBar = () => {
+const SearchBar = ({ setSearchString }) => {
+  const filterProducts = (text) => {
+    setSearchString(text);
+  };
+
   return (
     <Input
+      onChangeText={(text) => filterProducts(text)}
       backgroundColor="#E4E4E4"
       placeholder="Search"
       placeholderTextColor="#989898"

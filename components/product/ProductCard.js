@@ -20,7 +20,7 @@ import { db } from "../../firebase/firebaseConfig";
 import { useFocusEffect } from "@react-navigation/native";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 
-function ProductCard({ selectedCategory, setSelectedCategory }) {
+function ProductCard({ selectedCategory, searchString }) {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
@@ -47,7 +47,7 @@ function ProductCard({ selectedCategory, setSelectedCategory }) {
     if (!selectedCategory) {
       return products;
     }
-    
+
     return products.filter((item) => item.data.category === selectedCategory);
   }
 
