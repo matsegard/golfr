@@ -601,7 +601,7 @@ const styles = StyleSheet.create({
     fontSize: 11,
     marginTop: 20,
     marginRight: 3,
-    marginLeft: 8,
+    marginLeft: 12,
     color: "#9B9B9B",
   },
   adsCard: {
@@ -654,7 +654,7 @@ const styles = StyleSheet.create({
     fontSize: 11,
     marginTop: 20,
     marginRight: 3,
-    marginLeft: 10,
+    marginLeft: 12,
     color: "#94C949",
     textDecorationLine: "underline",
   },
