@@ -245,7 +245,7 @@ const styles = StyleSheet.create({
   locationIcon: {
     color: "#6A994E",
     alignItems: "center",
-    marginRight: 10,
+    marginRight: 3,
   },
   infoContainer: {
     flex: 2,

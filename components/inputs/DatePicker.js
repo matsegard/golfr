@@ -157,14 +157,14 @@ export default function DatePicker({ price, productId, user, setOpenModal }) {
       >
         <Text
           style={{
-            fontFamily: "MontserratSemiBold",
+            fontFamily: "MontserratRegular",
             marginBottom: 10,
             fontSize: 24,
           }}
         >
           Hyrperiod
         </Text>
-        <Text style={{ fontFamily: "MontserratMedium", fontSize: 18 }}>
+        <Text style={{ fontFamily: "MontserratSemiBold", fontSize: 18 }}>
           {startDate.toLocaleDateString()} - {endDate.toLocaleDateString()}
         </Text>
         <View style={{ flexDirection: "row", marginTop: 10 }}>

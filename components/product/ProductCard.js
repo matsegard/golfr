@@ -67,7 +67,7 @@ function ProductCard({ selectedCategory, searchString }) {
               key={i}
               onPress={() => {
                 navigation.navigate("ProductDetails", {
-                  tilte: item.data.title,
+                  title: item.data.title,
                   image: item.data.image,
                   price: item.data.price,
                   description: item.data.description,

@@ -74,24 +74,27 @@ function Signup() {
           top: 14,
         }}
       >
-        <Pressable
-          style={{ paddingLeft: 5 }}
-          onPress={() => navigation.navigate("HelpPage")}
-        >
-          <FontAwesomeIcon color="white" size={20} icon={faQuestion} />
+        <Pressable onPress={() => navigation.navigate("HelpPage")}>
+          <FontAwesomeIcon
+            style={{ marginLeft: 5 }}
+            color="white"
+            size={20}
+            icon={faQuestion}
+          />
+
+          <Text style={{ fontWeight: "400", color: "white", paddingTop: "1%" }}>
+            Hjälp
+          </Text>
+          <Divider
+            style={{
+              maxWidth: "9.4%",
+            }}
+            my="1"
+            _light={{
+              bg: "white",
+            }}
+          />
         </Pressable>
-        <Text style={{ fontWeight: "400", color: "white", paddingTop: "2%" }}>
-          Hjälp
-        </Text>
-        <Divider
-          style={{
-            maxWidth: "9.4%",
-          }}
-          my="1"
-          _light={{
-            bg: "white",
-          }}
-        />
       </View>
       {success && (
         <Alert
@@ -322,7 +325,6 @@ const styles = StyleSheet.create({
   forms: {
     position: "absolute",
     top: 200,
-    
   },
   form: {
     marginTop: 36,
