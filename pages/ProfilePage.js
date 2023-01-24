@@ -5,7 +5,7 @@ import Navbar from "../components/bars/Navbar";
 
 export default function ProfilePage() {
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <Profile />
       <Navbar />
     </View>
