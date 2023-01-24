@@ -1,20 +1,26 @@
-import React, { useState } from "react";
-import { StyleSheet, View, Image, Text, Pressable } from "react-native";
+import React, { useState, useEffect } from "react";
+import { StyleSheet, View, Image, Text, Pressable, Button } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faGear } from "@fortawesome/free-solid-svg-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import PrimaryButton from "../inputs/PrimaryButton";
 import { useNavigation } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
-import { signOut, getAuth } from "firebase/auth";
+import { signOut, getAuth, updateProfile } from "firebase/auth";
 import { Input, Alert, VStack, HStack } from "native-base";
+import * as ImagePicker from "expo-image-picker";
+import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
 
 function Profile() {
   const navigation = useNavigation();
   const auth = getAuth();
   const route = useRoute();
+  const [image, setImage] = useState(null);
+  const [imgUrl, setImgUrl] = useState(null);
+  const [imgError, setImgError] = useState(false);
   // const [username, setUsername] = useState(auth.currentUser.displayName);
   const [success, setSuccess] = useState(false);
+  const [profilePicUpdated, setProfilePicUpdated] = useState(false);
   const [logOutFail, setLogOutFail] = useState(false);
   const { user } = route.params;
 
@@ -26,7 +32,7 @@ function Profile() {
   }
 
   // SIGN OUT FUNCTIONALITY
-  function testSignOut() {
+  function signOutAccount() {
     signOut(auth)
       .then(() => {
         setSuccess(true);
@@ -39,16 +45,47 @@ function Profile() {
       });
   }
 
-  //updates password
-  // function updateUsersPassword({ password }) {
-  //   updatePassword(auth.currentUser, { password: password })
-  //     .then(() => {
-  //       console.log(auth.currentUser);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // }
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      aspect: [4, 3],
+      quality: 0.1,
+    });
+
+    if (!result.canceled) {
+      setImage(result.assets[0]);
+    }
+  };
+
+  useEffect(() => {
+    addImageDatabase();
+  }, [image]);
+
+  const addImageDatabase = async () => {
+    const storage = getStorage();
+    let filename = image.uri.substring(image.uri.lastIndexOf("/") + 1);
+    const storageRef = ref(storage, "images");
+    const imageRef = ref(storageRef, filename);
+    const response = await fetch(image.uri);
+    const blob = await response.blob();
+    await uploadBytes(imageRef, blob);
+    await getDownloadURL(imageRef).then((downloadURL) => {
+      setImgUrl(downloadURL);
+    });
+  };
+
+  function updatePfp() {
+    updateProfile(user, {
+      photoURL: imgUrl,
+    })
+      .then(() => {
+        console.log("Profilbild uppdaterad");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
   return (
     <View style={styles.container}>
@@ -71,7 +108,7 @@ function Profile() {
         >
           <FontAwesomeIcon color="white" size={24} icon={faGear} />
         </Pressable>
-        <Text style={styles.logout} onPress={() => testSignOut()}>
+        <Text style={styles.logout} onPress={() => signOutAccount()}>
           Logga ut
         </Text>
         {success && (
@@ -116,65 +153,95 @@ function Profile() {
           </Alert>
         )}
       </View>
-      <View style={styles.profilePic}></View>
-      <Pressable style={styles.addProfilePic}>
-        <View>
-          <FontAwesomeIcon color="white" size={15} icon={faPlus} />
-        </View>
+      <View style={styles.profilePic}>
+        {image && (
+          <Image
+            source={{ uri: image.uri }}
+            style={{
+              width: 150,
+              height: 150,
+              borderRadius: "75%",
+            }}
+          />
+        )}
+
+        {auth.currentUser && auth.currentUser.photoURL && !image && (
+          <Image
+            source={{ uri: auth.currentUser.photoURL }}
+            style={{
+              width: 150,
+              height: 150,
+              borderRadius: "75%",
+            }}
+          />
+        )}
+      </View>
+      <Pressable style={styles.addProfilePic} onPress={pickImage}>
+        <FontAwesomeIcon color="white" size={15} icon={faPlus} />
       </Pressable>
+
       <View style={styles.forms}>
-        <View>
-          <View style={styles.form}>
-            <Text
-              style={{
-                fontFamily: "MontserratSemiBold",
-                color: "#B6B6B6",
-                marginBottom: 8,
-              }}
-            >
-              Username
-            </Text>
-            <Text>{user.displayName}</Text>
-            <View
-              style={{
-                width: 280,
-                height: 1,
-                backgroundColor: "#D9D9D9",
-                marginTop: 18,
-              }}
-            ></View>
-          </View>
-          <View style={styles.form}>
-            <Text
-              style={{
-                fontFamily: "MontserratSemiBold",
-                color: "#B6B6B6",
-                marginBottom: 8,
-              }}
-            >
-              Email
-            </Text>
-            <Text>{user.email}</Text>
-            <View
-              style={{
-                width: 280,
-                height: 1,
-                backgroundColor: "#D9D9D9",
-                marginTop: 18,
-              }}
-            ></View>
-          </View>
-      <PrimaryButton
-        label="Mina annonser"
-        btnWidth={{
-          width: 150,
-          position: "absolute",
-          justifyContent:"center",
-          bottom: 180,
-        }}
-        onPress={() => navigation.navigate("MyProducts")}
-      />
+        {image && (
+          <Pressable
+            style={{
+              marginTop: 130,
+              marginBottom: 0,
+              alignSelf: "center",
+            }}
+            onPress={updatePfp}
+          >
+            <Text style={{ color: "green" }}>Bekräfta ny profilbild</Text>
+          </Pressable>
+        )}
+        <View style={styles.form}>
+          <Text
+            style={{
+              fontFamily: "MontserratSemiBold",
+              color: "#B6B6B6",
+              marginBottom: 8,
+            }}
+          >
+            Username
+          </Text>
+          <Text>{user.displayName}</Text>
+          <View
+            style={{
+              width: 280,
+              height: 1,
+              backgroundColor: "#D9D9D9",
+              marginTop: 18,
+            }}
+          ></View>
         </View>
+        <View style={styles.form}>
+          <Text
+            style={{
+              fontFamily: "MontserratSemiBold",
+              color: "#B6B6B6",
+              marginBottom: 8,
+            }}
+          >
+            Email
+          </Text>
+          <Text>{user.email}</Text>
+          <View
+            style={{
+              width: 280,
+              height: 1,
+              backgroundColor: "#D9D9D9",
+              marginTop: 18,
+            }}
+          ></View>
+        </View>
+        <PrimaryButton
+          label="Mina annonser"
+          btnWidth={{
+            width: 150,
+            marginTop: 30,
+            justifyContent: "center",
+          }}
+          onPress={() => navigation.navigate("MyProducts")}
+        />
       </View>
     </View>
   );
@@ -213,7 +280,7 @@ const styles = StyleSheet.create({
     borderRadius: "75%",
     backgroundColor: "#B6B6B6",
     position: "absolute",
-    top: 110,
+    top: 90,
   },
   addProfilePic: {
     width: 30,
@@ -221,17 +288,14 @@ const styles = StyleSheet.create({
     borderRadius: "50%",
     backgroundColor: "#B0D182",
     position: "absolute",
-    top: 230,
+    top: 220,
     right: 150,
     justifyContent: "center",
     alignItems: "center",
   },
-  forms: {
-    position: "absolute",
-    top: 330,
-  },
+  forms: { marginTop: 40 },
   form: {
-    marginTop: 30,
+    marginTop: 20,
   },
   editFormContainer: {
     width: 280,
