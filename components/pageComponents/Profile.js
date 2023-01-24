@@ -79,7 +79,8 @@ function Profile() {
             w="50%"
             borderBottomRadius="2xl"
             position="absolute"
-            top="0"
+            top="-20"
+            left="25%"
             status="success"
           >
             <VStack space={2} flexShrink={1} w="100%" alignItems="center">
