@@ -24,6 +24,6 @@ npm start
 
 ## Contributors
 
-- **Max Andersson**
-- **Fia Andersson**
-- **Erik Matsegård**
+- **[Max Andersson](https://github.com/frontMAX)**
+- **[Fia Andersson](https://github.com/fiababiakandersson)**
+- **[Erik Matsegård](https://github.com/matsegard)**
