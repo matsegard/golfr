@@ -9,11 +9,10 @@ import {
   Center,
   Stack,
   HStack,
-  View,
 } from "native-base";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons/faLocationDot";
-import { Pressable, StyleSheet, ActivityIndicator } from "react-native";
+import { Pressable, StyleSheet, ActivityIndicator, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../firebase/firebaseConfig";
@@ -79,6 +78,7 @@ function ProductCard({ selectedCategory, searchString }) {
                   hand: item.data.hand,
                   gender: item.data.gender,
                   user: item.data.user,
+                  userImage: item.data.userImage,
                   id: item.id,
                 });
               }}
@@ -150,10 +150,36 @@ function ProductCard({ selectedCategory, searchString }) {
                       {item.data.location}
                       <FontAwesomeIcon color="#B6B6B6" icon={faLocationDot} />
                     </Text>
-                    <Text fontSize="xs">
-                      {item.data.user}{" "}
-                      <FontAwesomeIcon color="#B6B6B6" icon={faUser} />
-                    </Text>
+                    <View
+                      style={{
+                        alignItems: "center",
+                        flexDirection: "row",
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontFamily: "MontserratMedium",
+                        }}
+                        fontSize="xs"
+                      >
+                        {item.data.user}{" "}
+                      </Text>
+                      {item.data.userImage ? (
+                        <Image
+                          alt={item.data.title}
+                          style={{
+                            width: 25,
+                            height: 25,
+                            borderRadius: "100%",
+                          }}
+                          source={{
+                            uri: item.data.userImage,
+                          }}
+                        />
+                      ) : (
+                        <FontAwesomeIcon color="#B6B6B6" icon={faUser} />
+                      )}
+                    </View>
                   </Stack>
                   <Text fontWeight="400">{item.data.description}</Text>
                 </Stack>

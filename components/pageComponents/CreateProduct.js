@@ -84,6 +84,7 @@ export default function CreateProduct() {
       hand: hand,
       shaft: shaft,
       user: user.displayName,
+      userImage: user.photoURL,
       userEmail: user.email,
       pendingBooking: false,
       startDate: null,

@@ -40,6 +40,7 @@ export default function ProductDetails() {
     user,
     id,
     category,
+    userImage,
   } = route.params;
 
   const openDatePickerModal = () => {
@@ -79,13 +80,28 @@ export default function ProductDetails() {
               style={{
                 flexDirection: "row",
                 marginLeft: 10,
+                alignItems: "center",
               }}
             >
-              <FontAwesomeIcon style={styles.icons} icon={faUser} />
+              {userImage ? (
+                <Image
+                  alt={title}
+                  style={{
+                    width: 30,
+                    height: 30,
+                    borderRadius: "100%",
+                  }}
+                  source={{
+                    uri: userImage,
+                  }}
+                />
+              ) : (
+                <FontAwesomeIcon style={styles.icons} icon={faUser} />
+              )}
               <Text
                 style={{
+                  fontFamily: "MontserratMedium",
                   marginLeft: 5,
-                  marginBottom: 10,
                 }}
               >
                 {user}
