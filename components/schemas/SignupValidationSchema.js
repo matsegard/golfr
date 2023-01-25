@@ -3,7 +3,7 @@ import * as yup from "yup";
 export const SignupValidationSchema = yup.object().shape({
   email: yup
     .string()
-    .email("Please enter valid email")
+    .email("Ange korrekt email")
     .required("Email address is required"),
   password: yup
     .string()
