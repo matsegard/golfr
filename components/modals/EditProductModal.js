@@ -9,7 +9,7 @@ import {
   KeyboardAvoidingView,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import { Modal, Center, Select, ScrollView } from "native-base";
+import { Center, Select, ScrollView } from "native-base";
 import PrimaryButton from "../inputs/PrimaryButton";
 import { ProductValidationSchema } from "../schemas/ProductValidationSchema";
 import { Formik } from "formik";
@@ -22,7 +22,6 @@ import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
 import * as ImagePicker from "expo-image-picker";
-import Navbar from "../bars/Navbar";
 
 export default function EditProductModal() {
   const [newImage, setNewImage] = useState(image);
@@ -42,7 +41,6 @@ export default function EditProductModal() {
     hand,
     gender,
     image,
-    user,
     id,
   } = route.params;
 
@@ -111,9 +109,7 @@ export default function EditProductModal() {
       setNewImageUrl(downloadURL);
     });
   };
-  console.log("gammal bild", image);
-  console.log("ny bild", newImage);
-  console.log("ny bild url", newImageUrl);
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
