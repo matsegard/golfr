@@ -29,7 +29,7 @@ function ProductCard({ selectedCategory, searchString }) {
       return products.filter((item) => item.data.category === selectedCategory);
     } else if (searchString) {
       return products.filter((item) =>
-        String(item.data.title).includes(searchString)
+        String(item.data.title).includes(searchString.toLowerCase())
       );
     } else if (!selectedCategory && !searchString) return products;
   });
@@ -195,7 +195,7 @@ function ProductCard({ selectedCategory, searchString }) {
             />
           </HStack>
         )}
-        {filteredList.length === 0 && selectedCategory && (
+        {filteredList.length === 0 && searchString && (
           <Text paddingTop={60}>Tyvärr, inga matchande annonser...</Text>
         )}
       </Box>
