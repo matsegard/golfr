@@ -20,8 +20,8 @@ function HelpInfo() {
             fontSize: 20,
             fontFamily: "MontserratBold",
             fontWeight: "bold",
-            marginTop: 50,
-            marginBottom: 55,
+            marginTop: 40,
+            marginBottom: 45,
           }}
           marginX="auto"
         >

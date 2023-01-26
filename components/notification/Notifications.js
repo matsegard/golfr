@@ -590,7 +590,6 @@ const Notifications = () => {
 const styles = StyleSheet.create({
   container: {
     height: "100%",
-    backgroundColor: "white",
   },
   adsContainer: {
     width: "100%",
@@ -605,7 +604,7 @@ const styles = StyleSheet.create({
     color: "#9B9B9B",
   },
   adsCard: {
-    backgroundColor: "#F4F4F4",
+    backgroundColor: "white",
     width: "90%",
     borderRadius: 10,
     marginTop: 30,

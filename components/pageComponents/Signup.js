@@ -98,7 +98,7 @@ function Signup() {
       </View>
       {success && (
         <Alert
-          w="60%"
+          w="50%"
           borderBottomRadius="2xl"
           position="absolute"
           top="0"
@@ -107,9 +107,9 @@ function Signup() {
           <VStack space={2} flexShrink={1} w="100%" alignItems="center">
             <HStack flexShrink={1} space={2} justifyContent="space-between">
               <HStack space={2} flexShrink={1}>
-                <Alert.Icon mt="1" color="black" />
+                <Alert.Icon mt="0" color="black" />
                 <Text fontSize="md" color="coolGray.800">
-                  Registrering/ inloggning lyckad
+                  Registrering lyckad
                 </Text>
               </HStack>
             </HStack>
@@ -314,7 +314,7 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
     position: "absolute",
     top: 545,
-    marginTop: 20,
+    marginTop: 15,
   },
   loginText: {
     fontSize: 20,
@@ -324,10 +324,10 @@ const styles = StyleSheet.create({
   },
   forms: {
     position: "absolute",
-    top: 200,
+    top: 170,
   },
   form: {
-    marginTop: 36,
+    marginTop: 25,
   },
   editFormContainer: {
     width: 280,

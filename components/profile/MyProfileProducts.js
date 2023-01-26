@@ -150,7 +150,7 @@ const MyProfileProducts = () => {
                 >
                   <FontAwesomeIcon color="#6A994E" icon={faLocationDot} />
                   <Text
-                    style={{ fontFamily: "MontserratMedium" }}
+                    style={{ fontFamily: "MontserratMedium", marginLeft: 2 }}
                     fontWeight="400"
                   >
                     {product.data.location}
