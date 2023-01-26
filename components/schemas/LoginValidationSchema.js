@@ -3,10 +3,10 @@ import * as yup from "yup";
 export const LoginValidationSchema = yup.object().shape({
   email: yup
     .string()
-    .email("Please enter valid email")
-    .required("Email address is required"),
+    .email("Ange korrekt mail")
+    .required("Ange mail"),
   password: yup
     .string()
-    .min(8, ({ min }) => `Password must be at least ${min} characters`)
-    .required("Password is required"),
+    .min(8, ({ min }) => `Lösenordet måste vara minst ${min} tecken`)
+    .required("Ange korrekt lösenord"),
 });
