@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import Navbar from "../components/bars/Navbar";
 import Notifications from "../components/notification/Notifications";
 
