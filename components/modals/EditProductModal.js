@@ -71,7 +71,6 @@ export default function EditProductModal() {
       image: newImageUrl || image,
     })
       .then((updateRef) => {
-        console.log("Uppdaterad");
         Alert.alert("Annons uppdaterad");
         navigation.navigate("MyProducts");
       })
