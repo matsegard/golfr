@@ -4,14 +4,14 @@ export const SignupValidationSchema = yup.object().shape({
   email: yup
     .string()
     .email("Ange korrekt email")
-    .required("Email address is required"),
+    .required("Ange email"),
   password: yup
     .string()
-    .min(8, ({ min }) => `Password must be at least ${min} characters`)
-    .required("Password is required"),
+    .min(8, ({ min }) => `Lösenordet måste vara minst ${min} tecken`)
+    .required("Ange lösenord"),
   username: yup
     .string()
-    .min(1, ({ min }) => `Username must be at least ${min} characters`)
-    .max(25, ({ max }) => `Username can be maximum ${max} characters`)
-    .required("Username is required"),
+    .min(1, ({ min }) => `Användarnamnet måste vara minst ${min} tecken`)
+    .max(25, ({ max }) => `Användarnamnet kan max vara ${max} tecken`)
+    .required("Ange användarnamnet"),
 });
