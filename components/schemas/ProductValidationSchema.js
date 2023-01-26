@@ -27,7 +27,6 @@ export const ProductValidationSchema = yup.object().shape({
     .min(3, "Plasten måste vara minst 2 tecken"),
   clubs: yup
     .string()
-    // .required("Ange vilka klubbor settet innehåller")
     .max(45, "Klubbor får inte vara mer än 45 tecken")
     .min(3, "Ange vilka klubbor settet innehåller"),
   difficulty: yup
@@ -36,12 +35,10 @@ export const ProductValidationSchema = yup.object().shape({
     .label(["Avancerad", "Medel", "Nybörjare"]),
   gender: yup
     .string()
-    // .required("Välj kön")
     .oneOf(["Herr", "Dam", "Unisex"])
     .label(["Herr", "Dam", "Unisex"]),
   hand: yup
     .string()
-    // .required("Välj fattning")
     .oneOf(["Höger", "Vänster"])
     .label(["Höger", "Vänster"]),
   shaft: yup

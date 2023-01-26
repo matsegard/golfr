@@ -41,11 +41,9 @@ function Login() {
       .catch((errors) => {
         if (errors.code === "auth/user-not-found") {
           setErrorCode(true);
-          console.log(" adressen existerar inte");
         }
         if (errors.code === "auth/wrong-password") {
           setErrorPassword(true);
-          console.log("Lösenordet existerar inte");
         }
       });
   }
