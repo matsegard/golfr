@@ -605,6 +605,10 @@ const styles = StyleSheet.create({
   },
   adsCard: {
     backgroundColor: "white",
+    shadowColor: "#171717",
+    shadowOffset: { width: -2, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
     width: "90%",
     borderRadius: 10,
     marginTop: 30,
