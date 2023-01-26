@@ -86,7 +86,6 @@ export default function EditProductModal() {
     addNewImageDatabase();
   }, [newImage]);
 
-  console.log(newImageUrl);
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({

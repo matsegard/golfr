@@ -28,6 +28,7 @@ export const ProductValidationSchema = yup.object().shape({
   clubs: yup
     .string()
     // .required("Ange vilka klubbor settet innehåller")
+    .max(45, "Klubbor får inte vara mer än 45 tecken")
     .min(3, "Ange vilka klubbor settet innehåller"),
   difficulty: yup
     .string()
