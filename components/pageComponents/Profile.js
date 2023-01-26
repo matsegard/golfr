@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, Image, Text, Pressable, Button } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Image,
+  Text,
+  Pressable,
+  Button,
+  Alert,
+} from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faGear } from "@fortawesome/free-solid-svg-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -7,7 +15,7 @@ import PrimaryButton from "../inputs/PrimaryButton";
 import { useNavigation } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
 import { signOut, getAuth, updateProfile } from "firebase/auth";
-import { Input, Alert, VStack, HStack } from "native-base";
+import { Input, Alert as NativeBaseAlert, VStack, HStack } from "native-base";
 import * as ImagePicker from "expo-image-picker";
 import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
 
@@ -17,8 +25,6 @@ function Profile() {
   const route = useRoute();
   const [image, setImage] = useState(null);
   const [imgUrl, setImgUrl] = useState(null);
-  const [imgError, setImgError] = useState(false);
-  // const [username, setUsername] = useState(auth.currentUser.displayName);
   const [success, setSuccess] = useState(false);
   const [profilePicUpdated, setProfilePicUpdated] = useState(false);
   const [logOutFail, setLogOutFail] = useState(false);
@@ -75,12 +81,22 @@ function Profile() {
     });
   };
 
-  function updatePfp() {
+  function UpdateProfileImg() {
+    Alert.alert("Profilbild uppdaterad", "", [
+      {
+        text: "Ok",
+        onPress: () => UpdatePfp(),
+      },
+    ]);
+  }
+
+  function UpdatePfp() {
     updateProfile(user, {
       photoURL: imgUrl,
     })
       .then(() => {
         console.log("Profilbild uppdaterad");
+        setProfilePicUpdated(true);
       })
       .catch((error) => {
         console.log(error);
@@ -112,7 +128,7 @@ function Profile() {
           Logga ut
         </Text>
         {success && (
-          <Alert
+          <NativeBaseAlert
             w="50%"
             borderBottomRadius="2xl"
             position="absolute"
@@ -123,17 +139,17 @@ function Profile() {
             <VStack space={2} flexShrink={1} w="100%" alignItems="center">
               <HStack flexShrink={1} space={2} justifyContent="space-between">
                 <HStack space={2} flexShrink={1}>
-                  <Alert.Icon mt="1" color="black" />
+                  <NativeBaseAlert.Icon mt="1" color="black" />
                   <Text fontSize="md" color="coolGray.800">
                     Utloggning lyckad
                   </Text>
                 </HStack>
               </HStack>
             </VStack>
-          </Alert>
+          </NativeBaseAlert>
         )}
         {logOutFail && (
-          <Alert
+          <NativeBaseAlert
             w="50%"
             borderBottomRadius="2xl"
             position="absolute"
@@ -143,14 +159,14 @@ function Profile() {
             <VStack space={2} flexShrink={1} w="100%" alignItems="center">
               <HStack flexShrink={1} space={2} justifyContent="space-between">
                 <HStack space={2} flexShrink={1}>
-                  <Alert.Icon mt="1" color="black" />
+                  <NativeBaseAlert.Icon mt="1" color="black" />
                   <Text fontSize="md" color="coolGray.800">
                     Utloggning misslyckad
                   </Text>
                 </HStack>
               </HStack>
             </VStack>
-          </Alert>
+          </NativeBaseAlert>
         )}
       </View>
       <View style={styles.profilePic}>
@@ -164,7 +180,6 @@ function Profile() {
             }}
           />
         )}
-
         {auth.currentUser && auth.currentUser.photoURL && !image && (
           <Image
             source={{ uri: auth.currentUser.photoURL }}
@@ -176,23 +191,32 @@ function Profile() {
           />
         )}
       </View>
+      {image && !profilePicUpdated && (
+        <Pressable
+          style={{
+            marginTop: 70,
+            marginBottom: 0,
+            alignSelf: "center",
+          }}
+          onPress={UpdateProfileImg}
+        >
+          <Text
+            style={{
+              color: "green",
+              position: "absolute",
+              alignSelf: "center",
+              top: 115,
+            }}
+          >
+            Bekräfta ny profilbild
+          </Text>
+        </Pressable>
+      )}
       <Pressable style={styles.addProfilePic} onPress={pickImage}>
         <FontAwesomeIcon color="white" size={15} icon={faPlus} />
       </Pressable>
 
       <View style={styles.forms}>
-        {image && (
-          <Pressable
-            style={{
-              marginTop: 130,
-              marginBottom: 0,
-              alignSelf: "center",
-            }}
-            onPress={updatePfp}
-          >
-            <Text style={{ color: "green" }}>Bekräfta ny profilbild</Text>
-          </Pressable>
-        )}
         <View style={styles.form}>
           <Text
             style={{
@@ -293,9 +317,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  forms: { marginTop: 40 },
+  forms: { marginTop: 150 },
   form: {
-    marginTop: 20,
+    marginTop: 15,
   },
   editFormContainer: {
     width: 280,
