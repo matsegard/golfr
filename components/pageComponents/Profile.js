@@ -5,7 +5,6 @@ import {
   Image,
   Text,
   Pressable,
-  Button,
   Alert,
 } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
@@ -15,7 +14,7 @@ import PrimaryButton from "../inputs/PrimaryButton";
 import { useNavigation } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
 import { signOut, getAuth, updateProfile } from "firebase/auth";
-import { Input, Alert as NativeBaseAlert, VStack, HStack } from "native-base";
+import { Alert as NativeBaseAlert, VStack, HStack } from "native-base";
 import * as ImagePicker from "expo-image-picker";
 import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
 
@@ -32,7 +31,7 @@ function Profile() {
 
   // funkar om man är inloggad blir error om man ej är
   if (auth == !true) {
-    console.log("inte inloggad");
+
   } else {
     user;
   }
@@ -95,7 +94,6 @@ function Profile() {
       photoURL: imgUrl,
     })
       .then(() => {
-        console.log("Profilbild uppdaterad");
         setProfilePicUpdated(true);
       })
       .catch((error) => {

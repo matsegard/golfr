@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import {
   ScrollView,
   Box,
@@ -6,7 +6,6 @@ import {
   AspectRatio,
   Image,
   Text,
-  Center,
   Stack,
   Pressable,
 } from "native-base";
@@ -14,19 +13,16 @@ import { Alert, View } from "react-native";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-// import { useNavigation } from "@react-navigation/native";
 import { getAuth } from "firebase/auth";
 import {
   collection,
   getDocs,
   query,
   where,
-  onSnapshot,
   doc,
   deleteDoc,
 } from "firebase/firestore";
 import { db } from "../../firebase/firebaseConfig";
-import EditProductModal from "../modals/EditProductModal";
 import { useNavigation } from "@react-navigation/native";
 import { useFocusEffect } from "@react-navigation/native";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons/faLocationDot";
@@ -53,7 +49,6 @@ const MyProfileProducts = () => {
       );
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
         productsFromDb.push({ data: doc.data(), id: doc.id });
       });
       setMyProducts(productsFromDb);

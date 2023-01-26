@@ -15,7 +15,7 @@ import { faCamera } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import PrimaryButton from "../inputs/PrimaryButton.js";
 import { ProductValidationSchema } from "../schemas/ProductValidationSchema";
-import { doc, setDoc, addDoc, collection } from "firebase/firestore";
+import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../firebase/firebaseConfig";
 import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import { getAuth } from "firebase/auth";
@@ -24,7 +24,6 @@ import { useNavigation } from "@react-navigation/native";
 export default function CreateProduct() {
   const [image, setImage] = useState(null);
   const [imgUrl, setImgUrl] = useState(null);
-  const [imgError, setImgError] = useState(false);
   const navigation = useNavigation();
   const auth = getAuth();
   const user = auth.currentUser;

@@ -21,7 +21,6 @@ import {
 import { useRoute } from "@react-navigation/native";
 import { Formik } from "formik";
 import { UsernameValidationSchema } from "../schemas/UsernameValidationSchema";
-import { PasswordValidationSchema } from "../schemas/PasswordValidationSchema";
 import { faQuestion } from "@fortawesome/free-solid-svg-icons";
 import { useNavigation } from "@react-navigation/native";
 
@@ -57,10 +56,6 @@ function Settings() {
       });
   }
 
-  // function updatePasswordAuth() {
-  //   setCapturePasswordForPassword(true);
-  // }
-
   function deleteAccount() {
     setCapturePassword(true);
   }
@@ -78,10 +73,8 @@ function Settings() {
       .then(() => {
         navigation.navigate("Products"); //temporary solution to username not updating on profile
         Alert.alert("Profil uppdaterad");
-        console.log("PASSWORD CHANGE SUCCESS?");
       })
       .catch((error) => {
-        console.log("PASSWORD CHANGE FAIL", error);
       });
   }
 
@@ -354,7 +347,6 @@ function Settings() {
         )}
       </Formik>
       <Formik
-        // validationSchema={PasswordValidationSchema}
         initialValues={{
           newPassword: "",
         }}
@@ -385,16 +377,6 @@ function Settings() {
                 </Text>
                 <View style={{ flexDirection: "row" }}>
                   <Text>Vill du ändra ditt lösenord?</Text>
-                  {/* <Text
-                    style={{
-                      fontFamily: "MontserratSemiBold",
-                      fontWeight: "bold",
-                      marginBottom: 10,
-                      marginLeft: 5,
-                    }}
-                  >
-                    {user.email}
-                  </Text> */}
                   <Pressable
                     onPress={() =>
                       setCapturePasswordForPassword(!capturePasswordForPassword)

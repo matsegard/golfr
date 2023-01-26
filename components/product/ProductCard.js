@@ -43,7 +43,6 @@ function ProductCard({ selectedCategory, searchString }) {
     );
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
-      // doc.data() is never undefined for query doc snapshots
       productsData.push({ data: doc.data(), id: doc.id });
     });
     setProducts(productsData);
