@@ -1,7 +1,6 @@
 import React from "react";
-import { Button, Modal, Center } from "native-base";
+import { Modal, Center } from "native-base";
 import DatePicker from "../inputs/DatePicker";
-import PrimaryButton from "../inputs/PrimaryButton";
 
 export default function DatePickerModal({
   openModal,

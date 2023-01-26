@@ -18,7 +18,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { db } from "../../firebase/firebaseConfig";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useState } from "react";
 import { getAuth } from "firebase/auth";
 import { useFocusEffect } from "@react-navigation/native";
 
@@ -79,7 +79,6 @@ const Notifications = () => {
         accepted: true,
       })
         .then((acceptBookingRef) => {
-          console.log("Hyrförfrågan Accepterad");
           Alert.alert("Hyrförfrågan Accepterad");
           setUpdate(true);
         })
@@ -98,7 +97,6 @@ const Notifications = () => {
         denied: true,
       })
         .then((acceptBookingRef) => {
-          console.log("Hyrförfrågan Nekad");
           Alert.alert("Hyrförfrågan Nekad");
           setUpdate(true);
         })
@@ -117,7 +115,6 @@ const Notifications = () => {
       );
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
         myBookingsFromDb.push({ data: doc.data(), id: doc.id });
       });
       setMyBookings(myBookingsFromDb);
