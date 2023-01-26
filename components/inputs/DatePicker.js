@@ -1,10 +1,10 @@
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { Text, View, Button, TextInput, Alert } from "react-native";
+import { Text, View, Button, Alert } from "react-native";
 import React, { useState } from "react";
 import PrimaryButton from "../inputs/PrimaryButton";
-import { doc, updateDoc, setDoc } from "firebase/firestore";
+import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase/firebaseConfig";
-import { getAuth, currentUser } from "firebase/auth";
+import { getAuth } from "firebase/auth";
 import { useNavigation } from "@react-navigation/native";
 
 export default function DatePicker({ price, productId, user, setOpenModal }) {
@@ -71,7 +71,6 @@ export default function DatePicker({ price, productId, user, setOpenModal }) {
         denied: false,
       })
         .then((bookingRef) => {
-          console.log("Hyrförfrågan skickad");
           Alert.alert("Hyrförfrågan skickad");
           navigation.navigate("Products");
         })

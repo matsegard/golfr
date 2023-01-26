@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { Button, Image, View, Platform } from "react-native";
+import React from "react";
+import { Button, Image, View} from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 
 export default function ImageUpload({ currentImage, newImage, setNewImage }) {
-  // const [image, setImage] = useState(null);
+
   const pickImage = async () => {
-    // No permissions request is necessary for launching the image library
+
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       aspect: [4, 3],
@@ -15,7 +15,6 @@ export default function ImageUpload({ currentImage, newImage, setNewImage }) {
     });
 
     if (!result.canceled) {
-      // setImage(result.assets[0]);
       setNewImage(result.assets[0].uri);
     }
   };
