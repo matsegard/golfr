@@ -15,7 +15,7 @@ import MyProductsPage from "./pages/MyProductsPage";
 import EditProductModal from "./components/modals/EditProductModal";
 import HelpPage from "./pages/HelpPage";
 import SettingsPage from "./pages/SettingsPage";
-// import * as SplashScreen from "expo-splash-screen";
+
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -27,13 +27,7 @@ export default function App() {
     MontserratSemiBold: require("./assets/Montserrat-SemiBold.ttf"),
   });
 
-  // SplashScreen.preventAutoHideAsync();
 
-  // const onLayoutRootView = useCallback(async () => {
-  //   if (fontsLoaded) {
-  //     await SplashScreen.hideAsync();
-  //   }
-  // }, [fontsLoaded]);
 
   if (!fontsLoaded) {
     return null;
@@ -43,7 +37,7 @@ export default function App() {
     <NavigationContainer>
       <NativeBaseProvider>
         <Stack.Navigator initialRouteName="Products">
-          {/* <Stack.Screen name="Home" component={HomePage} /> */}
+        
           <Stack.Screen
             name="Products"
             component={ProductPage}
@@ -160,8 +154,6 @@ export default function App() {
             name="Redigera"
             component={EditProductModal}
             options={{
-              // headerBackTitleVisible: false,
-              // headerBackVisible: false,
               title: "Redigera produkt",
               headerStyle: {
                 backgroundColor: "#6A8E4E",
@@ -176,8 +168,6 @@ export default function App() {
             name="ProductDetails"
             component={ProductDetails}
             options={{
-              // headerBackTitleVisible: false,
-              // headerBackVisible: false,
               title: "Produkt",
               headerStyle: {
                 backgroundColor: "#6A8E4E",
