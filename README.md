@@ -7,16 +7,18 @@ Golfr is an app developed for people with an interest in golf, no matter the lev
 
 ### Usage
 
+[Link to Golfr](https://expo.dev/@golfr/golfr?serviceType=classic&distribution=expo-go)
+
 ```
 1. Download Expo Go from AppStore
 ```
 
 ```
-2. Open [this](https://expo.dev/@golfr/golfr?serviceType=classic&distribution=expo-go) link and scan QR-code with your phone camera
+2. Open the link above and scan QR-code with your phone camera
 ```
 
 ```
-3. Press link to redirect to Golfr
+3. Press the link and the app will open
 ```
 
 ### Installing
