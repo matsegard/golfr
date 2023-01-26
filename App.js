@@ -5,7 +5,7 @@ import DatePicker from "./components/modals/DatePickerModal";
 import ProfilePage from "./pages/ProfilePage";
 import NotificationPage from "./pages/NotificationPage";
 import LoginPage from "./pages/LoginPage";
-import SignupPage from "./pages/SignupPage";
+import SignupPage from "./pages/signupPage";
 import ProductDetails from "./pages/ProductDetailsPage";
 import CreateProductPage from "./pages/CreateProductPage";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";

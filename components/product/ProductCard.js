@@ -195,7 +195,7 @@ function ProductCard({ selectedCategory, searchString }) {
             />
           </HStack>
         )}
-        {filteredList.length === 0 && (
+        {filteredList.length === 0 && selectedCategory && (
           <Text paddingTop={60}>Tyvärr, inga matchande annonser...</Text>
         )}
       </Box>
