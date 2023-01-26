@@ -32,6 +32,13 @@ npm i
 ```
 npm start
 ```
+
+```
+press "i" to open in ios simulator
+```
+```
+scan QR code to open with the expo go app on mobile
+```
 ## Built With
 
 - [React Native](https://reactnative.dev/)
