@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  StyleSheet,
-  View,
-  Image,
-  Text,
-  Pressable,
-  Alert,
-} from "react-native";
+import { StyleSheet, View, Image, Text, Pressable, Alert } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faGear } from "@fortawesome/free-solid-svg-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -29,9 +22,7 @@ function Profile() {
   const [logOutFail, setLogOutFail] = useState(false);
   const { user } = route.params;
 
-  // funkar om man är inloggad blir error om man ej är
   if (auth == !true) {
-
   } else {
     user;
   }
