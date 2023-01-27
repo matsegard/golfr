@@ -164,7 +164,7 @@ function Signup() {
                     style={{
                       fontFamily: "MontserratSemiBold",
                       color: "#B6B6B6",
-                      marginBottom: 8,
+                      marginBottom: 4,
                     }}
                   >
                     Användarnamn
@@ -189,7 +189,7 @@ function Signup() {
                     style={{
                       fontFamily: "MontserratSemiBold",
                       color: "#B6B6B6",
-                      marginBottom: 8,
+                      marginBottom: 4,
                     }}
                   >
                     Email
@@ -214,7 +214,7 @@ function Signup() {
                     style={{
                       fontFamily: "MontserratSemiBold",
                       color: "#B6B6B6",
-                      marginBottom: 8,
+                      marginBottom: 4,
                     }}
                   >
                     Lösenord
@@ -271,7 +271,7 @@ function Signup() {
                 btnWidth={{
                   width: 182,
                   right: 50,
-                  bottom: -70,
+                  bottom: -58,
                   position: "absolute",
                 }}
                 disabled={
@@ -314,7 +314,7 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
     position: "absolute",
     top: 500,
-    marginTop: 0,
+    marginTop: 10,
   },
   loginText: {
     fontSize: 20,
@@ -327,7 +327,7 @@ const styles = StyleSheet.create({
     top: 200,
   },
   form: {
-    marginTop: 10,
+    marginTop: 5,
   },
   editFormContainer: {
     width: 280,
