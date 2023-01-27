@@ -71,21 +71,13 @@ function Profile() {
     });
   };
 
-  function UpdateProfileImg() {
-    Alert.alert("Profilbild uppdaterad", "", [
-      {
-        text: "Ok",
-        onPress: () => UpdatePfp(),
-      },
-    ]);
-  }
-
   function UpdatePfp() {
     updateProfile(user, {
       photoURL: imgUrl,
     })
       .then(() => {
         setProfilePicUpdated(true);
+        Alert.alert("Profilbild uppdaterad");
       })
       .catch((error) => {
         console.log(error);
@@ -187,7 +179,7 @@ function Profile() {
             marginBottom: 0,
             alignSelf: "center",
           }}
-          onPress={UpdateProfileImg}
+          onPress={UpdatePfp}
         >
           <Text
             style={{
