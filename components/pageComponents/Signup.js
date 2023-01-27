@@ -136,6 +136,7 @@ function Signup() {
           </VStack>
         </Alert>
       )}
+
       <Text style={styles.loginText}>Registrera dig</Text>
       <View style={styles.forms}>
         <Formik
