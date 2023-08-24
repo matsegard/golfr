@@ -3,6 +3,26 @@
 This app is made for our final practical exam.  
 Golfr is an app developed for people with an interest in golf, no matter the level of skill, and is perfect for people on the go. The idea with this app is that a user can rent different types of golf equipment for an amount of money per day. A user can publish their own advertisement for golf products for others to rent, while making some extra money. 
 
+&nbsp;&nbsp;
+
+<img src="https://github.com/matsegard/golfr/assets/73194029/333cc913-6d1d-4927-b5e3-5027e6bff104" height="700" width="350" align="left">
+<img src="https://github.com/matsegard/golfr/assets/73194029/b71162a6-8b98-4753-bee3-f834fb2cfd18" height="700" width="350">
+
+&nbsp;&nbsp;
+
+<img src="https://github.com/matsegard/golfr/assets/73194029/bc3a38a9-5256-423c-9e35-f1c4bdef1757" height="700" width="350" align="left">
+<img src="https://github.com/matsegard/golfr/assets/73194029/1e242d4f-694e-4df5-99b1-622b3a13b716" height="700" width="350" >
+
+&nbsp;&nbsp;
+
+<img src="https://github.com/matsegard/golfr/assets/73194029/e113de44-1d8b-4836-a2af-20a16a78b8b7" height="700" width="350" align="left">
+<img src="https://github.com/matsegard/golfr/assets/73194029/a352e2d7-d98f-460d-8677-b7722ec22196" height="700" width="350" >
+
+&nbsp;&nbsp;
+
+<img src="https://github.com/matsegard/golfr/assets/73194029/80c3e93c-d3ac-475f-9fd9-6cbdd3bb9323" height="700" width="350" >
+
+
 ## Getting Started
 
 ### Usage
