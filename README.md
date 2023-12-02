@@ -3,6 +3,9 @@
 This app is made for our final practical exam.  
 Golfr is an app developed for people with an interest in golf, no matter the level of skill, and is perfect for people on the go. The idea with this app is that a user can rent different types of golf equipment for an amount of money per day. A user can publish their own advertisement for golf products for others to rent, while making some extra money. 
 
+### [LINK TO SEE A FLOW OF GOLFR IN FIGMA](https://www.figma.com/file/BHIpvsTKm5ZANWbMG2RhoC/golfr-demo?type=design&node-id=0%3A1&mode=design&t=g9meEorJe9XU9JHB-1)
+
+
 &nbsp;&nbsp;
 
 <img src="https://github.com/matsegard/golfr/assets/73194029/333cc913-6d1d-4927-b5e3-5027e6bff104" height="700" width="350" align="left">
